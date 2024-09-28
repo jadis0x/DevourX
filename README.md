@@ -13,6 +13,12 @@ Use your favorite **DLL injector** to inject the **DevourX.dll** file into the g
 - Press the F1 key to open the mod menu.
 - Select the desired features and enjoy!
 
+I recommend using LuminousInjector. If you encounter any errors, install the setups below for the sake of your computer's well-being.
+
+**Luminous Injector**
+- https://github.com/jadis0x/LuminousInjector
+- https://www.techpowerup.com/download/visual-c-redistributable-runtime-package-all-in-one/
+
 ###  Troubleshooting
 - **Mod menu not opening:** Make sure the injector is working correctly and that you've successfully injected the DevourX.dll file into the game.
 - **Game crashes or errors:** Ensure that you're running the latest version of the game and that no other mods are active.
