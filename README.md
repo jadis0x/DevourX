@@ -7,6 +7,9 @@ An advanced mod menu developed for Devour.
 
 Use your favorite **DLL injector** to inject the **DevourX.dll** file into the game
 
+You can also watch this short installation video
+https://www.youtube.com/watch?v=n5a-0D8UZrI
+
 # How to Use
 - Launch the game and reach the main menu.
 - Inject the DevourX.dll file into the game using your DLL injector.
