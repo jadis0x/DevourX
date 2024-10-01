@@ -1,7 +1,7 @@
 # DevourX
 An advanced mod menu developed for Devour.
 
-<img src="https://github.com/jadis0x/DevourX/blob/main/1.gif">
+<img src="https://github.com/jadis0x/DevourX/blob/main/1.png">
 
 ### Installation
 
