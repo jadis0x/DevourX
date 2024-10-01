@@ -18,7 +18,6 @@ https://www.youtube.com/watch?v=n5a-0D8UZrI
 
 I recommend using LuminousInjector. If you encounter any errors, install the setups below for the sake of your computer's well-being.
 
-**Luminous Injector**
 - [Luminous Injector v1.2 FIXED](https://github.com/jadis0x/LuminousInjector/releases/tag/v1.2)
 - [Visual C++ Redistributable Runtimes All-in-One](https://www.techpowerup.com/download/visual-c-redistributable-runtime-package-all-in-one/)
 
