@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="user\main.cpp">
+      <Filter>user</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\dllmain.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\helpers.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\il2cpp-init.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\pch-il2cpp.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="include\imgui\imgui.cpp">
+      <Filter>include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\imgui\imgui_draw.cpp">
+      <Filter>include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\imgui\imgui_impl_dx11.cpp">
+      <Filter>include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\imgui\imgui_impl_win32.cpp">
+      <Filter>include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\imgui\imgui_stdlib.cpp">
+      <Filter>include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\imgui\imgui_tables.cpp">
+      <Filter>include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\imgui\imgui_widgets.cpp">
+      <Filter>include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\Minhook\src\buffer.cpp">
+      <Filter>include\minhook</Filter>
+    </ClCompile>
+    <ClCompile Include="include\Minhook\src\hook.cpp">
+      <Filter>include\minhook</Filter>
+    </ClCompile>
+    <ClCompile Include="include\Minhook\src\trampoline.cpp">
+      <Filter>include\minhook</Filter>
+    </ClCompile>
+    <ClCompile Include="include\Minhook\src\HDE\hde32.cpp">
+      <Filter>include\minhook</Filter>
+    </ClCompile>
+    <ClCompile Include="include\Minhook\src\HDE\hde64.cpp">
+      <Filter>include\minhook</Filter>
+    </ClCompile>
+    <ClCompile Include="user\hooks\hooks.cpp">
+      <Filter>user\hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="user\features\menu.cpp">
+      <Filter>user\features</Filter>
+    </ClCompile>
+    <ClCompile Include="user\settings\settings.cpp">
+      <Filter>user\settings</Filter>
+    </ClCompile>
+    <ClCompile Include="user\features\misc\misc.cpp">
+      <Filter>user\features\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="user\players\players.cpp">
+      <Filter>user\players</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\private\ClientHelper.cpp">
+      <Filter>lib\private</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\private\wrapper.cpp">
+      <Filter>lib\private</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\private\UnityEngine\Camera.cpp">
+      <Filter>lib\private\UnityEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\private\UnityEngine\GameObject.cpp">
+      <Filter>lib\private\UnityEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\private\UnityEngine\Input.cpp">
+      <Filter>lib\private\UnityEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\private\UnityEngine\Math.cpp">
+      <Filter>lib\private\UnityEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\private\UnityEngine\Object.cpp">
+      <Filter>lib\private\UnityEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\private\UnityEngine\Transform.cpp">
+      <Filter>lib\private\UnityEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\private\Network\RiftNet.cpp">
+      <Filter>lib\private\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="user\system\RiftSystem.cpp">
+      <Filter>user\system</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="user\main.h">
+      <Filter>user</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\helpers.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\il2cpp-appdata.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\il2cpp-init.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\pch-il2cpp.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imconfig.h">
+      <Filter>include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imgui.h">
+      <Filter>include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imgui_impl_dx11.h">
+      <Filter>include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imgui_impl_win32.h">
+      <Filter>include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imgui_internal.h">
+      <Filter>include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imgui_stdlib.h">
+      <Filter>include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imstb_rectpack.h">
+      <Filter>include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imstb_textedit.h">
+      <Filter>include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imstb_truetype.h">
+      <Filter>include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Minhook\src\buffer.h">
+      <Filter>include\minhook</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Minhook\src\trampoline.h">
+      <Filter>include\minhook</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Minhook\include\MinHook.h">
+      <Filter>include\minhook</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Minhook\src\HDE\hde32.h">
+      <Filter>include\minhook</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Minhook\src\HDE\hde64.h">
+      <Filter>include\minhook</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Minhook\src\HDE\pstdint.h">
+      <Filter>include\minhook</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Minhook\src\HDE\table32.h">
+      <Filter>include\minhook</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Minhook\src\HDE\table64.h">
+      <Filter>include\minhook</Filter>
+    </ClInclude>
+    <ClInclude Include="user\hooks\hooks.hpp">
+      <Filter>user\hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="user\features\menu.hpp">
+      <Filter>user\features</Filter>
+    </ClInclude>
+    <ClInclude Include="user\settings\settings.hpp">
+      <Filter>user\settings</Filter>
+    </ClInclude>
+    <ClInclude Include="user\features\misc\misc.h">
+      <Filter>user\features\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\color.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="user\players\players.h">
+      <Filter>user\players</Filter>
+    </ClInclude>
+    <ClInclude Include="include\json.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\public\ClientHelper.h">
+      <Filter>lib\public</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\public\wrapper.h">
+      <Filter>lib\public</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\public\UnityEngine\Camera.h">
+      <Filter>lib\public\UnityEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\public\UnityEngine\Engine.hpp">
+      <Filter>lib\public\UnityEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\public\UnityEngine\GameObject.h">
+      <Filter>lib\public\UnityEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\public\UnityEngine\Input.h">
+      <Filter>lib\public\UnityEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\public\UnityEngine\Math.h">
+      <Filter>lib\public\UnityEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\public\UnityEngine\Object.h">
+      <Filter>lib\public\UnityEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\public\UnityEngine\Transform.h">
+      <Filter>lib\public\UnityEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\magic_enum.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\public\Network\RiftNet.h">
+      <Filter>lib\public\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="user\system\RiftSystem.h">
+      <Filter>user\system</Filter>
+    </ClInclude>
+    <ClInclude Include="appdata\il2cpp-api-functions.h">
+      <Filter>appdata</Filter>
+    </ClInclude>
+    <ClInclude Include="appdata\il2cpp-api-functions-ptr.h">
+      <Filter>appdata</Filter>
+    </ClInclude>
+    <ClInclude Include="appdata\il2cpp-functions.h">
+      <Filter>appdata</Filter>
+    </ClInclude>
+    <ClInclude Include="appdata\il2cpp-metadata-version.h">
+      <Filter>appdata</Filter>
+    </ClInclude>
+    <ClInclude Include="appdata\il2cpp-types.h">
+      <Filter>appdata</Filter>
+    </ClInclude>
+    <ClInclude Include="appdata\il2cpp-types-ptr.h">
+      <Filter>appdata</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="appdata">
+      <UniqueIdentifier>{facc3346-58de-47c4-a7b1-703dcab072f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework">
+      <UniqueIdentifier>{08c1b55f-419c-4aa9-a623-bfdfe4165e47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="user">
+      <UniqueIdentifier>{fcf43a20-437e-405b-adb6-ad412772eaa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib">
+      <UniqueIdentifier>{27bce89c-df31-4c70-93e6-760b9502363e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{3ae2556b-8c67-42a2-93f0-96d888db4c5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\imgui">
+      <UniqueIdentifier>{38486a79-ab1a-4b36-a9b9-67499a0cb38d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\minhook">
+      <UniqueIdentifier>{64a95d9a-38e8-43af-a7b7-d267016bb242}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="user\hooks">
+      <UniqueIdentifier>{10fd2705-7837-45f7-b4f2-448a10cd9354}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="user\features">
+      <UniqueIdentifier>{2dee8978-a889-4a3c-bc33-b895bbeec1cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="user\settings">
+      <UniqueIdentifier>{64867ae6-a574-4a01-ac5f-22a732ca25e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="user\features\misc">
+      <UniqueIdentifier>{116f67d1-9398-4156-8fe3-93de590b3c57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="user\players">
+      <UniqueIdentifier>{54f72ffe-f8ca-4732-bd14-62d1a7a68267}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\public">
+      <UniqueIdentifier>{22144ae2-ce2d-48f4-ac56-0cefde863748}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\private">
+      <UniqueIdentifier>{b83e2b95-1a9b-4065-8f3b-750d80fa32da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\private\UnityEngine">
+      <UniqueIdentifier>{a4d2670d-9928-419c-ab6d-12fd69137e9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\public\UnityEngine">
+      <UniqueIdentifier>{289d934d-1844-4207-b865-47a910a88c81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\private\Network">
+      <UniqueIdentifier>{382250a0-8dba-4fb1-8bf1-3fafe396bd49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\public\Network">
+      <UniqueIdentifier>{a6cb7448-b6d6-4c6a-95e5-22af0baef1c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="user\system">
+      <UniqueIdentifier>{569e2c4a-2541-47fc-b51b-caa174f6ca2c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="version.def">
+      <Filter>user</Filter>
+    </None>
+  </ItemGroup>
+</Project>
