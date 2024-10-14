@@ -103,10 +103,6 @@ void load_version() {
 #pragma execution_character_set("utf-8");
 
 void EnableNolanBehaviour();
-void SendHeartbeat(const uint64_t steamUserID);
-
-// Pencere başlıklarını tutacak vektör
-std::vector<std::wstring> windowTitles;
 
 void Load(LPVOID lpParam) {
 	load_version();
