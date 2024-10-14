@@ -17,7 +17,7 @@ DevourX is a powerful mod menu developed for the Devour. Written in C++ and inde
 - Faster walking speed
 - Instant Win
 - Rank Spoof
-- Flying Mode
+- Fly
 - Spawn any objects or carry
 - Force lobby start
 - EXP Modifier
@@ -28,6 +28,15 @@ DevourX is a powerful mod menu developed for the Devour. Written in C++ and inde
 And much more!
 <br>
 
-<img src="https://github.com/jadis0x/DevourX/blob/main/2.png">
+<img src="https://github.com/jadis0x/DevourX/blob/main/screenshot1.png">
+<img src="https://github.com/jadis0x/DevourX/blob/main/screenshot2.png">
+<img src="https://github.com/jadis0x/DevourX/blob/main/screenshot3.png">
 
+## How do I install DevourX?
+- Copy the version.dll file into the game’s installation folder. No external injectors are needed.
 
+## What should I do if DevourX crashes?
+- If DevourX crashes, ensure there are no other mods in the game folder and that your <a href="https://www.techpowerup.com/download/visual-c-redistributable-runtime-package-all-in-one/">Visual C++ Redistributable</a> and <a href="https://dotnet.microsoft.com/en-us/download/dotnet/6.0">.NET 6 SDK</a> are up to date.
+
+## Thank You and Goodbye
+I want to thank everyone who’s been there for me on this journey and truly appreciates my hard work. Until we meet again, farewell.
