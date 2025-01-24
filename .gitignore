@@ -2,3 +2,5 @@
 /.vs
 /DevourX/x64
 /Builds/Release
+/DevourX.NET/.vs
+/DevourX.NET/DevourX.NET/obj
