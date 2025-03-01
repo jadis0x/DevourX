@@ -2,26 +2,22 @@
 **DevourX** is an open-source, C++ based mod menu specifically designed for the horror game **Devour**
 
 ## Features
-- Fullbright
 - Unlimited UV Light
-- Force Lobby Start
-- Unlock Robes
 - Unlock Doors
 - Disable Long Interact
-- Instant Win
-- Object Pool (Destroy and Teleport Objects in the Current Scene)
 - Azazel Speed Modifier
+- Force Lobby Start
+- Instant Win
+- Fullbright
 - Player Speed Modifier
 - Fly
-- Kill/Revive Players
-- Trigger a Jumpscare for the Selected Player
+- Unlock Robes
+- Disable Character Locks
+- EXP Modifier
 - Create a custom lobby with unlimited players
-- Force attach any pet to players
+- Object Pool (Destroy and Teleport Objects in the Current Scene)
 
-  and more..
-
-
-## How To Use
+- ## How To Use
 
 **<p>Download the Source</p>**
 - Grab the repo or a ZIP of the project. If you don't want to deal with this, [click here](https://github.com/jadis0x/DevourX/releases)
