@@ -43,7 +43,7 @@
 <br>
 
 > [!NOTE]  
-> Press **F1** to activate the menu.
+> Press **F12** to activate the menu.
 
 
 ## Contact
