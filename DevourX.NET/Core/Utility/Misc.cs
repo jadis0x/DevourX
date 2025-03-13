@@ -1,7 +1,9 @@
 ﻿using Il2Cpp;
 using Il2CppOpsive.UltimateCharacterController.Character;
 using Il2CppPhoton.Bolt;
+using Il2CppSystem.Text;
 using Il2CppUdpKit.Platform.Photon;
+using MelonLoader;
 using UnityEngine;
 
 
@@ -124,7 +126,19 @@ namespace DevourX.NET.Core.Utility
 
         public static void JumpscarePlayer(GameObject player)
         {
-            
+            if (!GameHelper.IsLobbyOwner())
+            {
+                MelonLogger.Error("You're not lobby owner!");
+                return;
+            }
+
+            if (!player) return;
+
+            Il2Cpp.SurvivalAzazelBehaviour SurvivalAzazelBehaviour = Il2Cpp.SurvivalAzazelBehaviour.FindObjectOfType<Il2Cpp.SurvivalAzazelBehaviour>();
+
+            if (!SurvivalAzazelBehaviour) return;
+
+            SurvivalAzazelBehaviour.OnPickedUpPlayer(SurvivalAzazelBehaviour.gameObject, player, false);
         }
 
         public static void CagePlayer(GameObject player)
@@ -141,6 +155,21 @@ namespace DevourX.NET.Core.Utility
             if (localPlayer == null || player == null) return;
 
             localPlayer.GetComponent<NolanBehaviour>().TeleportTo(player.transform.position, Quaternion.identity, false);
+        }
+
+        public static void TeleportAzazel(GameObject player)
+        {
+            if (!player) return;
+
+            SurvivalAzazelBehaviour azazel = SurvivalAzazelBehaviour.FindObjectOfType<Il2Cpp.SurvivalAzazelBehaviour>();
+
+            if (!azazel) return;
+
+            UltimateCharacterLocomotion azazelLocomotion = azazel.GetComponent<UltimateCharacterLocomotion>();
+
+            if (!azazelLocomotion) return;
+
+            azazelLocomotion.SetPosition(player.transform.position);
         }
 
         public static void SpawnPrefab(PrefabId prefab, float spawnDistance)
@@ -200,7 +229,7 @@ namespace DevourX.NET.Core.Utility
 
         public static void AttachPetToPlayers(string petName, List<GameObject> players)
         {
-            for(int i = 0; i < players.Count; i++)
+            for (int i = 0; i < players.Count; i++)
             {
                 if (players[i] == null) return;
 
@@ -210,13 +239,122 @@ namespace DevourX.NET.Core.Utility
 
                 PetLoader petLoader = players[i].GetComponent<NolanBehaviour>().petLoader;
 
-                if(petLoader.GetPet() == null)
+                if (petLoader.GetPet() == null)
                 {
                     petLoader.LoadPet(petName);
                     petLoader.ResetPet();
                     petLoader.GetPet();
                 }
             }
+        }
+
+        public static void InstantWin(string map, bool burnAll)
+        {
+            if (!GameHelper.IsLobbyOwner())
+            {
+                MelonLogger.Error("You're not lobby owner!");
+                return;
+            }
+
+            switch (map)
+            {
+                case "Inn":
+                    var innController = UnityEngine.Object.FindObjectOfType<Il2Cpp.InnMapController>();
+                    if (!innController) return;
+
+                    if (burnAll)
+                        innController.SetProgressTo(10);
+                    else
+                        innController.IncreaseProgress();
+                    break;
+
+                case "Slaughterhouse":
+                    var slaughterhouseController = UnityEngine.Object.FindObjectOfType<Il2Cpp.SlaughterhouseAltarController>();
+                    if (!slaughterhouseController) return;
+
+                    if (burnAll)
+                        slaughterhouseController.BurnGoat();
+                    else
+                        slaughterhouseController.SkipToGoat(10);
+                    break;
+
+                case "Manor":
+                    var manorController = UnityEngine.Object.FindObjectOfType<Il2Cpp.MapController>();
+                    if (!manorController) return;
+
+                    if (burnAll)
+                        manorController.SetProgressTo(10);
+                    else
+                        manorController.SetProgressTo(manorController.GetMapProgress() + 1);
+                    break;
+
+                default:
+                    var altar = UnityEngine.Object.FindObjectOfType<Il2Cpp.SurvivalObjectBurnController>();
+                    if (!altar) return;
+
+                    if (burnAll)
+                        altar.SkipToGoat(10);
+                    else
+                        altar.BurnGoat();
+                    break;
+            }
+        }
+
+        public static void CarryObject(string key)
+        {
+            UnityEngine.GameObject LocalPlayer = PlayerManager.Instance.GetLocalPlayer();
+            if (!LocalPlayer || GameHelper.GetActiveSceneName() == "Menu") return;
+
+            NolanBehaviour nolanBehaviour = LocalPlayer.GetComponent<NolanBehaviour>();
+            if (!nolanBehaviour) return;
+
+            nolanBehaviour.StartCarry(key);
+
+            /*
+            {"Hay", "SurvivalHay"},
+		    {"First aid", "SurvivalFirstAid"},
+		    {"Spade", "SurvivalSpade"},
+		    {"Cake", "SurvivalCake"},
+		    {"Bone", "SurvivalBone"},
+		    {"Battery", "SurvivalBattery"},
+		    {"Gasoline", "SurvivalGasoline"},
+		    {"Fuse", "SurvivalFuse"},
+		    {"Food", "SurvivalRottenFood"},
+		    {"Bleach", "SurvivalBleach"},
+		    {"Ritual Book (inactive)", "RitualBook-InActive-1"},
+		    {"Ritual Book (active)", "RitualBook-Active-1"},
+		    {"Matchbox", "Matchbox-3"},
+		    {"Egg 1", "Egg-Clean-1"},
+		    {"Egg 2", "Egg-Clean-2"},
+		    {"Egg 3", "Egg-Clean-3"},
+		    {"Egg 4", "Egg-Clean-4"},
+		    {"Egg 5", "Egg-Clean-5"},
+		    {"Egg 6", "Egg-Clean-6"},
+		    {"Egg 7", "Egg-Clean-7"},
+		    {"Egg 8", "Egg-Clean-8"},
+		    {"Egg 9", "Egg-Clean-9"},
+		    {"Egg 10", "Egg-Clean-10"},
+		    {"Head (Dirty/Gardener)", "Head-Dirty-Gardener"},
+		    {"Head (Clean/Gardener)", "Head-Clean-Gardener"},
+		    {"Head (Dirty/Butler)", "Head-Dirty-Butler"},
+		    {"Head (Clean/Butler)", "Head-Clean-Butler)"},
+		    {"Head (Dirty/Bridesmaid_01)", "Head-Dirty-Bridesmaid_01"},
+		    {"Head (Clean/Bridesmaid_01)", "Head-Clean-Bridesmaid_01"},
+		    {"Head (Dirty/Bridesmaid_02)", "Head-Dirty-Bridesmaid_02"},
+		    {"Head (Clean/Bridesmaid_02)", "Head-Clean-Bridesmaid_02"},
+		    {"Head (Dirty/Cook)", "Head-Dirty-Cook"},
+		    {"Head (Clean/Cook)", "Head-Clean-Cook"},
+		    {"Head (Dirty/Groomsman_01)", "Head-Dirty-Groomsman_01"},
+		    {"Head (Clean/Groomsman_01)", "Head-Clean-Groomsman_01"},
+		    {"Head (Dirty/Groomsman_02)", "Head-Dirty-Groomsman_02"},
+		    {"Head (Clean/Groomsman_02)", "Head-Clean-Groomsman_02"},
+		    {"Head (Dirty/Maid)", "Head-Dirty-Maid"},
+		    {"Head (Clean/Maid)", "Head-Clean-Maid"},
+		    {"Head (Dirty/Photographer)", "Head-Dirty-Photographer"},
+		    {"Head (Clean/Photographer)", "Head-Clean-Photographer"},
+		    {"Head (Dirty/Priest)", "Head-Dirty-Priest"},
+		    {"Head (Clean/Priest)", "Head-Clean-Priest"}
+            */
         }
     }
 }

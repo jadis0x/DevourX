@@ -74,8 +74,6 @@ namespace DevourX.NET.Core.Utility
 
             static void UnlockOutfit(CharacterOutfit outfit)
             {
-                MelonLogger.Warning($"Unlocking outfit: {outfit.addressableName}");
-
                 outfit.isOwned = true;
                 outfit.isSupporter = true;
             }

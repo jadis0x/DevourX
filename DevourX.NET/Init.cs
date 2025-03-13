@@ -3,7 +3,7 @@ using Il2CppInterop.Runtime.Injection;
 using UnityEngine;
 
 [assembly: MelonLoader.VerifyLoaderVersion(0, 6, 0, true)] // Minimum MelonLoader version is V6.0.0, sanity check for people who use 5.7 and wonder why it crashes :)
-[assembly: MelonLoader.MelonInfo(typeof(DevourX.NET.Init), "DevourX", "3", "Jadis0x & ALittlePatate")]
+[assembly: MelonLoader.MelonInfo(typeof(DevourX.NET.Init), "DevourX", "4", "Jadis0x")]
 [assembly: MelonLoader.MelonGame("Straight Back Games", "DEVOUR")]
 
 namespace DevourX.NET

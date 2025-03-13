@@ -35,6 +35,7 @@ namespace DevourX.NET.Core
         private Vector2 poolScrollPosition;
 
         private int lobbyLimitInput = 4;
+        private string itemKey = "";
         private PhotonRegion.Regions selectedRegion = PhotonRegion.Regions.BEST_REGION; // default region
         private bool bestRegionChecked = true; // default selected
         private bool euChecked = false;
@@ -43,11 +44,10 @@ namespace DevourX.NET.Core
 
         public void Start()
         {
-            MelonLogger.Warning("Made with by Jadis0x and ALittlePatate.");
+            MelonLogger.Warning("Made with by Jadis0x");
             MelonLogger.Warning("Github : https://github.com/jadis0x/DevourX");
 
             _GameUI = UnityEngine.Object.FindObjectOfType<Il2Cpp.GameUI>();
-
 
             InitializeObjectPools();
         }
@@ -90,7 +90,16 @@ namespace DevourX.NET.Core
                 new ObjectPool(BoltPrefabs.InnDoor, "Inn Door"),
                 new ObjectPool(BoltPrefabs.ManorGate, "Manor Gate"),
                 new ObjectPool(BoltPrefabs.ManorMausoleumDoor, "Mausoleum Door"),
-                new ObjectPool(BoltPrefabs.ManorShrine, "Shrine (Manor)")
+                new ObjectPool(BoltPrefabs.ManorShrine, "Shrine (Manor)"),
+                new ObjectPool(BoltPrefabs.SurvivalGoat, "Goat"),
+                new ObjectPool(BoltPrefabs.SurvivalHay, "Hay"),
+                new ObjectPool(BoltPrefabs.SurvivalMatchbox, "Matchbox"),
+                new ObjectPool(BoltPrefabs.SurvivalMatchbox_02, "Matchbox 2"),
+                new ObjectPool(BoltPrefabs.SurvivalRitualBook, "Ritual Book"),
+                new ObjectPool(BoltPrefabs.SurvivalRose, "Rose"),
+                new ObjectPool(BoltPrefabs.SurvivalRat, "Rat"),
+                new ObjectPool(BoltPrefabs.InnMaze_B, "InnMaze_B"),
+                new ObjectPool(BoltPrefabs.InnFountain, "Inn Fountain")
             };
 
             MelonLogger.Msg($"Initialized {objectPools.Count} Object Pools.");
@@ -186,16 +195,24 @@ namespace DevourX.NET.Core
         {
             List<GameObject> players = PlayerManager.Instance.GetAllPlayers();
 
-            GUILayout.Label($"<color=#788686>Players</color> ({players.Count.ToString()})", new GUIStyle { richText = true });
+            GUILayout.Label($"<color=#fff>Players ({players.Count.ToString()})</color>", new GUIStyle { richText = true });
             GUILayout.Space(5);
 
-            playerTABScrollPosition = GUILayout.BeginScrollView(playerTABScrollPosition, GUILayout.Width(420), GUILayout.Height(400));
+            playerTABScrollPosition = GUILayout.BeginScrollView(playerTABScrollPosition);
+
+            GUILayout.Label("<color=#53ff79>Item Key:</color>");
+            itemKey = GUILayout.TextField(itemKey, GUILayout.Width(150));
+
+            if (GUILayout.Button("Carry Item From Key"))
+            {
+                Misc.CarryObject(itemKey);
+            }
 
             if (BoltNetwork.IsServer)
             {
                 if (GUILayout.Button("[FORCE] Attach pet to players"))
                 {
-                    Utility.Misc.AttachPetToPlayers("PetCat", players);
+                    Misc.AttachPetToPlayers("PetCat", players);
                 }
             }
 
@@ -229,7 +246,7 @@ namespace DevourX.NET.Core
 
                             // Butonlar
                             GUILayout.BeginHorizontal(); // Butonları yatay bir satıra koymak için
-                            if (GUILayout.Button("Kill", GUILayout.Width(60)))
+                            if (GUILayout.Button("Kill", GUILayout.Width(50)))
                             {
                                 Misc.KillPlayer(player);
                             }
@@ -241,13 +258,17 @@ namespace DevourX.NET.Core
                             {
                                 Misc.JumpscarePlayer(player);
                             }
-                            if (GUILayout.Button("Cage", GUILayout.Width(60)))
+                            if (GUILayout.Button("Cage", GUILayout.Width(50)))
                             {
                                 Misc.CagePlayer(player);
                             }
-                            if (GUILayout.Button("TP", GUILayout.Width(40)))
+                            if (GUILayout.Button("TP to player", GUILayout.Width(95)))
                             {
                                 Misc.TeleportPlayer(player);
+                            }
+                            if (GUILayout.Button("TP azazel to player", GUILayout.Width(130)))
+                            {
+                                Misc.TeleportAzazel(player);
                             }
                             GUILayout.EndHorizontal();
                         }
@@ -394,6 +415,8 @@ namespace DevourX.NET.Core
                 Utility.Misc.ForceLobbyStart();
             }
 
+           
+
             GUILayout.Space(20);
             GUILayout.BeginVertical(GUILayout.Width(250));
 
@@ -468,6 +491,18 @@ namespace DevourX.NET.Core
 
                 Utility.Misc.EnableMovement(Settings.Settings.enableMovement);
             }
+
+            if (GUILayout.Button("Burn one"))
+            {
+                Utility.Misc.InstantWin(GameHelper.GetMapName(GameHelper.GetActiveSceneName()), false);
+            }
+
+            if (GUILayout.Button("Burn all (Instant Win)"))
+            {
+                Utility.Misc.InstantWin(GameHelper.GetMapName(GameHelper.GetActiveSceneName()), true);
+            }
+
+            GUILayout.Space(20);
 
             Settings.Settings.unlimitedUVLight = GUILayout.Toggle(Settings.Settings.unlimitedUVLight, "Unlimited UV Light");
             Settings.Settings.unlockDoors = GUILayout.Toggle(Settings.Settings.unlockDoors, "Unlock Doors");
