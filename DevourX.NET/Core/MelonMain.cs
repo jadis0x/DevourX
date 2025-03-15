@@ -44,7 +44,7 @@ namespace DevourX.NET.Core
 
         public void Start()
         {
-            MelonLogger.Warning("Made with by Jadis0x");
+            MelonLogger.Warning("Made with love by Jadis0x.");
             MelonLogger.Warning("Github : https://github.com/jadis0x/DevourX");
 
             _GameUI = UnityEngine.Object.FindObjectOfType<Il2Cpp.GameUI>();
