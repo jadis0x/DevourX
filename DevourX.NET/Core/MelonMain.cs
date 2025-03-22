@@ -16,7 +16,7 @@ namespace DevourX.NET.Core
         }
 
         #region MENU
-        private string[] tabs = { "Settings", "Gameplay", "Object Pool", "Players", "Stats Manager" };
+        private string[] tabs = { "Settings", "Gameplay", "Object Pool", "Players", "Stats Manager", "Network" };
         private int selectedTab = 0;
 
         private string menuToggleKeyInput;
@@ -35,6 +35,9 @@ namespace DevourX.NET.Core
         private Vector2 poolScrollPosition;
 
         private int lobbyLimitInput = 4;
+        private string lobbyPasswordInput = "";
+        private bool lobbyVisibility = true;
+
         private string itemKey = "";
         private PhotonRegion.Regions selectedRegion = PhotonRegion.Regions.BEST_REGION; // default region
         private bool bestRegionChecked = true; // default selected
@@ -44,7 +47,7 @@ namespace DevourX.NET.Core
 
         public void Start()
         {
-            MelonLogger.Warning("Made with by Jadis0x");
+            MelonLogger.Warning("Made by Jadis0x");
             MelonLogger.Warning("Github : https://github.com/jadis0x/DevourX");
 
             _GameUI = UnityEngine.Object.FindObjectOfType<Il2Cpp.GameUI>();
@@ -132,6 +135,7 @@ namespace DevourX.NET.Core
         public void OnGUI()
         {
             if (!Settings.Settings.bShowMenu) return;
+            GUI.backgroundColor = Color.white;
 
             float menuWidth = Screen.width * Settings.Settings.menuWidthPercentage;
             float menuHeight = Screen.height * Settings.Settings.menuHeightPercentage;
@@ -140,7 +144,7 @@ namespace DevourX.NET.Core
 
 
             GUILayout.BeginArea(new Rect(menuX, menuY, menuWidth, menuHeight), GUI.skin.box);
-            GUILayout.Label("<color=#fff>DevourX.NET by Jadis0x - v4.0.1 [Preview]</color>");
+            GUILayout.Label("<color=#fff>DevourX.NET by Jadis0x v5</color>");
 
             GUILayout.BeginHorizontal();
             for (int i = 0; i < tabs.Length; i++)
@@ -186,10 +190,16 @@ namespace DevourX.NET.Core
                 case 4:
                     ShowStatsManagerTab();
                     break;
+
+                case 5:
+                    ShowNetworkTab();
+                    break;
             }
 
             GUILayout.EndArea();
         }
+
+        
 
         private void ShowPlayersTab()
         {
@@ -206,6 +216,8 @@ namespace DevourX.NET.Core
             if (GUILayout.Button("Carry Item From Key"))
             {
                 Misc.CarryObject(itemKey);
+                itemKey = "";
+                GUI.FocusControl(null);
             }
 
             if (BoltNetwork.IsServer)
@@ -323,6 +335,12 @@ namespace DevourX.NET.Core
 
             IngameStatsTracker StatsTracker = IngameStatsTracker.singleton;
 
+            Settings.Settings.expModifier = GUILayout.Toggle(Settings.Settings.expModifier, $"EXP Modifier: <color={(Settings.Settings.expModifier ? "green" : "#cb5b5f")}>{Settings.Settings.expModifier}</color>");
+            GUILayout.Label($"<b>Multiplier:</b> <color=#fff>{Settings.Settings.expModifierValue:F0}</color>");
+            Settings.Settings.expModifierValue = (int)GUILayout.HorizontalSlider(Settings.Settings.expModifierValue, 1000, 3000, GUILayout.Width(300));
+
+            GUILayout.Space(15);
+
             string mapName = GameHelper.GetActiveSceneName();
             if (mapName == "Menu" && StatsTracker == null)
             {
@@ -414,75 +432,7 @@ namespace DevourX.NET.Core
             {
                 Utility.Misc.ForceLobbyStart();
             }
-
            
-
-            GUILayout.Space(20);
-            GUILayout.BeginVertical(GUILayout.Width(250));
-
-            GUILayout.Label("<color=#53ff79>Connection Limit:</color>");
-            string input = GUILayout.TextField(lobbyLimitInput.ToString(), GUILayout.Width(90));
-
-            GUILayout.Space(10);
-            if (int.TryParse(input, out int parsedLimit))
-            {
-                lobbyLimitInput = parsedLimit;
-            }
-
-            GUILayout.Label("<color=#53ff79>Select Region:</color>");
-            GUILayout.BeginVertical();
-
-            // checkbox control
-            if (GUILayout.Toggle(bestRegionChecked, "Best Region") != bestRegionChecked)
-            {
-                bestRegionChecked = !bestRegionChecked;
-                if (bestRegionChecked)
-                {
-                    selectedRegion = PhotonRegion.Regions.BEST_REGION;
-                    euChecked = usChecked = asiaChecked = false; // reset others
-                }
-            }
-
-            if (GUILayout.Toggle(euChecked, "EU") != euChecked)
-            {
-                euChecked = !euChecked;
-                if (euChecked)
-                {
-                    selectedRegion = PhotonRegion.Regions.EU;
-                    bestRegionChecked = usChecked = asiaChecked = false; // reset others
-                }
-            }
-
-            if (GUILayout.Toggle(usChecked, "US") != usChecked)
-            {
-                usChecked = !usChecked;
-                if (usChecked)
-                {
-                    selectedRegion = PhotonRegion.Regions.US;
-                    bestRegionChecked = euChecked = asiaChecked = false; // reset others
-                }
-            }
-
-            if (GUILayout.Toggle(asiaChecked, "Asia") != asiaChecked)
-            {
-                asiaChecked = !asiaChecked;
-                if (asiaChecked)
-                {
-                    selectedRegion = PhotonRegion.Regions.ASIA;
-                    bestRegionChecked = euChecked = usChecked = false; // reset others
-                }
-            }
-
-            GUILayout.EndVertical();
-
-            // Custom lobby oluşturma butonu
-            if (GUILayout.Button("Create Customized Lobby", GUILayout.Width(190)))
-            {
-                Utility.Misc.CreateCustomizedLobby(selectedRegion, lobbyLimitInput);
-                MelonLogger.Warning($"Custom lobby created! Region: {selectedRegion}, Limit: {lobbyLimitInput}");
-            }
-
-            GUILayout.EndVertical();
             GUILayout.Space(20);
 
             if (GUILayout.Button($"Enable Movement: <color={(Settings.Settings.enableMovement ? "green" : "#cb5b5f")}>{Settings.Settings.enableMovement}</color>"))
@@ -520,6 +470,94 @@ namespace DevourX.NET.Core
             Settings.Settings.fly = GUILayout.Toggle(Settings.Settings.fly, $"Fly: <color={(Settings.Settings.fly ? "green" : "#cb5b5f")}>{Settings.Settings.fly}</color>");
             GUILayout.Label($"<b>Fly Speed Multiplier:</b> <color=#fff>{Settings.Settings.flyMultiplier:F0}</color>");
             Settings.Settings.flyMultiplier = GUILayout.HorizontalSlider(Settings.Settings.flyMultiplier, 1.5f, 25f, GUILayout.Width(300));
+        }
+
+        private void ShowNetworkTab()
+        {
+            GUILayout.BeginVertical(GUILayout.Width(300));
+
+            GUILayout.BeginHorizontal();
+
+            // Sol: Connection Limit
+            GUILayout.BeginVertical(GUILayout.Width(140));
+            GUILayout.Label("<color=#53ff79>Connection Limit:</color>");
+            string input = GUILayout.TextField(lobbyLimitInput.ToString(), GUILayout.Width(120));
+            if (int.TryParse(input, out int parsedLimit))
+            {
+                lobbyLimitInput = parsedLimit;
+            }
+            GUILayout.EndVertical();
+
+            GUILayout.Space(20);
+
+            // Sağ: Password
+            GUILayout.BeginVertical(GUILayout.Width(140));
+            GUILayout.Label("<color=#53ff79>Password:</color>");
+            lobbyPasswordInput = GUILayout.TextField(lobbyPasswordInput, GUILayout.Width(120));
+            GUILayout.EndVertical();
+
+            GUILayout.EndHorizontal();
+
+            GUILayout.Space(10);
+
+            GUILayout.Label("<color=#53ff79>Is Private?:</color>");
+            lobbyVisibility = GUILayout.Toggle(lobbyVisibility, "Yes");
+
+            GUILayout.Space(10);
+
+            GUILayout.Label("<color=#53ff79>Select Region:</color>");
+            GUILayout.BeginVertical(GUILayout.Width(200));
+
+            if (GUILayout.Toggle(bestRegionChecked, "Best Region") != bestRegionChecked)
+            {
+                bestRegionChecked = !bestRegionChecked;
+                if (bestRegionChecked)
+                {
+                    selectedRegion = PhotonRegion.Regions.BEST_REGION;
+                    euChecked = usChecked = asiaChecked = false;
+                }
+            }
+
+            if (GUILayout.Toggle(euChecked, "EU") != euChecked)
+            {
+                euChecked = !euChecked;
+                if (euChecked)
+                {
+                    selectedRegion = PhotonRegion.Regions.EU;
+                    bestRegionChecked = usChecked = asiaChecked = false;
+                }
+            }
+
+            if (GUILayout.Toggle(usChecked, "US") != usChecked)
+            {
+                usChecked = !usChecked;
+                if (usChecked)
+                {
+                    selectedRegion = PhotonRegion.Regions.US;
+                    bestRegionChecked = euChecked = asiaChecked = false;
+                }
+            }
+
+            if (GUILayout.Toggle(asiaChecked, "Asia") != asiaChecked)
+            {
+                asiaChecked = !asiaChecked;
+                if (asiaChecked)
+                {
+                    selectedRegion = PhotonRegion.Regions.ASIA;
+                    bestRegionChecked = euChecked = usChecked = false;
+                }
+            }
+
+            GUILayout.EndVertical();
+
+            GUILayout.Space(10);
+
+            if (GUILayout.Button("Create Customized Lobby", GUILayout.Width(200)))
+            {
+                Utility.Misc.CreateCustomizedLobby(selectedRegion, lobbyLimitInput, lobbyVisibility, lobbyPasswordInput);
+            }
+
+            GUILayout.EndVertical();
         }
     }
 }

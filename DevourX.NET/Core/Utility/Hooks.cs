@@ -164,5 +164,37 @@ namespace DevourX.NET.Core.Utility
                 return true;
             }
         }
+
+        [HarmonyPatch(typeof(Il2Cpp.RankHelpers))]
+        [HarmonyPatch(nameof(Il2Cpp.RankHelpers.CalculateExpGain))] 
+        static class RankHelpers_CalculateExpGain
+        {
+            static void Postfix(ref Il2Cpp.RankHelpers.ExpGainInfo __result)
+            {
+                if (Settings.Settings.expModifier)
+                {
+                    __result.totalExp = Settings.Settings.expModifierValue;
+                }
+
+                return;
+            }
+        }
+
+
+        [HarmonyPatch(typeof(Il2Cpp.RankHelpers))]
+        [HarmonyPatch(nameof(Il2Cpp.RankHelpers.GetRankName))]
+        static class RankHelpers_GetRankName
+        {
+            static bool Prefix(ref string __result, int rank)
+            {
+                if (Settings.Settings.expModifier && rank >= 1)
+                {
+                    __result = "<color=#66ffcc>✦ DevourX by Jadis0x ✦</color>";
+                    return false; 
+                }
+
+                return true;
+            }
+        }
     }
 }

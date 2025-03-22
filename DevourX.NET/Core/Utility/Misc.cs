@@ -199,14 +199,13 @@ namespace DevourX.NET.Core.Utility
             BoltNetwork.Instantiate(prefab, spawnPosition, Quaternion.identity);
         }
 
-        public static void CreateCustomizedLobby(PhotonRegion.Regions region, int serverConnectionLimit = 4, bool isPrivate = false)
+        public static void CreateCustomizedLobby(PhotonRegion.Regions region, int serverConnectionLimit = 4, bool isPrivate = false, string password = "")
         {
             Il2CppHorror.Menu HorrorMenu = UnityEngine.Object.FindObjectOfType<Il2CppHorror.Menu>();
             if (HorrorMenu == null) return;
 
             GameObject localPlayer = PlayerManager.Instance.GetLocalPlayer();
 
-            // if the player is not in the lobby
             if (!localPlayer)
             {
                 PhotonRegion _region = PhotonRegion.GetRegion(region);
@@ -215,9 +214,12 @@ namespace DevourX.NET.Core.Utility
                 BoltConfig __config = HorrorMenu.boltConfig;
 
                 UnityEngine.UI.Toggle __toggle = HorrorMenu.hostPrivateServer;
+                HorrorMenu.hostServerPasswordInputField.text = password;
 
                 __toggle.isOn = isPrivate;
                 __config.serverConnectionLimit = serverConnectionLimit;
+
+                MelonLogger.Warning("Server created with the password: " + HorrorMenu.hostServerPasswordInputField.text.ToString());
 
                 BoltLauncher.StartServer(__config, null);
 
