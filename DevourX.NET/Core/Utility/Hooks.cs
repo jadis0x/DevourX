@@ -2,8 +2,6 @@
 using Il2Cpp;
 using MelonLoader;
 using UnityEngine;
-using Il2CppHorror;
-using UnityEngine.Events;
 
 namespace DevourX.NET.Core.Utility
 {
@@ -66,7 +64,7 @@ namespace DevourX.NET.Core.Utility
                 {
                     if (!outfit.isOwned)
                     {
-                        UnlockOutfit(outfit); 
+                        UnlockOutfit(outfit);
                     }
                 }
                 return true;
@@ -79,7 +77,7 @@ namespace DevourX.NET.Core.Utility
             }
         }
 
-        
+
         [HarmonyPatch(typeof(Il2Cpp.SurvivalLobbyController), "OnSelectOutfit")]
         static class SurvivalLobbyController_OnSelectOutfit_Patch
         {
@@ -116,26 +114,6 @@ namespace DevourX.NET.Core.Utility
             }
         }
 
-
-        // TEST HOOK !!
-        [HarmonyPatch(typeof(Menu), "ShowPublicServerWarningModal")]
-        public class ShowPublicServerWarningModalPatch
-        {
-            // Prefix metodu: Orijinal metod çalışmadan önce devreye girer
-            [HarmonyPrefix]
-            public static bool Prefix(Menu __instance, UnityAction yesAction)
-            {
-                MelonLogger.Msg("ShowPublicServerWarningModal blocked!");
-                return false; 
-            }
-
-            [HarmonyPostfix]
-            public static void Postfix(Menu __instance, UnityAction yesAction)
-            {
-                MelonLogger.Msg("ShowPublicServerWarningModal called.");
-            }
-        }
-
         [HarmonyPatch(typeof(NolanBehaviour), "Update")]
         static class NolanBehaviour_Update_Patch
         {
@@ -146,7 +124,7 @@ namespace DevourX.NET.Core.Utility
                 {
                     if (Settings.Settings.fullbright)
                     {
-                            Misc.EnableFullBright(__instance);
+                        Misc.EnableFullBright(__instance);
                     }
 
                     if (Settings.Settings.fastMovement)
@@ -166,7 +144,7 @@ namespace DevourX.NET.Core.Utility
         }
 
         [HarmonyPatch(typeof(Il2Cpp.RankHelpers))]
-        [HarmonyPatch(nameof(Il2Cpp.RankHelpers.CalculateExpGain))] 
+        [HarmonyPatch(nameof(Il2Cpp.RankHelpers.CalculateExpGain))]
         static class RankHelpers_CalculateExpGain
         {
             static void Postfix(ref Il2Cpp.RankHelpers.ExpGainInfo __result)
@@ -189,8 +167,8 @@ namespace DevourX.NET.Core.Utility
             {
                 if (Settings.Settings.expModifier && rank >= 1)
                 {
-                    __result = "<color=#66ffcc>✦ DevourX by Jadis0x ✦</color>";
-                    return false; 
+                    __result = "<color=#66ffcc>✦ Signal Injected by Jadis0x ✦</color>";
+                    return false;
                 }
 
                 return true;

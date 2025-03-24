@@ -1,7 +1,6 @@
 ﻿using Il2Cpp;
 using Il2CppOpsive.UltimateCharacterController.Character;
 using Il2CppPhoton.Bolt;
-using Il2CppSystem.Text;
 using Il2CppUdpKit.Platform.Photon;
 using MelonLoader;
 using UnityEngine;
