@@ -6,6 +6,31 @@ system `version.dll` and then runs the injected code. The implementation can be
 seen in `framework/version.cpp` where `load_version()` loads the system DLL and
 proxies its exported functions.
 
+## Features
+- Fly
+- Modify player speed
+- Unlimited UV light
+- Disable long interact
+- Unlock all doors and robes
+- Modify Azazel speed
+- Fullbright mode
+- ESP (Azazel, items, players)
+- Post FX Override (experimental)
+- Modify UV color
+- Create lobby with no player limit
+- Change room name
+- Change Steam ID / player name
+- Modify EXP gain
+- Level spoofer
+- Spawn items
+- Kill any players
+- Send jumpscare to players
+- Instant win
+
+One exclusive feature (**Ghost Join**) is not included in this release.  
+Ghost Join allows you to join lobbies completely invisible to other players.  
+This feature is only available to users who provide a small support payment.
+
 ## Prerequisites
 
 - Windows 10/11 x64
