@@ -37,3 +37,6 @@ After building, copy the resulting `version.dll` next to `Devour.exe` in your
 Devour installation directory. When the game starts it will load this DLL which
 in turn loads the real system `version.dll` and starts the cheat logic defined
 in `user/main.cpp`.
+
+## Contact
+- Discord: Jadis0x
