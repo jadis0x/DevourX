@@ -2,6 +2,8 @@
 
 **DevourX** is an open-source, C++ based mod menu specifically designed for the horror game **Devour**
 
+![MenuShowcase](img/Screenshot.png)
+
 ## Requirements
 - Windows 10/11 64-bit
 - A legitimate copy of Devour installed via Steam or another supported platform
