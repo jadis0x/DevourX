@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="user\main.cpp">
+      <Filter>user</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\dllmain.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\helpers.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\il2cpp-init.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\pch-il2cpp.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\version.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\imgui\imgui.cpp">
+      <Filter>libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\imgui\imgui_draw.cpp">
+      <Filter>libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\imgui\imgui_impl_dx11.cpp">
+      <Filter>libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\imgui\imgui_impl_win32.cpp">
+      <Filter>libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\imgui\imgui_tables.cpp">
+      <Filter>libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\imgui\imgui_widgets.cpp">
+      <Filter>libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\detours\detours.cpp">
+      <Filter>libraries\detours</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\detours\disasm.cpp">
+      <Filter>libraries\detours</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\detours\modules.cpp">
+      <Filter>libraries\detours</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\pipeline\Dx11.cpp">
+      <Filter>libraries\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\pipeline\keybinds.cpp">
+      <Filter>libraries\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\pipeline\scene_explorer.cpp">
+      <Filter>libraries\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\pipeline\settings.cpp">
+      <Filter>libraries\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\pipeline\hooks\InitHooks.cpp">
+      <Filter>libraries\pipeline\hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\pipeline\hooks\DirectX.cpp">
+      <Filter>libraries\pipeline\hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\pipeline\gui\GUITheme.cpp">
+      <Filter>libraries\pipeline\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\pipeline\gui\menu.cpp">
+      <Filter>libraries\pipeline\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\pipeline\gui\tabs\SettingsTAB.cpp">
+      <Filter>libraries\pipeline\gui\tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="user\devour\devourbase.cpp">
+      <Filter>user\devour</Filter>
+    </ClCompile>
+    <ClCompile Include="user\esp\esp.cpp">
+      <Filter>user\devour\esp</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\resolver\il2cpp_resolver.cpp">
+      <Filter>libraries\resolver</Filter>
+    </ClCompile>
+    <ClCompile Include="user\player\player.cpp">
+      <Filter>user\player</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\pipeline\gui\tabs\EspTAB.cpp">
+      <Filter>libraries\pipeline\gui\tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\pipeline\gui\tabs\MiscTab.cpp">
+      <Filter>libraries\pipeline\gui\tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\pipeline\gui\tabs\PlayerTAB.cpp">
+      <Filter>libraries\pipeline\gui\tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\pipeline\gui\tabs\NetworkTab.cpp">
+      <Filter>libraries\pipeline\gui\tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\pipeline\gui\tabs\ItemTab.cpp">
+      <Filter>libraries\pipeline\gui\tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\pipeline\gui\tabs\MapTab.cpp">
+      <Filter>libraries\pipeline\gui\tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\pipeline\gui\tabs\ServerBrowserTAB.cpp">
+      <Filter>libraries\pipeline\gui\tabs</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="user\main.h">
+      <Filter>user</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\helpers.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\il2cpp-appdata.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\il2cpp-init.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\pch-il2cpp.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\version.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\imgui\imconfig.h">
+      <Filter>libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\imgui\imgui.h">
+      <Filter>libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\imgui\imgui_internal.h">
+      <Filter>libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\imgui\imstb_rectpack.h">
+      <Filter>libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\imgui\imstb_textedit.h">
+      <Filter>libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\imgui\imstb_truetype.h">
+      <Filter>libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\imgui\imgui_impl_dx11.h">
+      <Filter>libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\imgui\imgui_impl_win32.h">
+      <Filter>libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\detours\detours.h">
+      <Filter>libraries\detours</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\pipeline\Dx11.h">
+      <Filter>libraries\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\pipeline\keybinds.h">
+      <Filter>libraries\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\pipeline\scene_explorer.h">
+      <Filter>libraries\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\pipeline\settings.h">
+      <Filter>libraries\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\pipeline\hooks\InitHooks.h">
+      <Filter>libraries\pipeline\hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\pipeline\hooks\DirectX.h">
+      <Filter>libraries\pipeline\hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\pipeline\gui\GUITheme.h">
+      <Filter>libraries\pipeline\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\pipeline\gui\menu.h">
+      <Filter>libraries\pipeline\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\pipeline\gui\tabs\SettingsTAB.h">
+      <Filter>libraries\pipeline\gui\tabs</Filter>
+    </ClInclude>
+    <ClInclude Include="user\devour\devourbase.h">
+      <Filter>user\devour</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\json\json.hpp">
+      <Filter>libraries\json</Filter>
+    </ClInclude>
+    <ClInclude Include="user\esp\esp.h">
+      <Filter>user\devour\esp</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\resolver\il2cpp_resolver.h">
+      <Filter>libraries\resolver</Filter>
+    </ClInclude>
+    <ClInclude Include="user\player\player.h">
+      <Filter>user\player</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\pipeline\gui\tabs\EspTAB.h">
+      <Filter>libraries\pipeline\gui\tabs</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\pipeline\gui\tabs\MiscTab.h">
+      <Filter>libraries\pipeline\gui\tabs</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\pipeline\gui\tabs\PlayerTAB.h">
+      <Filter>libraries\pipeline\gui\tabs</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\pipeline\gui\tabs\NetworkTab.h">
+      <Filter>libraries\pipeline\gui\tabs</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\pipeline\gui\tabs\ItemTab.h">
+      <Filter>libraries\pipeline\gui\tabs</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\pipeline\gui\tabs\MapTab.h">
+      <Filter>libraries\pipeline\gui\tabs</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\pipeline\gui\tabs\ServerBrowserTAB.h">
+      <Filter>libraries\pipeline\gui\tabs</Filter>
+    </ClInclude>
+    <ClInclude Include="appdata\il2cpp-api-functions.h">
+      <Filter>appdata</Filter>
+    </ClInclude>
+    <ClInclude Include="appdata\il2cpp-api-functions-ptr.h">
+      <Filter>appdata</Filter>
+    </ClInclude>
+    <ClInclude Include="appdata\il2cpp-functions.h">
+      <Filter>appdata</Filter>
+    </ClInclude>
+    <ClInclude Include="appdata\il2cpp-metadata-version.h">
+      <Filter>appdata</Filter>
+    </ClInclude>
+    <ClInclude Include="appdata\il2cpp-types.h">
+      <Filter>appdata</Filter>
+    </ClInclude>
+    <ClInclude Include="appdata\il2cpp-types-ptr.h">
+      <Filter>appdata</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\pipeline\gui\widgets.h">
+      <Filter>libraries\pipeline\gui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="appdata">
+      <UniqueIdentifier>{dc3b66a7-a727-440e-92c2-c4639f4e50e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework">
+      <UniqueIdentifier>{ab7cb26e-f91c-4790-a789-62800a3c94a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="user">
+      <UniqueIdentifier>{23276f4b-43ad-45e9-8fa8-c5c6ce845125}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libraries">
+      <UniqueIdentifier>{8baf6036-5725-49c5-bc93-59b5a6d5ec65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libraries\imgui">
+      <UniqueIdentifier>{9c8f6889-c2aa-4104-be84-578f0ceda0e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libraries\detours">
+      <UniqueIdentifier>{5cacaf16-c849-40c2-9518-e906b1499811}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libraries\pipeline">
+      <UniqueIdentifier>{d0e0e533-d637-465b-8d88-f5e37cf59746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libraries\pipeline\gui">
+      <UniqueIdentifier>{4230fc1d-0a87-45d3-8b70-866de54548bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libraries\pipeline\gui\tabs">
+      <UniqueIdentifier>{79049b14-fd44-451b-971c-30ae84ea6e5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libraries\pipeline\hooks">
+      <UniqueIdentifier>{be1c20ae-b6b7-4e99-98f4-9c7eb3e5364f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="user\devour">
+      <UniqueIdentifier>{4d9139b0-2569-44ef-9f99-6c1188603b86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libraries\json">
+      <UniqueIdentifier>{255ff914-3e7e-4ac1-8472-63a17d5db1de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libraries\resolver">
+      <UniqueIdentifier>{55db0f4d-b994-44ca-bc31-18b08bc36242}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="user\player">
+      <UniqueIdentifier>{7fc4a763-fad5-4ea7-a874-568beda817f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="user\devour\esp">
+      <UniqueIdentifier>{98f8aa45-2495-4f50-9d6c-a988f28d8741}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="version.def" />
+  </ItemGroup>
+</Project>
