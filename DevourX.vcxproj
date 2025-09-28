@@ -38,40 +38,22 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="libraries\imgui\imgui.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="libraries\imgui\imgui_draw.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="libraries\imgui\imgui_impl_dx11.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="libraries\imgui\imgui_impl_win32.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="libraries\imgui\imgui_tables.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="libraries\imgui\imgui_widgets.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="libraries\pipeline\Dx11.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -177,6 +159,14 @@
     <ClInclude Include="framework\il2cpp-init.h" />
     <ClInclude Include="framework\pch-il2cpp.h" />
     <ClInclude Include="framework\version.h" />
+    <ClInclude Include="libraries\imgui\imconfig.h" />
+    <ClInclude Include="libraries\imgui\imgui.h" />
+    <ClInclude Include="libraries\imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="libraries\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="libraries\imgui\imgui_internal.h" />
+    <ClInclude Include="libraries\imgui\imstb_rectpack.h" />
+    <ClInclude Include="libraries\imgui\imstb_textedit.h" />
+    <ClInclude Include="libraries\imgui\imstb_truetype.h" />
     <ClInclude Include="libraries\json\json.hpp" />
     <ClInclude Include="libraries\pipeline\gui\tabs\EspTAB.h" />
     <ClInclude Include="libraries\pipeline\gui\tabs\ItemTab.h" />
@@ -190,14 +180,6 @@
     <ClInclude Include="user\devour\devourbase.h" />
     <ClInclude Include="user\esp\esp.h" />
     <ClInclude Include="user\main.h" />
-    <ClInclude Include="libraries\imgui\imconfig.h" />
-    <ClInclude Include="libraries\imgui\imgui.h" />
-    <ClInclude Include="libraries\imgui\imgui_internal.h" />
-    <ClInclude Include="libraries\imgui\imstb_rectpack.h" />
-    <ClInclude Include="libraries\imgui\imstb_textedit.h" />
-    <ClInclude Include="libraries\imgui\imstb_truetype.h" />
-    <ClInclude Include="libraries\imgui\imgui_impl_dx11.h" />
-    <ClInclude Include="libraries\imgui\imgui_impl_win32.h" />
     <ClInclude Include="libraries\detours\detours.h" />
     <ClInclude Include="libraries\pipeline\Dx11.h" />
     <ClInclude Include="libraries\pipeline\keybinds.h" />

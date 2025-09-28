@@ -5,8 +5,6 @@
 #include "imgui/imgui_internal.h"
 #include "imgui/imgui_impl_dx11.h"
 #include "imgui/imgui_impl_win32.h"
-#define STB_TRUETYPE_IMPLEMENTATION
-#include "imgui/imstb_truetype.h"
 #include "pipeline/gui/Menu.h"
 #include <mutex>
 #include "pipeline/Settings.h"
@@ -90,13 +88,13 @@ LRESULT __stdcall dWndProc(const HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 bool ImGuiInitialization(IDXGISwapChain* pSwapChain) {
 	if ((pDevice != nullptr) || (SUCCEEDED(pSwapChain->GetDevice(__uuidof(ID3D11Device), (void**)&pDevice)))) {
 		pDevice->GetImmediateContext(&pContext);
-		DXGI_SWAP_CHAIN_DESC sd;
+
+		DXGI_SWAP_CHAIN_DESC sd{};
 		pSwapChain->GetDesc(&sd);
 		DirectX::window = sd.OutputWindow;
 
 		ID3D11Texture2D* pBackBuffer = nullptr;
-		pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
-		if (!pBackBuffer)
+		if (FAILED(pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer)) || !pBackBuffer)
 			return false;
 
 		pDevice->CreateRenderTargetView(pBackBuffer, nullptr, &pRenderTargetView);
@@ -110,21 +108,21 @@ bool ImGuiInitialization(IDXGISwapChain* pSwapChain) {
 		ImGuiIO& io = ImGui::GetIO();
 		io.ConfigFlags = ImGuiConfigFlags_NoMouseCursorChange;
 
-		ImFontConfig config;
-		config.OversampleH = 3; 
-		config.OversampleV = 1; 
-		config.PixelSnapH = true; 
+		ImGui_ImplWin32_Init(DirectX::window);
+		ImGui_ImplDX11_Init(pDevice, pContext);
 
-		ImFont* font = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\segoeuib.ttf", 17.0f, &config);
-		io.Fonts->Build();
+		ImFontConfig config{};
+		config.OversampleH = 3;
+		config.OversampleV = 1;
+		config.PixelSnapH = true;
 
-		if (font)
+		if (ImFont* font = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\segoeuib.ttf", 17.0f, &config))
 			io.FontDefault = font;
 		else
 			std::cout << "[WARN] Font not loaded, using consolas.\n";
 
-		ImGui_ImplWin32_Init(DirectX::window);
-		ImGui_ImplDX11_Init(pDevice, pContext);
+		ImGui_ImplDX11_InvalidateDeviceObjects();
+		ImGui_ImplDX11_CreateDeviceObjects();
 
 		DirectX::hRenderSemaphore = CreateSemaphore(NULL, MAX_RENDER_THREAD_COUNT, MAX_RENDER_THREAD_COUNT, NULL);
 		return true;
@@ -231,7 +229,7 @@ void DirectX::Shutdown() {
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 
-	if (ImGui::GetCurrentContext()) 
+	if (ImGui::GetCurrentContext())
 		ImGui::DestroyContext();
 	CloseHandle(hRenderSemaphore);
 }

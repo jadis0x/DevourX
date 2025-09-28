@@ -19,24 +19,6 @@
     <ClCompile Include="framework\version.cpp">
       <Filter>framework</Filter>
     </ClCompile>
-    <ClCompile Include="libraries\imgui\imgui.cpp">
-      <Filter>libraries\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="libraries\imgui\imgui_draw.cpp">
-      <Filter>libraries\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="libraries\imgui\imgui_impl_dx11.cpp">
-      <Filter>libraries\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="libraries\imgui\imgui_impl_win32.cpp">
-      <Filter>libraries\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="libraries\imgui\imgui_tables.cpp">
-      <Filter>libraries\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="libraries\imgui\imgui_widgets.cpp">
-      <Filter>libraries\imgui</Filter>
-    </ClCompile>
     <ClCompile Include="libraries\detours\detours.cpp">
       <Filter>libraries\detours</Filter>
     </ClCompile>
@@ -106,6 +88,24 @@
     <ClCompile Include="libraries\pipeline\gui\tabs\ServerBrowserTAB.cpp">
       <Filter>libraries\pipeline\gui\tabs</Filter>
     </ClCompile>
+    <ClCompile Include="libraries\imgui\imgui.cpp">
+      <Filter>libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\imgui\imgui_draw.cpp">
+      <Filter>libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\imgui\imgui_impl_dx11.cpp">
+      <Filter>libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\imgui\imgui_impl_win32.cpp">
+      <Filter>libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\imgui\imgui_tables.cpp">
+      <Filter>libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\imgui\imgui_widgets.cpp">
+      <Filter>libraries\imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="user\main.h">
@@ -125,30 +125,6 @@
     </ClInclude>
     <ClInclude Include="framework\version.h">
       <Filter>framework</Filter>
-    </ClInclude>
-    <ClInclude Include="libraries\imgui\imconfig.h">
-      <Filter>libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="libraries\imgui\imgui.h">
-      <Filter>libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="libraries\imgui\imgui_internal.h">
-      <Filter>libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="libraries\imgui\imstb_rectpack.h">
-      <Filter>libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="libraries\imgui\imstb_textedit.h">
-      <Filter>libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="libraries\imgui\imstb_truetype.h">
-      <Filter>libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="libraries\imgui\imgui_impl_dx11.h">
-      <Filter>libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="libraries\imgui\imgui_impl_win32.h">
-      <Filter>libraries\imgui</Filter>
     </ClInclude>
     <ClInclude Include="libraries\detours\detours.h">
       <Filter>libraries\detours</Filter>
@@ -236,6 +212,30 @@
     </ClInclude>
     <ClInclude Include="libraries\pipeline\gui\widgets.h">
       <Filter>libraries\pipeline\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\imgui\imconfig.h">
+      <Filter>libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\imgui\imgui.h">
+      <Filter>libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\imgui\imgui_impl_dx11.h">
+      <Filter>libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\imgui\imgui_impl_win32.h">
+      <Filter>libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\imgui\imgui_internal.h">
+      <Filter>libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\imgui\imstb_rectpack.h">
+      <Filter>libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\imgui\imstb_textedit.h">
+      <Filter>libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\imgui\imstb_truetype.h">
+      <Filter>libraries\imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
