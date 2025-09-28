@@ -142,9 +142,7 @@ namespace Menu {
 				ItemTAB::Render();
 				PlayerTAB::Render();
 				MapTAB::Render();
-				#ifndef _DEBUG
-				ServerBrowserTAB::Render();
-				#endif
+				// ServerBrowserTAB::Render(); marked for removal
 				ImGui::EndTabBar();
 			}
 		}
