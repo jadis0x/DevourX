@@ -147,7 +147,7 @@ HRESULT __stdcall dPresent(IDXGISwapChain* __this, UINT SyncInterval, UINT Flags
 			std::cout << "[INFO]: DirectX Window Size: " << +size.x << "x" << +size.y << std::endl;
 		}
 		else {
-			if (DirectX::hRenderSemaphore) // güvenli kontrol
+			if (DirectX::hRenderSemaphore)
 				ReleaseSemaphore(DirectX::hRenderSemaphore, 1, NULL);
 			return oPresent(__this, SyncInterval, Flags);
 		}
@@ -163,7 +163,7 @@ HRESULT __stdcall dPresent(IDXGISwapChain* __this, UINT SyncInterval, UINT Flags
 			if (SUCCEEDED(pDevice->CreateRenderTargetView(pBackBuffer, nullptr, &pRenderTargetView)))
 			{
 				ImVec2 size = DirectX::GetWindowSize();
-				//std::cout << "[INFO]: DirectX Window Size: " << +size.x << "x" << +size.y << std::endl;
+				std::cout << "[INFO]: DirectX Window Size: " << +size.x << "x" << +size.y << std::endl;
 			}
 			else
 			{

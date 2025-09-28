@@ -35,7 +35,7 @@ namespace
 			ImGui::Columns(3, nullptr, false);
 
 			ImGui::PushStyleColor(ImGuiCol_Text, kAccentColour);
-			ImGui::TextUnformatted("DevourX Control Center");
+			ImGui::TextUnformatted("DevourX");
 			ImGui::PopStyleColor();
 			const std::string version = "2.0";
 			ImGui::Text("Build %s", version.empty() ? "-" : version.c_str());
