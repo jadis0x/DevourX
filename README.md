@@ -16,7 +16,7 @@ DevourX is an open-source C++ mod menu developed specifically for the co-op horr
 Download the version.dll file from the [Releases](https://github.com/jadis0x/DevourX/releases) section of this repository.
 
 #### 2. Locate your Devour installation folder
- - Default Steam path (may vary):
+ - Default Steam path (might differ):
 ```
 C:\Program Files (x86)\Steam\steamapps\common\Devour
 ```
@@ -52,7 +52,7 @@ C:\Program Files (x86)\Steam\steamapps\common\Devour
 
 ## Uninstalling
 1. Close Devour.
-2. Delete the DevourX `version.dll`.
+2. Delete the `version.dll`.
 
 ## Security and Ethics
 - Respect the experience of other players in online lobbies.
