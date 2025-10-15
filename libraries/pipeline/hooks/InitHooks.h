@@ -20,7 +20,9 @@ void dNolanBehaviour_Update(app::NolanBehaviour* __this, MethodInfo* method);
 void dNolanBehaviour_FixedUpdate(app::NolanBehaviour* __this, MethodInfo* method);
 
 bool dDevourInput_GetLongPress(app::DevourInput* __this, app::String* name, float duration, bool waitForRelease, MethodInfo* method);
-void dNolanBehaviour_OnAttributeUpdateValue(app::NolanBehaviour* __this, app::Attribute_1* attribute, MethodInfo* method);
+
+// DO_APP_FUNC(0x0060A950, void, NolanBehaviour_OnAttributeUpdateValue, (NolanBehaviour * __this, Attribute * attribute, MethodInfo * method));
+void dNolanBehaviour_OnAttributeUpdateValue(app::NolanBehaviour* __this, app::Attribute* attribute, MethodInfo* method);
 
 app::RankHelpers_ExpGainInfo* dRankHelpers_CalculateExpGain(app::RankHelpers* __this, int32_t mapProgress, int32_t numAwards, app::GameConfigToken* gameConfigToken, MethodInfo* method);
 bool dLockedInteractable_CanInteract(app::LockedInteractable* __this, app::GameObject* character, MethodInfo* method);
@@ -53,7 +55,7 @@ void dObjectInteractable_Interact(app::ObjectInteractable* __this, app::GameObje
 void dObjectInteractable_Awake(app::ObjectInteractable* __this, MethodInfo* method);
 
 
-//DO_APP_FUNC(0x00699BB0, BoltEntity *, InGameHelpers_CreateDroppedObject, (InGameHelpers * __this, PrefabId prefabId, Vector3 position, String * carryObjectName, BoltEntity * player, bool fromKnockout, MethodInfo * method));
+//DO_APP_FUNC(0x00763190, BoltEntity *, InGameHelpers_CreateDroppedObject, (InGameHelpers * __this, PrefabId prefabId, Vector3 position, String * carryObjectName, BoltEntity * player, bool fromKnockout, BoltEntity * ai, MethodInfo * method));
 app::BoltEntity* dInGameHelpers_CreateDroppedObject(app::InGameHelpers* __this, app::PrefabId prefabId, app::Vector3 position, app::String* carryObjectName, app::BoltEntity* player, bool fromKnockout, MethodInfo* method);
 
 // DO_APP_FUNC(0x005F2A60, void, SurvivalLobbyController_Update, (SurvivalLobbyController * __this, MethodInfo * method));

@@ -619,7 +619,7 @@ bool dDevourInput_GetLongPress(app::DevourInput* __this, app::String* name, floa
 	return app::DevourInput_GetLongPress(__this, name, duration, waitForRelease, method);
 }
 
-void dNolanBehaviour_OnAttributeUpdateValue(app::NolanBehaviour* __this, app::Attribute_1* attribute, MethodInfo* method)
+void dNolanBehaviour_OnAttributeUpdateValue(app::NolanBehaviour* __this, app::Attribute* attribute, MethodInfo* method)
 {
 
 	if (settings.bModifyFlashlightColor)
@@ -630,6 +630,7 @@ void dNolanBehaviour_OnAttributeUpdateValue(app::NolanBehaviour* __this, app::At
 	}
 
 	if (settings.bUnlimitedUVLight) {
+
 
 		if (strcmp(il2cppi_to_string(attribute->fields.m_Name).c_str(), "Battery") == 0)
 		{

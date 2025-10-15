@@ -192,24 +192,6 @@
     <ClInclude Include="libraries\pipeline\gui\tabs\ServerBrowserTAB.h">
       <Filter>libraries\pipeline\gui\tabs</Filter>
     </ClInclude>
-    <ClInclude Include="appdata\il2cpp-api-functions.h">
-      <Filter>appdata</Filter>
-    </ClInclude>
-    <ClInclude Include="appdata\il2cpp-api-functions-ptr.h">
-      <Filter>appdata</Filter>
-    </ClInclude>
-    <ClInclude Include="appdata\il2cpp-functions.h">
-      <Filter>appdata</Filter>
-    </ClInclude>
-    <ClInclude Include="appdata\il2cpp-metadata-version.h">
-      <Filter>appdata</Filter>
-    </ClInclude>
-    <ClInclude Include="appdata\il2cpp-types.h">
-      <Filter>appdata</Filter>
-    </ClInclude>
-    <ClInclude Include="appdata\il2cpp-types-ptr.h">
-      <Filter>appdata</Filter>
-    </ClInclude>
     <ClInclude Include="libraries\pipeline\gui\widgets.h">
       <Filter>libraries\pipeline\gui</Filter>
     </ClInclude>
@@ -236,6 +218,24 @@
     </ClInclude>
     <ClInclude Include="libraries\imgui\imstb_truetype.h">
       <Filter>libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="appdata\il2cpp-api-functions.h">
+      <Filter>appdata</Filter>
+    </ClInclude>
+    <ClInclude Include="appdata\il2cpp-api-functions-ptr.h">
+      <Filter>appdata</Filter>
+    </ClInclude>
+    <ClInclude Include="appdata\il2cpp-functions.h">
+      <Filter>appdata</Filter>
+    </ClInclude>
+    <ClInclude Include="appdata\il2cpp-metadata-version.h">
+      <Filter>appdata</Filter>
+    </ClInclude>
+    <ClInclude Include="appdata\il2cpp-types.h">
+      <Filter>appdata</Filter>
+    </ClInclude>
+    <ClInclude Include="appdata\il2cpp-types-ptr.h">
+      <Filter>appdata</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
