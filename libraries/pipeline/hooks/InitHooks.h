@@ -56,7 +56,7 @@ void dObjectInteractable_Awake(app::ObjectInteractable* __this, MethodInfo* meth
 
 
 //DO_APP_FUNC(0x00763190, BoltEntity *, InGameHelpers_CreateDroppedObject, (InGameHelpers * __this, PrefabId prefabId, Vector3 position, String * carryObjectName, BoltEntity * player, bool fromKnockout, BoltEntity * ai, MethodInfo * method));
-app::BoltEntity* dInGameHelpers_CreateDroppedObject(app::InGameHelpers* __this, app::PrefabId prefabId, app::Vector3 position, app::String* carryObjectName, app::BoltEntity* player, bool fromKnockout, MethodInfo* method);
+app::BoltEntity* dInGameHelpers_CreateDroppedObject(app::InGameHelpers* __this, app::PrefabId prefabId, app::Vector3 position, app::String* carryObjectName, app::BoltEntity* player, bool fromKnockout, app::BoltEntity* ai, MethodInfo* method);
 
 // DO_APP_FUNC(0x005F2A60, void, SurvivalLobbyController_Update, (SurvivalLobbyController * __this, MethodInfo * method));
 void dSurvivalLobbyController_Update(app::SurvivalLobbyController* __this, MethodInfo* method);
@@ -115,8 +115,11 @@ void dServerBrowser_JoinSession(app::ServerBrowser* __this, app::PhotonSession* 
 // DO_APP_FUNC(0x00C934E0, String *, SteamFriends_GetPersonaName, (MethodInfo * method));
 app::String* dSteamFriends_GetPersonaName(MethodInfo* method);
 
-// DO_APP_FUNC(0x007D21F0, TaskStatus__Enum_1, ShouldCalmDown_OnUpdate, (ShouldCalmDown * __this, MethodInfo * method));
-app::TaskStatus__Enum_1 dShouldCalmDown_OnUpdate(app::ShouldCalmDown* __this, MethodInfo* method);
+// DO_APP_FUNC(0x008C5BF0, TaskStatus__Enum, ShouldCalmDown_OnUpdate, (ShouldCalmDown * __this, MethodInfo * method));
+app::TaskStatus__Enum dShouldCalmDown_OnUpdate(app::ShouldCalmDown* __this, MethodInfo* method);
+
+// DO_APP_FUNC(0x008C53C0, TaskStatus__Enum, PlayersFocusingMeWait_OnUpdate, (PlayersFocusingMeWait * __this, MethodInfo * method));
+app::TaskStatus__Enum dPlayersFocusingMeWait_OnUpdate(app::PlayersFocusingMeWait* __this, MethodInfo* method);
 
 // DO_APP_FUNC(0x006862D0, void, SurvivalAzazelBehaviour_AnnaFrying, (SurvivalAzazelBehaviour * __this, int32_t fryCount, MethodInfo * method));
 void dSurvivalAzazelBehaviour_AnnaFrying(app::SurvivalAzazelBehaviour* __this, int32_t fryCount, MethodInfo* method);
@@ -144,3 +147,11 @@ void dCharacterOutfit__ctor(app::CharacterOutfit* __this, MethodInfo* method);
 // DO_APP_FUNC(0x00B90110, IProtocolToken *, ProtocolTokenUtils_ReadToken, (UdpPacket * packet, MethodInfo * method));
 app::IProtocolToken* dProtocolTokenUtils_ReadToken(app::UdpPacket* packet, MethodInfo* method);
 
+// DO_APP_FUNC(0x0074C340, bool, SurvivalReviveInteractable_CanInteract, (SurvivalReviveInteractable * __this, GameObject * character, MethodInfo * method));
+bool dSurvivalReviveInteractable_CanInteract(app::SurvivalReviveInteractable* __this, app::GameObject* character, MethodInfo* method);
+
+// DO_APP_FUNC(0x02238DC0, bool, Interactable_CanInteract, (Interactable * __this, GameObject * character, MethodInfo * method));
+bool dInteractable_CanInteract(app::Interactable* __this, app::GameObject* character, MethodInfo* method);
+
+// DO_APP_FUNC(0x0072E090, void, CollectableInteractable__ctor, (CollectableInteractable * __this, MethodInfo * method));
+void dCollectableInteractable__ctor(app::CollectableInteractable* __this, MethodInfo* method);

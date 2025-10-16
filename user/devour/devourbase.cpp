@@ -10,8 +10,7 @@
 app::ServerBrowser* Base::GlobalVar::__browser = nullptr;
 app::ServerConnectToken* Base::GlobalVar::__g_connectToken = nullptr;
 
-uint64_t Base::Steam::GetUserID()
-{
+uint64_t Base::Steam::GetUserID() {
 	if (app::SteamUser_GetSteamID != nullptr)
 	{
 		if (const auto id = app::SteamUser_GetSteamID(nullptr); id.m_SteamID)
@@ -20,8 +19,7 @@ uint64_t Base::Steam::GetUserID()
 	return 0;
 }
 
-bool Base::Game::IsInGame()
-{
+bool Base::Game::IsInGame() {
 	app::OptionsHelpers* helper = app::OptionsHelpers_get_singleton(nullptr);
 
 	if (helper == nullptr) return false;
@@ -29,9 +27,9 @@ bool Base::Game::IsInGame()
 	return app::OptionsHelpers_get_inGame(helper, nullptr);
 }
 
-void Base::Gameplay::FullBright(app::NolanBehaviour* localPlayer_nolanBehaviour)
-{
-	if (localPlayer_nolanBehaviour != nullptr) {
+void Base::Gameplay::FullBright(app::NolanBehaviour* localPlayer_nolanBehaviour) {
+	if (localPlayer_nolanBehaviour != nullptr)
+	{
 		if (app::Light* flashlight = localPlayer_nolanBehaviour->fields.flashlightSpot; flashlight != nullptr)
 		{
 			app::Light_set_intensity(flashlight, 1.0f, nullptr);
@@ -44,13 +42,11 @@ void Base::Gameplay::FullBright(app::NolanBehaviour* localPlayer_nolanBehaviour)
 }
 
 
-bool Base::DevourNet::IsHost()
-{
+bool Base::DevourNet::IsHost() {
 	return app::BoltNetwork_get_IsServer(nullptr);
 }
 
-float Base::DevourNet::GetPing()
-{
+float Base::DevourNet::GetPing() {
 	if (app::BoltConnection* connection = app::BoltNetwork_get_Server(nullptr))
 	{
 		const float ping_seconds = app::BoltConnection_get_PingNetwork(connection, nullptr);
@@ -60,14 +56,12 @@ float Base::DevourNet::GetPing()
 	return 0.0;
 }
 
-uint32_t Base::DevourNet::GetConnectionID()
-{
+uint32_t Base::DevourNet::GetConnectionID() {
 	return app::NetworkIdAllocator_get_LocalConnectionId(nullptr);
 }
 
 
-void Base::Gameplay::ForceLobbyStart()
-{
+void Base::Gameplay::ForceLobbyStart() {
 	if (DevourNet::IsHost())
 	{
 		static Il2cppData data;
@@ -81,22 +75,24 @@ void Base::Gameplay::ForceLobbyStart()
 
 		if (app::Menu* menu = finder.FindByName("MenuController", data))
 		{
-			if (app::Menu_OnLobbyStartButtonClick != nullptr) {
+			if (app::Menu_OnLobbyStartButtonClick != nullptr)
+			{
 				app::Menu_OnLobbyStartButtonClick(menu, nullptr);
 			}
 		}
 	}
 }
 
-void Base::Gameplay::SetProgressTo(int32_t progress)
-{
+void Base::Gameplay::SetProgressTo(int32_t progress) {
 	const std::string scene = Base::Gameplay::GetSceneName();
 
-	if (scene == "Menu") {
+	if (scene == "Menu")
+	{
 		return;
 	}
 
-	if (!Base::DevourNet::IsHost()) {
+	if (!Base::DevourNet::IsHost())
+	{
 		return;
 	}
 
@@ -105,11 +101,13 @@ void Base::Gameplay::SetProgressTo(int32_t progress)
 		app::MapController* map_controller = Func::FindObject<app::MapController>(
 			ASSEMBLY_CSHARP, "", "MapController");
 
-		if (!map_controller) {
+		if (!map_controller)
+		{
 			return;
 		}
 
-		if (app::MapController_SetProgressTo != nullptr) {
+		if (app::MapController_SetProgressTo != nullptr)
+		{
 			app::MapController_SetProgressTo(map_controller, progress, nullptr);
 		}
 	}
@@ -118,11 +116,13 @@ void Base::Gameplay::SetProgressTo(int32_t progress)
 		app::SlaughterhouseAltarController* altar_controller = Func::FindObject<app::SlaughterhouseAltarController>(
 			ASSEMBLY_CSHARP, "", "SlaughterhouseAltarController");
 
-		if (!altar_controller) {
+		if (!altar_controller)
+		{
 			return;
 		}
 
-		if (app::SlaughterhouseAltarController_SkipToGoat != nullptr) {
+		if (app::SlaughterhouseAltarController_SkipToGoat != nullptr)
+		{
 			app::SlaughterhouseAltarController_SkipToGoat(altar_controller, progress, nullptr);
 		}
 	}
@@ -131,18 +131,19 @@ void Base::Gameplay::SetProgressTo(int32_t progress)
 		app::SurvivalObjectBurnController* burn_controller = Func::FindObject<app::SurvivalObjectBurnController>(
 			ASSEMBLY_CSHARP, "", "SurvivalObjectBurnController");
 
-		if (!burn_controller) {
+		if (!burn_controller)
+		{
 			return;
 		}
 
-		if (app::SurvivalObjectBurnController_SkipToGoat != nullptr) {
+		if (app::SurvivalObjectBurnController_SkipToGoat != nullptr)
+		{
 			app::SurvivalObjectBurnController_SkipToGoat(burn_controller, progress, nullptr);
 		}
 	}
 }
 
-void Base::Gameplay::CreateLobby(const char* region_code, const int lobby_limit, const bool is_private)
-{
+void Base::Gameplay::CreateLobby(const char* region_code, const int lobby_limit, const bool is_private) {
 	if (Base::Game::IsInGame() || LocalPlayer::GetLocalPlayer())
 	{
 		return;
@@ -188,9 +189,9 @@ void Base::Gameplay::CreateLobby(const char* region_code, const int lobby_limit,
 	}
 }
 
-void Base::Gameplay::StartCarryItem(const char* itemName)
-{
-	if (Base::Gameplay::GetSceneName() == "Menu") {
+void Base::Gameplay::StartCarryItem(const char* itemName) {
+	if (Base::Gameplay::GetSceneName() == "Menu")
+	{
 		return;
 	}
 
@@ -231,38 +232,51 @@ void Base::Gameplay::StartCarryItem(const char* itemName)
 		{"Head (Dirty/Photographer)", "Head-Dirty-Photographer"},
 		{"Head (Clean/Photographer)", "Head-Clean-Photographer"},
 		{"Head (Dirty/Priest)", "Head-Dirty-Priest"},
-		{"Head (Clean/Priest)", "Head-Clean-Priest"}
+		{"Coin", "SurvivalCoin"},
+		{"Music Box (Idle)", "MusicBox-Idle"},
+		{"Music Box (Armed)", "MusicBox-Armed"},
 	};
 
 	const auto it = itemMap.find(itemName);
-	if (it == itemMap.end()) {
+	if (it == itemMap.end())
+	{
 		return;
 	}
 
-	if (app::GameObject* local_player = LocalPlayer::GetLocalPlayer(); !SafePtr::IsValid(local_player)) {
+	if (app::GameObject* local_player = LocalPlayer::GetLocalPlayer(); !SafePtr::IsValid(local_player))
+	{
 		return;
 	}
 
 	app::NolanBehaviour* nolan = LocalPlayer::GetNolan();
-	if (!nolan) {
+	if (!nolan)
+	{
 		return;
 	}
 
 	const std::string internal_name = it->second;
+	std::cout << internal_name << "\n";
+
 	app::String* item_str = convert_to_system_string(internal_name.c_str());
 
-	if (!item_str) {
+	if (!item_str)
+	{
 		return;
 	}
 
-	if (app::NolanBehaviour_StartCarry != nullptr) {
-		app::NolanBehaviour_StartCarry(nolan, item_str, nullptr);
-	}
+	// FIX!!
+	SafePtr::safe_call([&]()
+	{
+		if (app::NolanBehaviour_StartCarry != nullptr)
+		{
+			app::NolanBehaviour_StartCarry(nolan, item_str, nullptr);
+		}
+	});
 }
 
-void Base::Gameplay::StartCarryAnimal(const char* animal_name)
-{
-	if (Base::Gameplay::GetSceneName() == "Menu") {
+void Base::Gameplay::StartCarryAnimal(const char* animal_name) {
+	if (Base::Gameplay::GetSceneName() == "Menu")
+	{
 		return;
 	}
 
@@ -274,28 +288,26 @@ void Base::Gameplay::StartCarryAnimal(const char* animal_name)
 
 	const std::string carry_animal = animal_map[animal_name];
 
-	if (!carry_animal.empty() && LocalPlayer::GetLocalPlayer()) {
+	if (!carry_animal.empty() && LocalPlayer::GetLocalPlayer())
+	{
 		app::NolanBehaviour_StartCarry(LocalPlayer::GetNolan(), convert_to_system_string(carry_animal.c_str()), nullptr);
 	}
 }
 
-std::string Base::Gameplay::GetSceneName()
-{
+std::string Base::Gameplay::GetSceneName() {
 	app::Scene scene = app::SceneManager_GetActiveScene(nullptr);
 	app::String* name = app::Scene_get_name(&scene, nullptr);
 
 	return name ? il2cppi_to_string(name) : "Unknown";
 }
 
-bool Base::Gameplay::IsPlayerCrawling(app::NolanBehaviour* nolan)
-{
+bool Base::Gameplay::IsPlayerCrawling(app::NolanBehaviour* nolan) {
 	if (!nolan) return false;
 
 	return app::NolanBehaviour_IsCrawling(nolan, nullptr);
 }
 
-bool Base::Gameplay::IsSequencePlaying()
-{
+bool Base::Gameplay::IsSequencePlaying() {
 	static app::InGameHelpers* cached_helper = nullptr;
 
 	if (!cached_helper)
@@ -313,15 +325,17 @@ bool Base::Gameplay::IsSequencePlaying()
 		|| app::Survival_StartingToPlayFailEnding(survival, nullptr);
 }
 
-void Base::Gameplay::Knockout(app::GameObject* target_player)
-{
-	if (!SafePtr::IsValid(target_player)) {
+void Base::Gameplay::Knockout(app::GameObject* target_player) {
+	if (!SafePtr::IsValid(target_player))
+	{
 		return;
 	}
-	if (!Base::DevourNet::IsHost()) {
+	if (!Base::DevourNet::IsHost())
+	{
 		return;
 	}
-	if (Base::Gameplay::GetSceneName() == "Menu") {
+	if (Base::Gameplay::GetSceneName() == "Menu")
+	{
 		return;
 	}
 
@@ -341,65 +355,75 @@ void Base::Gameplay::Knockout(app::GameObject* target_player)
 
 	app::SurvivalAzazelBehaviour* azazel_behaviour = Func::FindObject<app::SurvivalAzazelBehaviour>(ASSEMBLY_CSHARP, "", "SurvivalAzazelBehaviour");
 
-	if (!azazel_behaviour) {
+	if (!azazel_behaviour)
+	{
 		return;
 	}
 
 
-	if (app::SurvivalAzazelBehaviour_OnKnockout != nullptr) {
+	if (app::SurvivalAzazelBehaviour_OnKnockout != nullptr)
+	{
 		app::SurvivalAzazelBehaviour_OnKnockout(azazel_behaviour, azazel_game_object, target_player, nullptr);
 	}
 }
 
-void Base::Gameplay::Revive(app::GameObject* target_player)
-{
+void Base::Gameplay::Revive(app::GameObject* target_player) {
 	if (!Base::Game::IsInGame()) return;
 
-	if (!SafePtr::IsValid(target_player)) {
+	if (!SafePtr::IsValid(target_player))
+	{
 		return;
 	}
-	if (!Base::DevourNet::IsHost()) {
+	if (!Base::DevourNet::IsHost())
+	{
 		return;
 	}
 
 	UComponent u_nolan;
 	u_nolan.Attach(target_player);
 	app::Component* nb_component = u_nolan.GetComponentByName("NolanBehaviour");
-	if (!nb_component) {
+	if (!nb_component)
+	{
 		return;
 	}
 
 	const auto nb = reinterpret_cast<app::NolanBehaviour*>(nb_component);
-	if (!nb) {
+	if (!nb)
+	{
 		return;
 	}
-	if (!Base::Gameplay::IsPlayerCrawling(nb)) {
+	if (!Base::Gameplay::IsPlayerCrawling(nb))
+	{
 		return;
 	}
 
-	if (app::SurvivalReviveInteractable* revive_interactable = Func::FindObject<app::SurvivalReviveInteractable>(ASSEMBLY_CSHARP, "", "SurvivalReviveInteractable"); !revive_interactable) {
+	if (app::SurvivalReviveInteractable* revive_interactable = Func::FindObject<app::SurvivalReviveInteractable>(ASSEMBLY_CSHARP, "", "SurvivalReviveInteractable"); !revive_interactable)
+	{
 		if (app::Quaternion_get_identity && app::NolanBehaviour_TeleportTo)
 		{
-			constexpr app::Vector3 vec{ 0.f, -150.f, 0.f };
+			constexpr app::Vector3 vec { 0.f, -150.f, 0.f };
 			app::NolanBehaviour_TeleportTo(nb, vec, app::Quaternion_get_identity(nullptr), false, nullptr);
 		}
 	}
-	else {
+	else
+	{
 		app::SurvivalReviveInteractable_Interact(revive_interactable, target_player, nullptr);
 	}
 }
 
-void Base::Gameplay::Jumpscare(app::GameObject* target_player)
-{
+void Base::Gameplay::Jumpscare(app::GameObject* target_player) {
 	if (!Base::Game::IsInGame()) return;
 
-	if (!SafePtr::IsValid(target_player)) {
+	if (!SafePtr::IsValid(target_player))
+	{
 		return;
 	}
-	if (!Base::DevourNet::IsHost()) {
+	if (!Base::DevourNet::IsHost())
+	{
 		return;
 	}
-	if (Base::Gameplay::GetSceneName() == "Menu") {
+	if (Base::Gameplay::GetSceneName() == "Menu")
+	{
 		return;
 	}
 
@@ -416,28 +440,31 @@ void Base::Gameplay::Jumpscare(app::GameObject* target_player)
 	}
 
 	app::SurvivalAzazelBehaviour* azazel_behaviour = Func::FindObject<app::SurvivalAzazelBehaviour>(ASSEMBLY_CSHARP, "", "SurvivalAzazelBehaviour");
-	if (!azazel_behaviour) {
+	if (!azazel_behaviour)
+	{
 		return;
 	}
 
 	UComponent u_nolan;
 	u_nolan.Attach(target_player);
 	app::Component* nb_component = u_nolan.GetComponentByName("NolanBehaviour");
-	if (!nb_component) {
+	if (!nb_component)
+	{
 		return;
 	}
 
-	if (const auto nb = reinterpret_cast<app::NolanBehaviour*>(nb_component); !nb) {
+	if (const auto nb = reinterpret_cast<app::NolanBehaviour*>(nb_component); !nb)
+	{
 		return;
 	}
 
-	if (app::SurvivalAzazelBehaviour_OnPickedUpPlayer) {
+	if (app::SurvivalAzazelBehaviour_OnPickedUpPlayer)
+	{
 		app::SurvivalAzazelBehaviour_OnPickedUpPlayer(azazel_behaviour, azazel_game_object, target_player, true, nullptr);
 	}
 }
 
-void Base::Gameplay::TP(app::GameObject* target_player)
-{
+void Base::Gameplay::TP(app::GameObject* target_player) {
 	if (!Base::Game::IsInGame()) return;
 
 	if (!target_player) return;
@@ -455,8 +482,7 @@ void Base::Gameplay::TP(app::GameObject* target_player)
 	app::NolanBehaviour_TeleportTo(local_player, target_pos, app::Quaternion_get_identity(nullptr), false, nullptr);
 }
 
-void Base::Gameplay::TPAzazel(app::GameObject* target_player)
-{
+void Base::Gameplay::TPAzazel(app::GameObject* target_player) {
 	if (!Base::Game::IsInGame()) return;
 
 	if (!target_player) return;
@@ -487,8 +513,7 @@ void Base::Gameplay::TPAzazel(app::GameObject* target_player)
 	}
 }
 
-void Base::Gameplay::Shoot(app::GameObject* target_player)
-{
+void Base::Gameplay::Shoot(app::GameObject* target_player) {
 	if (!Base::DevourNet::IsHost())
 	{
 		return;
@@ -509,8 +534,7 @@ void Base::Gameplay::Shoot(app::GameObject* target_player)
 	app::AzazelSamBehaviour_OnShootPlayer(azazel_behaviour, target_player, true, nullptr);
 }
 
-void Base::Gameplay::setRank(app::GameObject* local_player, int32_t new_rank)
-{
+void Base::Gameplay::setRank(app::GameObject* local_player, int32_t new_rank) {
 	if (!SafePtr::IsValid(local_player)) return;
 
 	const auto component = app::GameObject_GetComponentByName(local_player, convert_to_system_string("NolanRankController"), nullptr);
@@ -524,24 +548,23 @@ void Base::Gameplay::setRank(app::GameObject* local_player, int32_t new_rank)
 }
 
 
-std::string Base::System::generate_random_unique_id(int length)
-{
+std::string Base::System::generate_random_unique_id(int length) {
 	static const char charset[] =
 		"0123456789"
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 		"abcdefghijklmnopqrstuvwxyz";
-	static std::mt19937 rng(std::random_device{}());
+	static std::mt19937 rng(std::random_device {}());
 	static std::uniform_int_distribution<> dist(0, sizeof(charset) - 2);
 
 	std::string id;
-	for (int i = 0; i < length; ++i) {
+	for (int i = 0; i < length; ++i)
+	{
 		id += charset[dist(rng)];
 	}
 	return id;
 }
 
-uint64_t Base::System::GenerateRandomSteamID64()
-{
+uint64_t Base::System::GenerateRandomSteamID64() {
 	const uint64_t universe = 1ull << 56;
 	const uint64_t accountType = 1ull << 52;
 	const uint64_t instance = 1ull << 32;

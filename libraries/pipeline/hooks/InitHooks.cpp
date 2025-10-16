@@ -268,7 +268,7 @@ app::String* dSteamFriends_GetPersonaName(MethodInfo* method)
 	return steamName;
 }
 
-app::TaskStatus__Enum_1 dShouldCalmDown_OnUpdate(app::ShouldCalmDown* __this, MethodInfo* method)
+app::TaskStatus__Enum dShouldCalmDown_OnUpdate(app::ShouldCalmDown* __this, MethodInfo* method)
 {
 	if (settings.bNeverCalm)
 	{
@@ -288,14 +288,14 @@ app::TaskStatus__Enum_1 dShouldCalmDown_OnUpdate(app::ShouldCalmDown* __this, Me
 	return shouldCalmDown;
 }
 
-app::TaskStatus__Enum_1 dPlayersFocusingMeWait_OnUpdate(app::PlayersFocusingMeWait* __this, MethodInfo* method)
+app::TaskStatus__Enum dPlayersFocusingMeWait_OnUpdate(app::PlayersFocusingMeWait* __this, MethodInfo* method)
 {
 	if (settings.bAutoCalmWhenNearby)
 	{
-		return app::TaskStatus__Enum_1::Success;
+		return app::TaskStatus__Enum::Success;
 	}
 
-	return  app::PlayersFocusingMeWait_OnUpdate(__this, method);
+	return app::PlayersFocusingMeWait_OnUpdate(__this, method);
 }
 
 void dSurvivalAzazelBehaviour_AnnaFrying(app::SurvivalAzazelBehaviour* __this, int32_t fryCount, MethodInfo* method)
@@ -765,11 +765,11 @@ void dObjectInteractable_Awake(app::ObjectInteractable* __this, MethodInfo* meth
 	}
 }
 
-app::BoltEntity* dInGameHelpers_CreateDroppedObject(app::InGameHelpers* __this, app::PrefabId prefabId, app::Vector3 position, app::String* carryObjectName, app::BoltEntity* player, bool fromKnockout, MethodInfo* method)
+app::BoltEntity* dInGameHelpers_CreateDroppedObject(app::InGameHelpers* __this, app::PrefabId prefabId, app::Vector3 position, app::String* carryObjectName, app::BoltEntity* player, bool fromKnockout, app::BoltEntity* ai, MethodInfo* method)
 {
 	settings.bInteractableEspUpdated = false;
 
-	return app::InGameHelpers_CreateDroppedObject(__this, prefabId, position, carryObjectName, player, fromKnockout, method);
+	return app::InGameHelpers_CreateDroppedObject(__this, prefabId, position, carryObjectName, player, fromKnockout, ai, method);
 }
 
 void dSurvivalLobbyController_Update(app::SurvivalLobbyController* __this, MethodInfo* method)
@@ -887,6 +887,29 @@ app::IProtocolToken* dProtocolTokenUtils_ReadToken(app::UdpPacket* packet, Metho
 	// test
 
 	return token;
+}
+
+bool dSurvivalReviveInteractable_CanInteract(app::SurvivalReviveInteractable* __this, app::GameObject* character, MethodInfo* method) {
+	return true;
+}
+
+bool dInteractable_CanInteract(app::Interactable* __this, app::GameObject* character, MethodInfo* method) {
+	return true;
+}
+
+void dCollectableInteractable__ctor(app::CollectableInteractable* __this, MethodInfo* method) {
+
+	app::CollectableInteractable__ctor(__this, method);
+
+	if (__this)
+	{
+		auto* obj = reinterpret_cast<app::Object_1*>(__this);
+
+		if (obj)
+		{
+			std::cout << "collactable -> " << ToString(obj);
+		}
+	}
 }
 
 bool HookFunction(PVOID* ppPointer, PVOID pDetour, const char* functionName)
@@ -1297,4 +1320,9 @@ void DetourUninitialization()
 	if (DetourDetach(&(PVOID&)app::UIOutfitSelectionType_SetLocked, dUIOutfitSelectionType_SetLocked) != 0) return;
 	if (DetourDetach(&(PVOID&)app::CharacterOutfit__ctor, dCharacterOutfit__ctor) != 0) return;
 	if (DetourDetach(&(PVOID&)app::ProtocolTokenUtils_ReadToken, dProtocolTokenUtils_ReadToken) != 0) return;
+
+	if (DetourDetach(&(PVOID&) app::SurvivalReviveInteractable_CanInteract, dSurvivalReviveInteractable_CanInteract) != 0) return;
+	if (DetourDetach(&(PVOID&) app::Interactable_CanInteract, dInteractable_CanInteract) != 0) return;
+	if (DetourDetach(&(PVOID&) app::CollectableInteractable__ctor, dCollectableInteractable__ctor) != 0) return;
+
 }

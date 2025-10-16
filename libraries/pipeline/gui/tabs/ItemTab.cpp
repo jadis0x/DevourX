@@ -58,6 +58,9 @@ void ItemTAB::Render()
 				"Head (Clean/Photographer)",
 				"Head (Dirty/Priest)",
 				"Head (Clean/Priest)",
+				"Coin",
+				"Music Box (Idle)",
+				"Music Box (Armed)"
 		};
 
 		static int item_current = 0;
