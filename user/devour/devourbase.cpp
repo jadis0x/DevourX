@@ -254,22 +254,40 @@ void Base::Gameplay::StartCarryItem(const char* itemName) {
 		return;
 	}
 
+	il2cpp_thread_attach(il2cpp_domain_get());
+
+	Il2CppClass* klass = il2cpp_object_get_class(reinterpret_cast<Il2CppObject*>(nolan));
+	il2cpp_runtime_class_init(klass);
+
 	const std::string internal_name = it->second;
-	std::cout << internal_name << "\n";
 
-	app::String* item_str = convert_to_system_string(internal_name.c_str());
-
-	if (!item_str)
-	{
-		return;
-	}
-
-	// FIX!!
 	SafePtr::safe_call([&]()
 	{
-		if (app::NolanBehaviour_StartCarry != nullptr)
+		il2cpp_thread_attach(il2cpp_domain_get());
+
+		Il2CppClass* k = il2cpp_object_get_class(reinterpret_cast<Il2CppObject*>(nolan));
+		il2cpp_runtime_class_init(k);
+
+		const MethodInfo* baseMi = il2cpp_class_get_method_from_name(k, "StartCarry", 1);
+		if (!baseMi) { std::printf("StartCarry could NOT be resolved (base)\n"); return; }
+
+		const MethodInfo* mi = il2cpp_object_get_virtual_method(reinterpret_cast<Il2CppObject*>(nolan), baseMi);
+		if (!mi) { std::printf("StartCarry could NOT be resolved (virtual)\n"); return; }
+
+		Il2CppString* il2str = il2cpp_string_new(internal_name.c_str());
+		if (!il2str) { std::printf("string_new null\n"); return; }
+
+		void* args[1] = { il2str };
+		Il2CppException* exc = nullptr;
+		il2cpp_runtime_invoke(mi, nolan, args, &exc);
+
+		if (exc)
 		{
-			app::NolanBehaviour_StartCarry(nolan, item_str, nullptr);
+			char msg[1024] = {};
+			char st[2048] = {};
+			il2cpp_format_exception(exc, msg, sizeof(msg) - 1);
+			il2cpp_format_stack_trace(exc, st, sizeof(st) - 1);
+			std::printf("[StartCarry] EXC: %s\nSTACK:\n%s\n", msg, st);
 		}
 	});
 }
