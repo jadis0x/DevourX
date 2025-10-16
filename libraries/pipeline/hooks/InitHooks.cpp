@@ -897,21 +897,6 @@ bool dInteractable_CanInteract(app::Interactable* __this, app::GameObject* chara
 	return true;
 }
 
-void dCollectableInteractable__ctor(app::CollectableInteractable* __this, MethodInfo* method) {
-
-	app::CollectableInteractable__ctor(__this, method);
-
-	if (__this)
-	{
-		auto* obj = reinterpret_cast<app::Object_1*>(__this);
-
-		if (obj)
-		{
-			// TODO: Collectable Object ESP
-		}
-	}
-}
-
 void dNolanBehaviour_StartCarry(app::NolanBehaviour* __this, app::String* objectName, MethodInfo* method) {
 
 	if (PlayerHelper::IsLocalPlayer(__this) && objectName != nullptr)
@@ -920,6 +905,21 @@ void dNolanBehaviour_StartCarry(app::NolanBehaviour* __this, app::String* object
 	}
 
 	app::NolanBehaviour_StartCarry(__this, objectName, method);
+}
+
+void dKeyBehaviour_Attached(app::KeyBehaviour* __this, MethodInfo* method) {
+
+	if (__this)
+	{
+		auto* nolan = LocalPlayer::GetNolan();
+
+		if (nolan)
+		{
+			app::NolanBehaviour_StartCarry(nolan, __this->fields.keyName, method);
+		}
+	}
+
+	app::KeyBehaviour_Attached(__this, method);
 }
 
 bool HookFunction(PVOID* ppPointer, PVOID pDetour, const char* functionName)
@@ -1257,12 +1257,6 @@ void DetourInitilization()
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&) app::CollectableInteractable__ctor, dCollectableInteractable__ctor, "dCollectableInteractable__ctor"))
-	{
-		DetourTransactionAbort();
-		return;
-	}
-
 	if (!HookFunction(&(PVOID&) app::NolanBehaviour_StartCarry, dNolanBehaviour_StartCarry, "dNolanBehaviour_StartCarry"))
 	{
 		DetourTransactionAbort();
@@ -1356,6 +1350,5 @@ void DetourUninitialization()
 
 	if (DetourDetach(&(PVOID&) app::SurvivalReviveInteractable_CanInteract, dSurvivalReviveInteractable_CanInteract) != 0) return;
 	if (DetourDetach(&(PVOID&) app::Interactable_CanInteract, dInteractable_CanInteract) != 0) return;
-	if (DetourDetach(&(PVOID&) app::CollectableInteractable__ctor, dCollectableInteractable__ctor) != 0) return;
 	if (DetourDetach(&(PVOID&) app::NolanBehaviour_StartCarry, dNolanBehaviour_StartCarry) != 0) return;
 }
