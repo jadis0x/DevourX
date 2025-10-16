@@ -20,9 +20,13 @@ void AzazelEsp::Update(app::Object_1* instance) {
 	if (!instance || !SafePtr::IsValid(instance))
 		return;
 
+	auto* component = reinterpret_cast<app::Component*>(instance);
+	if (!component)
+		return;
+
 	auto* behaviour = reinterpret_cast<app::SurvivalAzazelBehaviour*>(instance);
-	app::GameObject* go = app::Component_get_gameObject(reinterpret_cast<app::Component*>(behaviour), nullptr);
-	app::Transform* tf = app::Component_get_transform(reinterpret_cast<app::Component*>(behaviour), nullptr);
+	app::GameObject* go = app::Component_get_gameObject(component, nullptr);
+	app::Transform* tf = app::Component_get_transform(component, nullptr);
 
 	if (!SafePtr::IsValid(go) || !SafePtr::IsValid(reinterpret_cast<app::Object_1*>(tf)))
 		return;

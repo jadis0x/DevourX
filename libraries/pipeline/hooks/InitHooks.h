@@ -150,8 +150,11 @@ app::IProtocolToken* dProtocolTokenUtils_ReadToken(app::UdpPacket* packet, Metho
 // DO_APP_FUNC(0x0074C340, bool, SurvivalReviveInteractable_CanInteract, (SurvivalReviveInteractable * __this, GameObject * character, MethodInfo * method));
 bool dSurvivalReviveInteractable_CanInteract(app::SurvivalReviveInteractable* __this, app::GameObject* character, MethodInfo* method);
 
-// DO_APP_FUNC(0x02238DC0, bool, Interactable_CanInteract, (Interactable * __this, GameObject * character, MethodInfo * method));
-bool dInteractable_CanInteract(app::Interactable* __this, app::GameObject* character, MethodInfo* method);
-
 // DO_APP_FUNC(0x005FDEB0, void, NolanBehaviour_StartCarry, (NolanBehaviour * __this, String * objectName, MethodInfo * method));
 void dNolanBehaviour_StartCarry(app::NolanBehaviour* __this, app::String* objectName, MethodInfo* method);
+
+// DO_APP_FUNC(0x0076A460, bool, KeyHelpers_IsKeyInArray, (KeyHelpers * __this, String * state, String * name, MethodInfo * method));
+bool dKeyHelpers_IsKeyInArray(app::KeyHelpers* __this, app::String* state, app::String* name, MethodInfo* method);
+
+// DO_APP_FUNC(0x007F6CB0, bool, DoorBehaviour_IsLocked, (DoorBehaviour * __this, MethodInfo * method));
+bool dDoorBehaviour_IsLocked(app::DoorBehaviour* __this, MethodInfo* method);

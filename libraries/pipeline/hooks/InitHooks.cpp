@@ -35,25 +35,23 @@ std::vector<int> spoofedItemIDs = {
 
 static bool fxApplied = false;
 
-void dDebug_Log(Object* message, MethodInfo* method)
-{
+void dDebug_Log(Object* message, MethodInfo* method) {
 	if (settings.bEnableUnityLogs)
 		std::cout << "[UNITY]: " << ToString(message) << std::endl;
 
 	app::Debug_2_Log(message, method);
 }
 
-void dDebug_LogError(Object* message, MethodInfo* method)
-{
+void dDebug_LogError(Object* message, MethodInfo* method) {
 	if (settings.bEnableUnityLogs)
 		std::cout << "[UNITY]: " << ToString(message) << std::endl;
 
 	app::Debug_2_LogError(message, method);
 }
 
-void dDebug_LogException(Exception* exception, MethodInfo* method)
-{
-	if (settings.bEnableUnityLogs) {
+void dDebug_LogException(Exception* exception, MethodInfo* method) {
+	if (settings.bEnableUnityLogs)
+	{
 		std::string excMsg = il2cppi_to_string(exception->fields._message);
 		std::cout << "[UNITY]: " << excMsg << std::endl;
 	}
@@ -61,56 +59,49 @@ void dDebug_LogException(Exception* exception, MethodInfo* method)
 	app::Debug_2_LogException(exception, method);
 }
 
-void dDebug_LogWarning(app::Object* message, MethodInfo* method)
-{
+void dDebug_LogWarning(app::Object* message, MethodInfo* method) {
 	if (settings.bEnableUnityLogs)
 		std::cout << "[UNITY]: " << ToString(message) << std::endl;
 
 	app::Debug_2_LogWarning(message, method);
 }
 
-bool dCursor_get_visible(MethodInfo* method)
-{
+bool dCursor_get_visible(MethodInfo* method) {
 	if (settings.bShowMenu)
 		return true;
 
 	return app::Cursor_1_get_visible(method);
 }
 
-void dCursor_set_visible(bool value, MethodInfo* method)
-{
+void dCursor_set_visible(bool value, MethodInfo* method) {
 	if (settings.bShowMenu)
 		value = true;
 
 	return app::Cursor_1_set_visible(value, method);
 }
 
-app::CursorLockMode__Enum dCursor_get_lockState(MethodInfo* method)
-{
+app::CursorLockMode__Enum dCursor_get_lockState(MethodInfo* method) {
 	if (settings.bShowMenu)
 		return app::CursorLockMode__Enum::None;
 
 	return app::Cursor_1_get_lockState(method);
 }
 
-void dCursor_set_lockState(app::CursorLockMode__Enum value, MethodInfo* method)
-{
+void dCursor_set_lockState(app::CursorLockMode__Enum value, MethodInfo* method) {
 	if (settings.bShowMenu)
 		value = app::CursorLockMode__Enum::None;
 
 	app::Cursor_1_set_lockState(value, method);
 }
 
-float dInput_1_GetAxis(app::String* axisName, MethodInfo* method)
-{
+float dInput_1_GetAxis(app::String* axisName, MethodInfo* method) {
 	if (settings.bShowMenu)
 		return 0.0f;
 
 	return app::Input_1_GetAxis(axisName, method);
 }
 
-void dServerConnectToken_Write(app::ServerConnectToken* __this, app::UdpPacket* packet, MethodInfo* method)
-{
+void dServerConnectToken_Write(app::ServerConnectToken* __this, app::UdpPacket* packet, MethodInfo* method) {
 	Base::GlobalVar::__g_connectToken = __this;
 
 	auto& f = __this->fields;
@@ -131,8 +122,7 @@ void dServerConnectToken_Write(app::ServerConnectToken* __this, app::UdpPacket* 
 	app::ServerConnectToken_Write(__this, packet, method);
 }
 
-void dServerConnectToken_Read(app::ServerConnectToken* __this, app::UdpPacket* packet, MethodInfo* method)
-{
+void dServerConnectToken_Read(app::ServerConnectToken* __this, app::UdpPacket* packet, MethodInfo* method) {
 	auto& f = __this->fields;
 
 	if (settings.bGhostMod)
@@ -155,24 +145,25 @@ float interactableEspTimer = 0.0f;
 float playerEspTimer = 0.0f;
 constexpr float espRefreshInterval = 3.0f;
 
-void dMenu_Update(app::Menu* __this, MethodInfo* method)
-{
+void dMenu_Update(app::Menu* __this, MethodInfo* method) {
 	globalMenu = __this;
 
-	if (settings.bSpoofSteamName) {
+	if (settings.bSpoofSteamName)
+	{
 		__this->fields.steamName = convert_to_system_string(settings.customSteamname);
 	}
 
-	if (settings.bSpoofSteamId) {
+	if (settings.bSpoofSteamId)
+	{
 		__this->fields.steamID = convert_to_system_string(settings.customSteamIdStr);
 	}
 
 	app::Menu_Update(__this, method);
 }
 
-void dServerAcceptToken_Read(app::ServerAcceptToken* __this, app::UdpPacket* packet, MethodInfo* method)
-{
-	if (settings.bSpoofSteamName) {
+void dServerAcceptToken_Read(app::ServerAcceptToken* __this, app::UdpPacket* packet, MethodInfo* method) {
+	if (settings.bSpoofSteamName)
+	{
 		auto* newSteamName = convert_to_system_string(settings.customSteamname);
 
 		if (newSteamName)
@@ -184,8 +175,7 @@ void dServerAcceptToken_Read(app::ServerAcceptToken* __this, app::UdpPacket* pac
 	app::ServerAcceptToken_Read(__this, packet, method);
 }
 
-void dServerBrowser_Populate(app::ServerBrowser* __this, app::Map_2_System_Guid_UdpSession_* sessions, MethodInfo* method)
-{
+void dServerBrowser_Populate(app::ServerBrowser* __this, app::Map_2_System_Guid_UdpSession_* sessions, MethodInfo* method) {
 	// global vars
 	Base::GlobalVar::__browser = __this;
 	g_ServerList.clear();
@@ -195,8 +185,7 @@ void dServerBrowser_Populate(app::ServerBrowser* __this, app::Map_2_System_Guid_
 	ServerBrowserTAB::CollectServers(sessions);
 }
 
-void dPhotonRoomProperties_Read(app::PhotonRoomProperties* __this, app::UdpPacket* packet, MethodInfo* method)
-{
+void dPhotonRoomProperties_Read(app::PhotonRoomProperties* __this, app::UdpPacket* packet, MethodInfo* method) {
 	if (settings.bForcePublic)
 	{
 		if (__this && __this->klass)
@@ -212,13 +201,13 @@ void dPhotonRoomProperties_Read(app::PhotonRoomProperties* __this, app::UdpPacke
 	app::PhotonRoomProperties_Read(__this, packet, method);
 }
 
-app::CSteamID dSteamUser_GetSteamID(MethodInfo* method)
-{
+app::CSteamID dSteamUser_GetSteamID(MethodInfo* method) {
 	auto r_steamId = app::SteamUser_GetSteamID(method);
 
-	if (settings.bSpoofSteamId) {
+	if (settings.bSpoofSteamId)
+	{
 		uint64_t spoofedId = strtoull(settings.customSteamIdStr, nullptr, 10);
-		app::CSteamID spoof{ spoofedId };
+		app::CSteamID spoof { spoofedId };
 		app::CSteamID__ctor_1(&spoof, spoofedId, nullptr);
 
 		spoof.m_SteamID = spoofedId;
@@ -230,8 +219,7 @@ app::CSteamID dSteamUser_GetSteamID(MethodInfo* method)
 }
 
 
-void dServerBrowser_JoinSession(app::ServerBrowser* __this, app::PhotonSession* photonSession, app::RoomProtocolToken* token, app::String* password, MethodInfo* method)
-{
+void dServerBrowser_JoinSession(app::ServerBrowser* __this, app::PhotonSession* photonSession, app::RoomProtocolToken* token, app::String* password, MethodInfo* method) {
 	token->fields.isPasswordRequired = false;
 
 	token->fields.isPrivate = false;
@@ -246,8 +234,7 @@ void dServerBrowser_JoinSession(app::ServerBrowser* __this, app::PhotonSession* 
 	app::ServerBrowser_JoinSession(__this, photonSession, token, password, method);
 }
 
-app::String* dSteamFriends_GetPersonaName(MethodInfo* method)
-{
+app::String* dSteamFriends_GetPersonaName(MethodInfo* method) {
 	auto steamName = app::SteamFriends_GetPersonaName(method);
 
 	auto steamNameStr = il2cppi_to_string(steamName);
@@ -260,7 +247,8 @@ app::String* dSteamFriends_GetPersonaName(MethodInfo* method)
 		{
 			return newSteamName;
 		}
-		else {
+		else
+		{
 			return steamName;
 		}
 	}
@@ -268,13 +256,13 @@ app::String* dSteamFriends_GetPersonaName(MethodInfo* method)
 	return steamName;
 }
 
-app::TaskStatus__Enum dShouldCalmDown_OnUpdate(app::ShouldCalmDown* __this, MethodInfo* method)
-{
+app::TaskStatus__Enum dShouldCalmDown_OnUpdate(app::ShouldCalmDown* __this, MethodInfo* method) {
 	if (settings.bNeverCalm)
 	{
 		__this->fields.disableCalmDown->fields._.mValue = true;
 	}
-	else {
+	else
+	{
 		__this->fields.disableCalmDown->fields._.mValue = false;
 	}
 
@@ -288,8 +276,7 @@ app::TaskStatus__Enum dShouldCalmDown_OnUpdate(app::ShouldCalmDown* __this, Meth
 	return shouldCalmDown;
 }
 
-app::TaskStatus__Enum dPlayersFocusingMeWait_OnUpdate(app::PlayersFocusingMeWait* __this, MethodInfo* method)
-{
+app::TaskStatus__Enum dPlayersFocusingMeWait_OnUpdate(app::PlayersFocusingMeWait* __this, MethodInfo* method) {
 	if (settings.bAutoCalmWhenNearby)
 	{
 		return app::TaskStatus__Enum::Success;
@@ -298,8 +285,7 @@ app::TaskStatus__Enum dPlayersFocusingMeWait_OnUpdate(app::PlayersFocusingMeWait
 	return app::PlayersFocusingMeWait_OnUpdate(__this, method);
 }
 
-void dSurvivalAzazelBehaviour_AnnaFrying(app::SurvivalAzazelBehaviour* __this, int32_t fryCount, MethodInfo* method)
-{
+void dSurvivalAzazelBehaviour_AnnaFrying(app::SurvivalAzazelBehaviour* __this, int32_t fryCount, MethodInfo* method) {
 	if (settings.bAutoCalmWhenNearby)
 	{
 		fryCount = 4;
@@ -308,8 +294,7 @@ void dSurvivalAzazelBehaviour_AnnaFrying(app::SurvivalAzazelBehaviour* __this, i
 	app::SurvivalAzazelBehaviour_AnnaFrying(__this, fryCount, method);
 }
 
-bool dEnemyState_get_MultipleFocus(app::EnemyState* __this, MethodInfo* method)
-{
+bool dEnemyState_get_MultipleFocus(app::EnemyState* __this, MethodInfo* method) {
 	if (settings.bAutoCalmWhenNearby)
 	{
 		return true;
@@ -318,8 +303,7 @@ bool dEnemyState_get_MultipleFocus(app::EnemyState* __this, MethodInfo* method)
 	return app::EnemyState_get_MultipleFocus(__this, method);
 }
 
-void dEnemyState_set_MultipleFocus(app::EnemyState* __this, bool value, MethodInfo* method)
-{
+void dEnemyState_set_MultipleFocus(app::EnemyState* __this, bool value, MethodInfo* method) {
 	if (settings.bAutoCalmWhenNearby)
 	{
 		value = true;
@@ -330,8 +314,7 @@ void dEnemyState_set_MultipleFocus(app::EnemyState* __this, bool value, MethodIn
 
 
 
-app::UIOutfitSelectionType* dMenu_SetupOutfit(app::Menu* __this, app::CharacterOutfit* outfit, MethodInfo* method)
-{
+app::UIOutfitSelectionType* dMenu_SetupOutfit(app::Menu* __this, app::CharacterOutfit* outfit, MethodInfo* method) {
 	outfit->fields.isHidden = false;
 	outfit->fields.isOwned = true;
 	outfit->fields.isSupporter = true;
@@ -339,13 +322,11 @@ app::UIOutfitSelectionType* dMenu_SetupOutfit(app::Menu* __this, app::CharacterO
 	return app::Menu_SetupOutfit(__this, outfit, method);
 }
 
-bool dSteamInventoryManager_UserHasItem(app::SteamInventoryManager* __this, int32_t steamItemDefID, MethodInfo* method)
-{
+bool dSteamInventoryManager_UserHasItem(app::SteamInventoryManager* __this, int32_t steamItemDefID, MethodInfo* method) {
 	return true;
 }
 
-app::BoltConfig* dMenu_get_boltConfig(app::Menu* __this, MethodInfo* method)
-{
+app::BoltConfig* dMenu_get_boltConfig(app::Menu* __this, MethodInfo* method) {
 	auto* get_Config = app::Menu_get_boltConfig(__this, method);
 
 	get_Config->fields.serverConnectionAcceptMode = app::BoltConnectionAcceptMode__Enum::Auto;
@@ -353,8 +334,7 @@ app::BoltConfig* dMenu_get_boltConfig(app::Menu* __this, MethodInfo* method)
 	return get_Config;
 }
 
-void dUIOutfitSelectionType_SetLocked(app::UIOutfitSelectionType* __this, bool locked, MethodInfo* method)
-{
+void dUIOutfitSelectionType_SetLocked(app::UIOutfitSelectionType* __this, bool locked, MethodInfo* method) {
 	__this->fields.outfitType->fields.isOwned = true;
 	__this->fields.outfitType->fields.isSupporter = true;
 	__this->fields.outfitType->fields.isHidden = false;
@@ -364,8 +344,7 @@ void dUIOutfitSelectionType_SetLocked(app::UIOutfitSelectionType* __this, bool l
 	app::UIOutfitSelectionType_SetLocked(__this, locked, method);
 }
 
-void dCharacterOutfit__ctor(app::CharacterOutfit* __this, MethodInfo* method)
-{
+void dCharacterOutfit__ctor(app::CharacterOutfit* __this, MethodInfo* method) {
 	__this->fields.isHidden = false;
 	__this->fields.isOwned = true;
 	__this->fields.isSupporter = true;
@@ -373,8 +352,7 @@ void dCharacterOutfit__ctor(app::CharacterOutfit* __this, MethodInfo* method)
 	app::CharacterOutfit__ctor(__this, method);
 }
 
-void dNolanBehaviour_FixedUpdate(app::NolanBehaviour* __this, MethodInfo* method)
-{
+void dNolanBehaviour_FixedUpdate(app::NolanBehaviour* __this, MethodInfo* method) {
 	if (settings.bPostFX_Override)
 	{
 		if (!fxApplied && __this && __this->fields.customPostProcessing && __this->fields.colorGradingController && __this->fields.cameraController)
@@ -460,9 +438,11 @@ void dNolanBehaviour_FixedUpdate(app::NolanBehaviour* __this, MethodInfo* method
 		}
 	}
 
-	if (settings.bInteractableEsp) {
+	if (settings.bInteractableEsp)
+	{
 		interactableEspTimer += app::Time_1_get_deltaTime(nullptr);
-		if (interactableEspTimer >= espRefreshInterval) {
+		if (interactableEspTimer >= espRefreshInterval)
+		{
 			interactableEspTimer = 0.0f;
 
 			auto& esp = ESPManager::GetInteractables();
@@ -471,25 +451,30 @@ void dNolanBehaviour_FixedUpdate(app::NolanBehaviour* __this, MethodInfo* method
 			settings.bInteractableEspUpdated = true;
 		}
 	}
-	else {
+	else
+	{
 		interactableEspTimer = 0.0f;
 	}
 
-	if (settings.bPlayerEsp) {
+	if (settings.bPlayerEsp)
+	{
 		playerEspTimer += app::Time_1_get_deltaTime(nullptr);
-		if (playerEspTimer >= espRefreshInterval) {
+		if (playerEspTimer >= espRefreshInterval)
+		{
 			playerEspTimer = 0.0f;
 
 			auto& esp = ESPManager::GetPlayers();
 
 			app::Survival* survival = __this->fields.m_Survival;
-			if (survival) {
+			if (survival)
+			{
 				esp.Reset();
 				esp.Update(reinterpret_cast<app::Object_1*>(survival));
 			}
 		}
 	}
-	else {
+	else
+	{
 		playerEspTimer = 0.0f;
 	}
 
@@ -513,13 +498,16 @@ void dNolanBehaviour_FixedUpdate(app::NolanBehaviour* __this, MethodInfo* method
 	{
 		app::GameObject* azazelGameObject = __this->fields.m_Survival->fields.m_Azazel;
 
-		if (azazelGameObject) {
+		if (azazelGameObject)
+		{
 			auto component = app::GameObject_GetComponentByName(azazelGameObject, convert_to_system_string("UltimateCharacterLocomotion"), nullptr);
 
-			if (component) {
+			if (component)
+			{
 				app::UltimateCharacterLocomotion* locomotion = reinterpret_cast<app::UltimateCharacterLocomotion*>(component);
 
-				if (locomotion) {
+				if (locomotion)
+				{
 
 					app::UltimateCharacterLocomotion_set_TimeScale(locomotion, settings.azazelSpeed, NULL);
 				}
@@ -530,16 +518,15 @@ void dNolanBehaviour_FixedUpdate(app::NolanBehaviour* __this, MethodInfo* method
 	return app::NolanBehaviour_FixedUpdate(__this, method);
 }
 
-void dNolanBehaviour_Update(app::NolanBehaviour* __this, MethodInfo* method)
-{
+void dNolanBehaviour_Update(app::NolanBehaviour* __this, MethodInfo* method) {
 	static app::NolanBehaviour* local_nb = nullptr;
 	static app::Component* cachedLocomotion = nullptr;
 
 	auto reset_local_state = [&]()
-		{
-			local_nb = nullptr;
-			cachedLocomotion = nullptr;
-		};
+	{
+		local_nb = nullptr;
+		cachedLocomotion = nullptr;
+	};
 
 	if (local_nb && !SafePtr::IsValid(reinterpret_cast<app::Object_1*>(local_nb)))
 	{
@@ -567,7 +554,7 @@ void dNolanBehaviour_Update(app::NolanBehaviour* __this, MethodInfo* method)
 
 	if (settings.bFly)
 	{
-		app::Transform* transform = app::Component_get_transform((app::Component*)__this, nullptr);
+		app::Transform* transform = app::Component_get_transform((app::Component*) __this, nullptr);
 		if (!transform)
 		{
 			return app::NolanBehaviour_Update(__this, method);
@@ -588,29 +575,28 @@ void dNolanBehaviour_Update(app::NolanBehaviour* __this, MethodInfo* method)
 		if (GetAsyncKeyState(VK_SPACE) & 0x8000) pos = pos + (up * speed * deltaTime);
 		if (GetAsyncKeyState(VK_LCONTROL) & 0x8000) pos = pos - (up * speed * deltaTime);
 
-		app::GameObject* thisGO = app::Component_get_gameObject((app::Component*)__this, nullptr);
+		app::GameObject* thisGO = app::Component_get_gameObject((app::Component*) __this, nullptr);
 		if (!SafePtr::IsValid(thisGO))
 		{
 			reset_local_state();
 			return app::NolanBehaviour_Update(__this, method);
 		}
 
-		if (!SafePtr::IsValid((app::Object_1*)cachedLocomotion))
+		if (!SafePtr::IsValid((app::Object_1*) cachedLocomotion))
 		{
 			cachedLocomotion = app::GameObject_GetComponentByName(thisGO, convert_to_system_string("UltimateCharacterLocomotion"), nullptr);
 		}
 
-		if (SafePtr::IsValid((app::Object_1*)cachedLocomotion) && app::UltimateCharacterLocomotion_SetPosition_1)
+		if (SafePtr::IsValid((app::Object_1*) cachedLocomotion) && app::UltimateCharacterLocomotion_SetPosition_1)
 		{
-			app::UltimateCharacterLocomotion_SetPosition_1((app::UltimateCharacterLocomotion*)cachedLocomotion, pos, false, nullptr);
+			app::UltimateCharacterLocomotion_SetPosition_1((app::UltimateCharacterLocomotion*) cachedLocomotion, pos, false, nullptr);
 		}
 	}
 
 	return app::NolanBehaviour_Update(__this, method);
 }
 
-bool dDevourInput_GetLongPress(app::DevourInput* __this, app::String* name, float duration, bool waitForRelease, MethodInfo* method)
-{
+bool dDevourInput_GetLongPress(app::DevourInput* __this, app::String* name, float duration, bool waitForRelease, MethodInfo* method) {
 	if (settings.bDisableLongInteract)
 	{
 		duration = 0.0f;
@@ -619,8 +605,7 @@ bool dDevourInput_GetLongPress(app::DevourInput* __this, app::String* name, floa
 	return app::DevourInput_GetLongPress(__this, name, duration, waitForRelease, method);
 }
 
-void dNolanBehaviour_OnAttributeUpdateValue(app::NolanBehaviour* __this, app::Attribute* attribute, MethodInfo* method)
-{
+void dNolanBehaviour_OnAttributeUpdateValue(app::NolanBehaviour* __this, app::Attribute* attribute, MethodInfo* method) {
 
 	if (settings.bModifyFlashlightColor)
 	{
@@ -629,7 +614,8 @@ void dNolanBehaviour_OnAttributeUpdateValue(app::NolanBehaviour* __this, app::At
 		__this->fields.flashlightUVColor = color;
 	}
 
-	if (settings.bUnlimitedUVLight) {
+	if (settings.bUnlimitedUVLight)
+	{
 
 
 		if (strcmp(il2cppi_to_string(attribute->fields.m_Name).c_str(), "Battery") == 0)
@@ -641,12 +627,12 @@ void dNolanBehaviour_OnAttributeUpdateValue(app::NolanBehaviour* __this, app::At
 	return app::NolanBehaviour_OnAttributeUpdateValue(__this, attribute, method);
 }
 
-app::RankHelpers_ExpGainInfo* dRankHelpers_CalculateExpGain(app::RankHelpers* __this, int32_t mapProgress, int32_t numAwards, app::GameConfigToken* gameConfigToken, MethodInfo* method)
-{
-	if (settings.exp_modifier) {
+app::RankHelpers_ExpGainInfo* dRankHelpers_CalculateExpGain(app::RankHelpers* __this, int32_t mapProgress, int32_t numAwards, app::GameConfigToken* gameConfigToken, MethodInfo* method) {
+	if (settings.exp_modifier)
+	{
 		app::RankHelpers_ExpGainInfo* gain = app::RankHelpers_CalculateExpGain(__this, mapProgress, numAwards, gameConfigToken, method);
 
-		int32_t bonus = (int32_t)settings.newExp;
+		int32_t bonus = (int32_t) settings.newExp;
 
 		gain->fields.awardsBonus = bonus;
 		gain->fields.winBonus = bonus;
@@ -658,9 +644,9 @@ app::RankHelpers_ExpGainInfo* dRankHelpers_CalculateExpGain(app::RankHelpers* __
 	return app::RankHelpers_CalculateExpGain(__this, mapProgress, numAwards, gameConfigToken, method);
 }
 
-bool dLockedInteractable_CanInteract(app::LockedInteractable* __this, app::GameObject* character, MethodInfo* method)
-{
-	if (settings.bUnlockDoors) {
+bool dLockedInteractable_CanInteract(app::LockedInteractable* __this, app::GameObject* character, MethodInfo* method) {
+	if (settings.bUnlockDoors)
+	{
 		__this->fields.isLocked = false;
 		return true;
 	}
@@ -668,18 +654,15 @@ bool dLockedInteractable_CanInteract(app::LockedInteractable* __this, app::GameO
 	return app::LockedInteractable_CanInteract(__this, character, method);
 }
 
-bool dOptionsHelpers_IsCharacterUnlocked(app::OptionsHelpers* __this, app::String* prefab, MethodInfo* method)
-{
+bool dOptionsHelpers_IsCharacterUnlocked(app::OptionsHelpers* __this, app::String* prefab, MethodInfo* method) {
 	return true;
 }
 
-bool dOptionsHelpers_IsRobeUnlocked(app::OptionsHelpers* __this, app::String* robe, MethodInfo* method)
-{
+bool dOptionsHelpers_IsRobeUnlocked(app::OptionsHelpers* __this, app::String* robe, MethodInfo* method) {
 	return true;
 }
 
-app::UIPerkSelectionType* dMenu_SetupPerk(app::Menu* __this, app::CharacterPerk* perk, MethodInfo* method)
-{
+app::UIPerkSelectionType* dMenu_SetupPerk(app::Menu* __this, app::CharacterPerk* perk, MethodInfo* method) {
 	perk->fields.isHidden = false;
 	perk->fields.isOwned = true;
 	perk->fields.cost = 0;
@@ -687,23 +670,19 @@ app::UIPerkSelectionType* dMenu_SetupPerk(app::Menu* __this, app::CharacterPerk*
 	return app::Menu_SetupPerk(__this, perk, method);
 }
 
-bool dSurvivalLobbyController_CanReady(app::SurvivalLobbyController* __this, MethodInfo* method)
-{
+bool dSurvivalLobbyController_CanReady(app::SurvivalLobbyController* __this, MethodInfo* method) {
 	return true;
 }
 
-bool dSurvivalLobbyController_PlayableCharacterSelected(app::SurvivalLobbyController* __this, MethodInfo* method)
-{
+bool dSurvivalLobbyController_PlayableCharacterSelected(app::SurvivalLobbyController* __this, MethodInfo* method) {
 	return true;
 }
 
-bool dSurvivalLobbyController_UnlockedCharacterSelected(app::SurvivalLobbyController* __this, MethodInfo* method)
-{
+bool dSurvivalLobbyController_UnlockedCharacterSelected(app::SurvivalLobbyController* __this, MethodInfo* method) {
 	return true;
 }
 
-void dSurvivalAzazelBehaviour_Update(app::SurvivalAzazelBehaviour* __this, MethodInfo* method)
-{
+void dSurvivalAzazelBehaviour_Update(app::SurvivalAzazelBehaviour* __this, MethodInfo* method) {
 	if (settings.bAzazelEsp)
 	{
 		ESPManager::GetAzazel().Update(reinterpret_cast<app::Object_1*>(__this));
@@ -713,8 +692,7 @@ void dSurvivalAzazelBehaviour_Update(app::SurvivalAzazelBehaviour* __this, Metho
 	app::SurvivalAzazelBehaviour_Update(__this, method);
 }
 
-void dAzazelAprilBehaviour_Update(app::AzazelAprilBehaviour* __this, MethodInfo* method)
-{
+void dAzazelAprilBehaviour_Update(app::AzazelAprilBehaviour* __this, MethodInfo* method) {
 	if (settings.bAzazelEsp)
 	{
 		ESPManager::GetAzazel().Update(reinterpret_cast<app::Object_1*>(__this));
@@ -723,19 +701,16 @@ void dAzazelAprilBehaviour_Update(app::AzazelAprilBehaviour* __this, MethodInfo*
 	app::AzazelAprilBehaviour_Update(__this, method);
 }
 
-void dCharacterLoader_Awake(app::CharacterLoader* __this, MethodInfo* method)
-{
+void dCharacterLoader_Awake(app::CharacterLoader* __this, MethodInfo* method) {
 	app::CharacterLoader_Awake(__this, method);
 }
 
-void dCharacterLoader_OnOutfit(app::CharacterLoader* __this, MethodInfo* method)
-{
+void dCharacterLoader_OnOutfit(app::CharacterLoader* __this, MethodInfo* method) {
 	app::CharacterLoader_OnOutfit(__this, method);
 }
 
 //DO_APP_FUNC(0x02FFD5B0, void, SceneManager_Internal_ActiveSceneChanged, (Scene previousActiveScene, Scene newActiveScene, MethodInfo * method));
-void dSceneManager_Internal_ActiveSceneChanged(app::Scene previousActiveScene, app::Scene newActiveScene, MethodInfo* method)
-{
+void dSceneManager_Internal_ActiveSceneChanged(app::Scene previousActiveScene, app::Scene newActiveScene, MethodInfo* method) {
 	ESPManager::ResetAll();
 	Players::PlayersManager::Instance().ClearCache();
 	LocalPlayer::LocalPlayerManager::Instance().ClearCache();
@@ -745,16 +720,14 @@ void dSceneManager_Internal_ActiveSceneChanged(app::Scene previousActiveScene, a
 	return app::SceneManager_Internal_ActiveSceneChanged(previousActiveScene, newActiveScene, method);
 }
 
-void dObjectInteractable_Interact(app::ObjectInteractable* __this, app::GameObject* character, MethodInfo* method)
-{
+void dObjectInteractable_Interact(app::ObjectInteractable* __this, app::GameObject* character, MethodInfo* method) {
 	settings.bInteractableEspUpdated = false;
 	__this->fields.m_CanInteract = true;
 
 	app::ObjectInteractable_Interact(__this, character, method);
 }
 
-void dObjectInteractable_Awake(app::ObjectInteractable* __this, MethodInfo* method)
-{
+void dObjectInteractable_Awake(app::ObjectInteractable* __this, MethodInfo* method) {
 	__this->fields.m_CanInteract = true;
 
 	app::ObjectInteractable_Awake(__this, method);
@@ -765,15 +738,13 @@ void dObjectInteractable_Awake(app::ObjectInteractable* __this, MethodInfo* meth
 	}
 }
 
-app::BoltEntity* dInGameHelpers_CreateDroppedObject(app::InGameHelpers* __this, app::PrefabId prefabId, app::Vector3 position, app::String* carryObjectName, app::BoltEntity* player, bool fromKnockout, app::BoltEntity* ai, MethodInfo* method)
-{
+app::BoltEntity* dInGameHelpers_CreateDroppedObject(app::InGameHelpers* __this, app::PrefabId prefabId, app::Vector3 position, app::String* carryObjectName, app::BoltEntity* player, bool fromKnockout, app::BoltEntity* ai, MethodInfo* method) {
 	settings.bInteractableEspUpdated = false;
 
 	return app::InGameHelpers_CreateDroppedObject(__this, prefabId, position, carryObjectName, player, fromKnockout, ai, method);
 }
 
-void dSurvivalLobbyController_Update(app::SurvivalLobbyController* __this, MethodInfo* method)
-{
+void dSurvivalLobbyController_Update(app::SurvivalLobbyController* __this, MethodInfo* method) {
 	__this->fields.m_ready = true;
 	__this->fields.m_Menu->fields.gameStarted = false;
 
@@ -788,8 +759,7 @@ void dSurvivalLobbyController_Update(app::SurvivalLobbyController* __this, Metho
 	return app::SurvivalLobbyController_Update(__this, method);
 }
 
-void dRoomProtocolToken_Write(app::RoomProtocolToken* __this, app::UdpPacket* packet, MethodInfo* method)
-{
+void dRoomProtocolToken_Write(app::RoomProtocolToken* __this, app::UdpPacket* packet, MethodInfo* method) {
 	if (__this && __this->klass)
 	{
 		if (settings.bForcePublic)
@@ -813,12 +783,11 @@ void dRoomProtocolToken_Write(app::RoomProtocolToken* __this, app::UdpPacket* pa
 	app::RoomProtocolToken_Write(__this, packet, method);
 }
 
-void dBoltMatchmaking_UpdateSession(app::IProtocolToken* token, MethodInfo* method)
-{
+void dBoltMatchmaking_UpdateSession(app::IProtocolToken* token, MethodInfo* method) {
 	if (token && token->klass)
 	{
-		const char* className = il2cpp_class_get_name((Il2CppClass*)token->klass);
-		const char* classNamespace = il2cpp_class_get_namespace((Il2CppClass*)token->klass);
+		const char* className = il2cpp_class_get_name((Il2CppClass*) token->klass);
+		const char* classNamespace = il2cpp_class_get_namespace((Il2CppClass*) token->klass);
 
 		if (strcmp(className, "PhotonRoomProperties") == 0)
 		{
@@ -833,21 +802,20 @@ void dBoltMatchmaking_UpdateSession(app::IProtocolToken* token, MethodInfo* meth
 	app::BoltMatchmaking_UpdateSession(token, method);
 }
 
-bool dSurvivalLobbyController_AllPlayersReady(app::SurvivalLobbyController* __this, MethodInfo* method)
-{
+bool dSurvivalLobbyController_AllPlayersReady(app::SurvivalLobbyController* __this, MethodInfo* method) {
 	return true;
 }
 
-void dMouseFollower_Update(app::MouseFollower* __this, MethodInfo* method)
-{
-	if (settings.bMouseFollower) {
+void dMouseFollower_Update(app::MouseFollower* __this, MethodInfo* method) {
+	if (settings.bMouseFollower)
+	{
 		if (!__this || !app::Camera_get_main(nullptr))
 			return;
 
 		app::Vector3 rawMouse = app::Input_1_get_mousePosition(nullptr);
 
-		float screenWidth = (float)app::Screen_get_width(nullptr);
-		float screenHeight = (float)app::Screen_get_height(nullptr);
+		float screenWidth = (float) app::Screen_get_width(nullptr);
+		float screenHeight = (float) app::Screen_get_height(nullptr);
 
 		float normX = rawMouse.x / screenWidth;
 		float normY = rawMouse.y / screenHeight;
@@ -859,14 +827,14 @@ void dMouseFollower_Update(app::MouseFollower* __this, MethodInfo* method)
 		offsetX *= settings.MF_offsetX;
 		offsetY *= settings.MF_offsetY;
 
-		static app::Vector3 basePos = app::Transform_get_position(app::Component_get_transform((app::Component*)__this, nullptr), nullptr);
+		static app::Vector3 basePos = app::Transform_get_position(app::Component_get_transform((app::Component*) __this, nullptr), nullptr);
 
 		app::Vector3 target;
 		target.x = basePos.x + offsetX;
 		target.y = basePos.y + offsetY;
 		target.z = basePos.z;
 
-		app::Transform* transform = app::Component_get_transform((app::Component*)__this, nullptr);
+		app::Transform* transform = app::Component_get_transform((app::Component*) __this, nullptr);
 		app::Vector3 current = app::Transform_get_position(transform, nullptr);
 
 		float delta = app::Time_1_get_deltaTime(nullptr);
@@ -875,13 +843,13 @@ void dMouseFollower_Update(app::MouseFollower* __this, MethodInfo* method)
 		app::Vector3 final = app::Vector3_Lerp(current, target, speed * delta, nullptr);
 		app::Transform_set_position(transform, final, nullptr);
 	}
-	else {
+	else
+	{
 		app::MouseFollower_Update(__this, method);
 	}
 }
 
-app::IProtocolToken* dProtocolTokenUtils_ReadToken(app::UdpPacket* packet, MethodInfo* method)
-{
+app::IProtocolToken* dProtocolTokenUtils_ReadToken(app::UdpPacket* packet, MethodInfo* method) {
 	auto* token = app::ProtocolTokenUtils_ReadToken(packet, method);
 
 	// test
@@ -907,24 +875,24 @@ void dNolanBehaviour_StartCarry(app::NolanBehaviour* __this, app::String* object
 	app::NolanBehaviour_StartCarry(__this, objectName, method);
 }
 
-void dKeyBehaviour_Attached(app::KeyBehaviour* __this, MethodInfo* method) {
+bool dKeyHelpers_IsKeyInArray(app::KeyHelpers* __this, app::String* state, app::String* name, MethodInfo* method) {
 
-	if (__this)
-	{
-		auto* nolan = LocalPlayer::GetNolan();
-
-		if (nolan)
-		{
-			app::NolanBehaviour_StartCarry(nolan, __this->fields.keyName, method);
-		}
-	}
-
-	app::KeyBehaviour_Attached(__this, method);
+	return true;
 }
 
-bool HookFunction(PVOID* ppPointer, PVOID pDetour, const char* functionName)
-{
-	if (const auto error = DetourAttach(ppPointer, pDetour); error != NO_ERROR) {
+bool dDoorBehaviour_IsLocked(app::DoorBehaviour* __this, MethodInfo* method) {
+	if (settings.bUnlockDoors)
+	{
+		__this->fields.lockedInteractable->fields.isLocked = false;
+		return false;
+	}
+
+	return app::DoorBehaviour_IsLocked(__this, method);
+}
+
+bool HookFunction(PVOID* ppPointer, PVOID pDetour, const char* functionName) {
+	if (const auto error = DetourAttach(ppPointer, pDetour); error != NO_ERROR)
+	{
 		std::cout << "[ERROR]: Failed to hook " << functionName << ", error " << error << std::endl;
 		return false;
 	}
@@ -935,9 +903,9 @@ bool HookFunction(PVOID* ppPointer, PVOID pDetour, const char* functionName)
 
 #define HOOKFUNC(n) if (!HookFunction(&(PVOID&)n, d##n, #n)) return;
 
-bool UnhookFunction(PVOID* ppPointer, PVOID pDetour, const char* functionName)
-{
-	if (const auto error = DetourDetach(ppPointer, pDetour); error != NO_ERROR) {
+bool UnhookFunction(PVOID* ppPointer, PVOID pDetour, const char* functionName) {
+	if (const auto error = DetourDetach(ppPointer, pDetour); error != NO_ERROR)
+	{
 		std::cout << "[ERROR]: Failed to unhook " << functionName << ", error " << error << std::endl;
 		return false;
 	}
@@ -947,300 +915,355 @@ bool UnhookFunction(PVOID* ppPointer, PVOID pDetour, const char* functionName)
 
 #define UNHOOKFUNC(n) if (!UnhookFunction(&(PVOID&)n, d##n, #n)) return;
 
-void DetourInitilization()
-{
+void DetourInitilization() {
 	DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());
 
 	D3D_PRESENT_FUNCTION present = dx11api::GetPresentFunction();
-	if (!present) {
+	if (!present)
+	{
 		std::cout << "[ERROR]: Unable to retrieve IDXGISwapChain::Present method" << std::endl;
 		return;
 	}
 
 	oPresent = present;
-	if (!oPresent) {
+	if (!oPresent)
+	{
 		std::cout << "[ERROR]: oPresent is null!" << std::endl;
 		return;
 	}
 
 	std::cout << "[INFO]: Attempting to hook oPresent at address: " << oPresent << std::endl;
 
-	if (!HookFunction(&(PVOID&)oPresent, dPresent, "D3D_PRESENT_FUNCTION")) {
+	if (!HookFunction(&(PVOID&) oPresent, dPresent, "D3D_PRESENT_FUNCTION"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)Debug_2_Log, dDebug_Log, "Debug_2_Log")) {
+	if (!HookFunction(&(PVOID&) Debug_2_Log, dDebug_Log, "Debug_2_Log"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)Debug_2_LogError, dDebug_LogError, "Debug_2_LogError")) {
+	if (!HookFunction(&(PVOID&) Debug_2_LogError, dDebug_LogError, "Debug_2_LogError"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)Debug_2_LogException, dDebug_LogException, "Debug_2_LogException")) {
+	if (!HookFunction(&(PVOID&) Debug_2_LogException, dDebug_LogException, "Debug_2_LogException"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)Debug_2_LogWarning, dDebug_LogWarning, "Debug_2_LogWarning")) {
+	if (!HookFunction(&(PVOID&) Debug_2_LogWarning, dDebug_LogWarning, "Debug_2_LogWarning"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::Cursor_1_get_visible, dCursor_get_visible, "Cursor_1_get_visible")) {
+	if (!HookFunction(&(PVOID&) app::Cursor_1_get_visible, dCursor_get_visible, "Cursor_1_get_visible"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::Cursor_1_set_visible, dCursor_set_visible, "Cursor_1_set_visible")) {
+	if (!HookFunction(&(PVOID&) app::Cursor_1_set_visible, dCursor_set_visible, "Cursor_1_set_visible"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::Cursor_1_get_lockState, dCursor_get_lockState, "Cursor_1_get_lockState")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-
-	if (!HookFunction(&(PVOID&)app::Cursor_1_set_lockState, dCursor_set_lockState, "Cursor_1_set_lockState")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::Input_1_GetAxis, dInput_1_GetAxis, "Input_1_GetAxis")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-
-	if (!HookFunction(&(PVOID&)app::NolanBehaviour_FixedUpdate, dNolanBehaviour_FixedUpdate, "NolanBehaviour_FixedUpdate")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::NolanBehaviour_Update, dNolanBehaviour_Update, "NolanBehaviour_Update")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::DevourInput_GetLongPress, dDevourInput_GetLongPress, "DevourInput_GetLongPress")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::NolanBehaviour_OnAttributeUpdateValue, dNolanBehaviour_OnAttributeUpdateValue, "dNolanBehaviour_OnAttributeUpdateValue")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::RankHelpers_CalculateExpGain, dRankHelpers_CalculateExpGain, "RankHelpers_CalculateExpGain")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::LockedInteractable_CanInteract, dLockedInteractable_CanInteract, "LockedInteractable_CanInteract")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::OptionsHelpers_IsCharacterUnlocked, dOptionsHelpers_IsCharacterUnlocked, "OptionsHelpers_IsCharacterUnlocked")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::OptionsHelpers_IsRobeUnlocked, dOptionsHelpers_IsRobeUnlocked, "OptionsHelpers_IsRobeUnlocked")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::Menu_SetupPerk, dMenu_SetupPerk, "Menu_SetupPerk")) {
+	if (!HookFunction(&(PVOID&) app::Cursor_1_get_lockState, dCursor_get_lockState, "Cursor_1_get_lockState"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
 
-
-	if (!HookFunction(&(PVOID&)app::SurvivalLobbyController_CanReady, dSurvivalLobbyController_CanReady, "SurvivalLobbyController_CanReady")) {
+	if (!HookFunction(&(PVOID&) app::Cursor_1_set_lockState, dCursor_set_lockState, "Cursor_1_set_lockState"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::SurvivalLobbyController_PlayableCharacterSelected, dSurvivalLobbyController_PlayableCharacterSelected, "SurvivalLobbyController_PlayableCharacterSelected")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::SurvivalLobbyController_UnlockedCharacterSelected, dSurvivalLobbyController_UnlockedCharacterSelected, "SurvivalLobbyController_UnlockedCharacterSelected")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::SurvivalAzazelBehaviour_Update, dSurvivalAzazelBehaviour_Update, "SurvivalAzazelBehaviour_Update")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::AzazelAprilBehaviour_Update, dAzazelAprilBehaviour_Update, "dAzazelAprilBehaviour_Update")) {
+	if (!HookFunction(&(PVOID&) app::Input_1_GetAxis, dInput_1_GetAxis, "Input_1_GetAxis"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
 
-	if (!HookFunction(&(PVOID&)app::CharacterLoader_Awake, dCharacterLoader_Awake, "CharacterLoader_Awake")) {
+	if (!HookFunction(&(PVOID&) app::NolanBehaviour_FixedUpdate, dNolanBehaviour_FixedUpdate, "NolanBehaviour_FixedUpdate"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::CharacterLoader_OnOutfit, dCharacterLoader_OnOutfit, "CharacterLoader_OnOutfit")) {
+	if (!HookFunction(&(PVOID&) app::NolanBehaviour_Update, dNolanBehaviour_Update, "NolanBehaviour_Update"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::SceneManager_Internal_ActiveSceneChanged, dSceneManager_Internal_ActiveSceneChanged, "SceneManager_Internal_ActiveSceneChanged")) {
+	if (!HookFunction(&(PVOID&) app::DevourInput_GetLongPress, dDevourInput_GetLongPress, "DevourInput_GetLongPress"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::ObjectInteractable_Interact, dObjectInteractable_Interact, "ObjectInteractable_Interact")) {
+	if (!HookFunction(&(PVOID&) app::NolanBehaviour_OnAttributeUpdateValue, dNolanBehaviour_OnAttributeUpdateValue, "dNolanBehaviour_OnAttributeUpdateValue"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::InGameHelpers_CreateDroppedObject, dInGameHelpers_CreateDroppedObject, "InGameHelpers_CreateDroppedObject")) {
+	if (!HookFunction(&(PVOID&) app::RankHelpers_CalculateExpGain, dRankHelpers_CalculateExpGain, "RankHelpers_CalculateExpGain"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::ObjectInteractable_Awake, dObjectInteractable_Awake, "ObjectInteractable_Awake")) {
+	if (!HookFunction(&(PVOID&) app::LockedInteractable_CanInteract, dLockedInteractable_CanInteract, "LockedInteractable_CanInteract"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::SurvivalLobbyController_Update, dSurvivalLobbyController_Update, "SurvivalLobbyController_Update")) {
+	if (!HookFunction(&(PVOID&) app::OptionsHelpers_IsCharacterUnlocked, dOptionsHelpers_IsCharacterUnlocked, "OptionsHelpers_IsCharacterUnlocked"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::RoomProtocolToken_Write, dRoomProtocolToken_Write, "RoomProtocolToken_Write")) {
+	if (!HookFunction(&(PVOID&) app::OptionsHelpers_IsRobeUnlocked, dOptionsHelpers_IsRobeUnlocked, "OptionsHelpers_IsRobeUnlocked"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::BoltMatchmaking_UpdateSession, dBoltMatchmaking_UpdateSession, "BoltMatchmaking_UpdateSession")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::SurvivalLobbyController_AllPlayersReady, dSurvivalLobbyController_AllPlayersReady, "SurvivalLobbyController_AllPlayersReady")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-
-	if (!HookFunction(&(PVOID&)app::MouseFollower_Update, dMouseFollower_Update, "MouseFollower_Update")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::ServerConnectToken_Write, dServerConnectToken_Write, "ServerConnectToken_Write")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::ServerConnectToken_Read, dServerConnectToken_Read, "dServerConnectToken_Read")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::ServerAcceptToken_Read, dServerAcceptToken_Read, "ServerAcceptToken_Read")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::ServerBrowser_Populate, dServerBrowser_Populate, "ServerBrowser_Populate")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::PhotonRoomProperties_Read, dPhotonRoomProperties_Read, "dPhotonRoomProperties_Read")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::SteamUser_GetSteamID, dSteamUser_GetSteamID, "dSteamUser_GetSteamID")) {
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::ServerBrowser_JoinSession, dServerBrowser_JoinSession, "dServerBrowser_JoinSession")) {
+	if (!HookFunction(&(PVOID&) app::Menu_SetupPerk, dMenu_SetupPerk, "Menu_SetupPerk"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
 
-	if (!HookFunction(&(PVOID&)app::SteamFriends_GetPersonaName, dSteamFriends_GetPersonaName, "dSteamFriends_GetPersonaName")) {
+
+	if (!HookFunction(&(PVOID&) app::SurvivalLobbyController_CanReady, dSurvivalLobbyController_CanReady, "SurvivalLobbyController_CanReady"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::SurvivalLobbyController_PlayableCharacterSelected, dSurvivalLobbyController_PlayableCharacterSelected, "SurvivalLobbyController_PlayableCharacterSelected"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::SurvivalLobbyController_UnlockedCharacterSelected, dSurvivalLobbyController_UnlockedCharacterSelected, "SurvivalLobbyController_UnlockedCharacterSelected"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::SurvivalAzazelBehaviour_Update, dSurvivalAzazelBehaviour_Update, "SurvivalAzazelBehaviour_Update"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::AzazelAprilBehaviour_Update, dAzazelAprilBehaviour_Update, "dAzazelAprilBehaviour_Update"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
 
-	if (!HookFunction(&(PVOID&)app::ShouldCalmDown_OnUpdate, dShouldCalmDown_OnUpdate, "dShouldCalmDown_OnUpdate")) {
+	if (!HookFunction(&(PVOID&) app::CharacterLoader_Awake, dCharacterLoader_Awake, "CharacterLoader_Awake"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::PlayersFocusingMeWait_OnUpdate, dPlayersFocusingMeWait_OnUpdate, "dPlayersFocusingMeWait_OnUpdate")) {
+	if (!HookFunction(&(PVOID&) app::CharacterLoader_OnOutfit, dCharacterLoader_OnOutfit, "CharacterLoader_OnOutfit"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::SurvivalAzazelBehaviour_AnnaFrying, dSurvivalAzazelBehaviour_AnnaFrying, "dSurvivalAzazelBehaviour_AnnaFrying")) {
+	if (!HookFunction(&(PVOID&) app::SceneManager_Internal_ActiveSceneChanged, dSceneManager_Internal_ActiveSceneChanged, "SceneManager_Internal_ActiveSceneChanged"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::EnemyState_get_MultipleFocus, dEnemyState_get_MultipleFocus, "dEnemyState_get_MultipleFocus")) {
+	if (!HookFunction(&(PVOID&) app::ObjectInteractable_Interact, dObjectInteractable_Interact, "dObjectInteractable_Interact"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::EnemyState_set_MultipleFocus, dEnemyState_set_MultipleFocus, "dEnemyState_set_MultipleFocus")) {
+	if (!HookFunction(&(PVOID&) app::InGameHelpers_CreateDroppedObject, dInGameHelpers_CreateDroppedObject, "dInGameHelpers_CreateDroppedObject"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::ObjectInteractable_Awake, dObjectInteractable_Awake, "dObjectInteractable_Awake"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::SurvivalLobbyController_Update, dSurvivalLobbyController_Update, "SurvivalLobbyController_Update"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::RoomProtocolToken_Write, dRoomProtocolToken_Write, "RoomProtocolToken_Write"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::BoltMatchmaking_UpdateSession, dBoltMatchmaking_UpdateSession, "BoltMatchmaking_UpdateSession"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::SurvivalLobbyController_AllPlayersReady, dSurvivalLobbyController_AllPlayersReady, "SurvivalLobbyController_AllPlayersReady"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
 
-	if (!HookFunction(&(PVOID&)app::Menu_SetupOutfit, dMenu_SetupOutfit, "dMenu_SetupOutfit")) {
+	if (!HookFunction(&(PVOID&) app::MouseFollower_Update, dMouseFollower_Update, "MouseFollower_Update"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::SteamInventoryManager_UserHasItem, dSteamInventoryManager_UserHasItem, "dSteamInventoryManager_UserHasItem")) {
+	if (!HookFunction(&(PVOID&) app::ServerConnectToken_Write, dServerConnectToken_Write, "ServerConnectToken_Write"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::Menu_get_boltConfig, dMenu_get_boltConfig, "dMenu_get_boltConfig")) {
+	if (!HookFunction(&(PVOID&) app::ServerConnectToken_Read, dServerConnectToken_Read, "dServerConnectToken_Read"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::UIOutfitSelectionType_SetLocked, dUIOutfitSelectionType_SetLocked, "dUIOutfitSelectionType_SetLocked")) {
+	if (!HookFunction(&(PVOID&) app::ServerAcceptToken_Read, dServerAcceptToken_Read, "ServerAcceptToken_Read"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::CharacterOutfit__ctor, dCharacterOutfit__ctor, "dCharacterOutfit__ctor")) {
+	if (!HookFunction(&(PVOID&) app::ServerBrowser_Populate, dServerBrowser_Populate, "ServerBrowser_Populate"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::ProtocolTokenUtils_ReadToken, dProtocolTokenUtils_ReadToken, "dProtocolTokenUtils_ReadToken")) {
+	if (!HookFunction(&(PVOID&) app::PhotonRoomProperties_Read, dPhotonRoomProperties_Read, "dPhotonRoomProperties_Read"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::SteamUser_GetSteamID, dSteamUser_GetSteamID, "dSteamUser_GetSteamID"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::ServerBrowser_JoinSession, dServerBrowser_JoinSession, "dServerBrowser_JoinSession"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+
+	if (!HookFunction(&(PVOID&) app::SteamFriends_GetPersonaName, dSteamFriends_GetPersonaName, "dSteamFriends_GetPersonaName"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+
+	if (!HookFunction(&(PVOID&) app::ShouldCalmDown_OnUpdate, dShouldCalmDown_OnUpdate, "dShouldCalmDown_OnUpdate"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::PlayersFocusingMeWait_OnUpdate, dPlayersFocusingMeWait_OnUpdate, "dPlayersFocusingMeWait_OnUpdate"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::SurvivalAzazelBehaviour_AnnaFrying, dSurvivalAzazelBehaviour_AnnaFrying, "dSurvivalAzazelBehaviour_AnnaFrying"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::EnemyState_get_MultipleFocus, dEnemyState_get_MultipleFocus, "dEnemyState_get_MultipleFocus"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::EnemyState_set_MultipleFocus, dEnemyState_set_MultipleFocus, "dEnemyState_set_MultipleFocus"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+
+	if (!HookFunction(&(PVOID&) app::Menu_SetupOutfit, dMenu_SetupOutfit, "dMenu_SetupOutfit"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::SteamInventoryManager_UserHasItem, dSteamInventoryManager_UserHasItem, "dSteamInventoryManager_UserHasItem"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::Menu_get_boltConfig, dMenu_get_boltConfig, "dMenu_get_boltConfig"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::UIOutfitSelectionType_SetLocked, dUIOutfitSelectionType_SetLocked, "dUIOutfitSelectionType_SetLocked"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::CharacterOutfit__ctor, dCharacterOutfit__ctor, "dCharacterOutfit__ctor"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::ProtocolTokenUtils_ReadToken, dProtocolTokenUtils_ReadToken, "dProtocolTokenUtils_ReadToken"))
+	{
 		DetourTransactionAbort();
 		return;
 	}
@@ -1251,13 +1274,20 @@ void DetourInitilization()
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&) app::Interactable_CanInteract, dInteractable_CanInteract, "dInteractable_CanInteract"))
+
+	if (!HookFunction(&(PVOID&) app::NolanBehaviour_StartCarry, dNolanBehaviour_StartCarry, "dNolanBehaviour_StartCarry"))
 	{
 		DetourTransactionAbort();
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&) app::NolanBehaviour_StartCarry, dNolanBehaviour_StartCarry, "dNolanBehaviour_StartCarry"))
+	if (!HookFunction(&(PVOID&) app::KeyHelpers_IsKeyInArray, dKeyHelpers_IsKeyInArray, "dKeyHelpers_IsKeyInArray"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::DoorBehaviour_IsLocked, dDoorBehaviour_IsLocked, "dDoorBehaviour_IsLocked"))
 	{
 		DetourTransactionAbort();
 		return;
@@ -1266,89 +1296,90 @@ void DetourInitilization()
 	DetourTransactionCommit();
 }
 
-void DetourUninitialization()
-{
+void DetourUninitialization() {
 	DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());
 
-	if (DetourDetach(&(PVOID&)oPresent, dPresent) != 0) return;
+	if (DetourDetach(&(PVOID&) oPresent, dPresent) != 0) return;
 
-	if (DetourTransactionCommit() == NO_ERROR) {
+	if (DetourTransactionCommit() == NO_ERROR)
+	{
 		DirectX::Shutdown();
 		dx11api::Shutdown();
 	}
 
-	if (DetourDetach(&(PVOID&)Debug_2_Log, dDebug_Log) != 0) return;
-	if (DetourDetach(&(PVOID&)Debug_2_LogError, dDebug_LogError) != 0) return;
-	if (DetourDetach(&(PVOID&)Debug_2_LogException, dDebug_LogException) != 0) return;
+	if (DetourDetach(&(PVOID&) Debug_2_Log, dDebug_Log) != 0) return;
+	if (DetourDetach(&(PVOID&) Debug_2_LogError, dDebug_LogError) != 0) return;
+	if (DetourDetach(&(PVOID&) Debug_2_LogException, dDebug_LogException) != 0) return;
 
-	if (DetourDetach(&(PVOID&)app::Cursor_1_get_visible, dCursor_get_visible) != 0) return;
-	if (DetourDetach(&(PVOID&)app::Cursor_1_set_visible, dCursor_set_visible) != 0) return;
-	if (DetourDetach(&(PVOID&)app::Cursor_1_get_lockState, dCursor_get_lockState) != 0) return;
-	if (DetourDetach(&(PVOID&)app::Cursor_1_set_lockState, dCursor_set_lockState) != 0) return;
-	if (DetourDetach(&(PVOID&)app::Input_1_GetAxis, dInput_1_GetAxis) != 0) return;
+	if (DetourDetach(&(PVOID&) app::Cursor_1_get_visible, dCursor_get_visible) != 0) return;
+	if (DetourDetach(&(PVOID&) app::Cursor_1_set_visible, dCursor_set_visible) != 0) return;
+	if (DetourDetach(&(PVOID&) app::Cursor_1_get_lockState, dCursor_get_lockState) != 0) return;
+	if (DetourDetach(&(PVOID&) app::Cursor_1_set_lockState, dCursor_set_lockState) != 0) return;
+	if (DetourDetach(&(PVOID&) app::Input_1_GetAxis, dInput_1_GetAxis) != 0) return;
 
-	if (DetourDetach(&(PVOID&)app::NolanBehaviour_FixedUpdate, dNolanBehaviour_FixedUpdate) != 0) return;
-	if (DetourDetach(&(PVOID&)app::NolanBehaviour_Update, dNolanBehaviour_Update) != 0) return;
+	if (DetourDetach(&(PVOID&) app::NolanBehaviour_FixedUpdate, dNolanBehaviour_FixedUpdate) != 0) return;
+	if (DetourDetach(&(PVOID&) app::NolanBehaviour_Update, dNolanBehaviour_Update) != 0) return;
 
-	if (DetourDetach(&(PVOID&)app::DevourInput_GetLongPress, dDevourInput_GetLongPress) != 0) return;
-	if (DetourDetach(&(PVOID&)app::NolanBehaviour_OnAttributeUpdateValue, dNolanBehaviour_OnAttributeUpdateValue) != 0) return;
+	if (DetourDetach(&(PVOID&) app::DevourInput_GetLongPress, dDevourInput_GetLongPress) != 0) return;
+	if (DetourDetach(&(PVOID&) app::NolanBehaviour_OnAttributeUpdateValue, dNolanBehaviour_OnAttributeUpdateValue) != 0) return;
 
-	if (DetourDetach(&(PVOID&)app::RankHelpers_CalculateExpGain, dRankHelpers_CalculateExpGain) != 0) return;
+	if (DetourDetach(&(PVOID&) app::RankHelpers_CalculateExpGain, dRankHelpers_CalculateExpGain) != 0) return;
 
-	if (DetourDetach(&(PVOID&)app::LockedInteractable_CanInteract, dLockedInteractable_CanInteract) != 0) return;
+	if (DetourDetach(&(PVOID&) app::LockedInteractable_CanInteract, dLockedInteractable_CanInteract) != 0) return;
 
-	if (DetourDetach(&(PVOID&)app::OptionsHelpers_IsCharacterUnlocked, dOptionsHelpers_IsCharacterUnlocked) != 0) return;
-	if (DetourDetach(&(PVOID&)app::OptionsHelpers_IsRobeUnlocked, dOptionsHelpers_IsRobeUnlocked) != 0) return;
+	if (DetourDetach(&(PVOID&) app::OptionsHelpers_IsCharacterUnlocked, dOptionsHelpers_IsCharacterUnlocked) != 0) return;
+	if (DetourDetach(&(PVOID&) app::OptionsHelpers_IsRobeUnlocked, dOptionsHelpers_IsRobeUnlocked) != 0) return;
 
-	if (DetourDetach(&(PVOID&)app::OptionsHelpers_IsRobeUnlocked, dOptionsHelpers_IsRobeUnlocked) != 0) return;
-	if (DetourDetach(&(PVOID&)app::OptionsHelpers_IsRobeUnlocked, dOptionsHelpers_IsRobeUnlocked) != 0) return;
-	if (DetourDetach(&(PVOID&)app::OptionsHelpers_IsRobeUnlocked, dOptionsHelpers_IsRobeUnlocked) != 0) return;
+	if (DetourDetach(&(PVOID&) app::OptionsHelpers_IsRobeUnlocked, dOptionsHelpers_IsRobeUnlocked) != 0) return;
+	if (DetourDetach(&(PVOID&) app::OptionsHelpers_IsRobeUnlocked, dOptionsHelpers_IsRobeUnlocked) != 0) return;
+	if (DetourDetach(&(PVOID&) app::OptionsHelpers_IsRobeUnlocked, dOptionsHelpers_IsRobeUnlocked) != 0) return;
 
-	if (DetourDetach(&(PVOID&)app::SurvivalLobbyController_CanReady, dSurvivalLobbyController_CanReady) != 0) return;
-	if (DetourDetach(&(PVOID&)app::SurvivalLobbyController_PlayableCharacterSelected, dSurvivalLobbyController_PlayableCharacterSelected) != 0) return;
-	if (DetourDetach(&(PVOID&)app::SurvivalLobbyController_UnlockedCharacterSelected, dSurvivalLobbyController_UnlockedCharacterSelected) != 0) return;
+	if (DetourDetach(&(PVOID&) app::SurvivalLobbyController_CanReady, dSurvivalLobbyController_CanReady) != 0) return;
+	if (DetourDetach(&(PVOID&) app::SurvivalLobbyController_PlayableCharacterSelected, dSurvivalLobbyController_PlayableCharacterSelected) != 0) return;
+	if (DetourDetach(&(PVOID&) app::SurvivalLobbyController_UnlockedCharacterSelected, dSurvivalLobbyController_UnlockedCharacterSelected) != 0) return;
 
-	if (DetourDetach(&(PVOID&)app::SurvivalAzazelBehaviour_Update, dSurvivalAzazelBehaviour_Update) != 0) return;
-	if (DetourDetach(&(PVOID&)app::AzazelAprilBehaviour_Update, dAzazelAprilBehaviour_Update) != 0) return;
-
-
-	if (DetourDetach(&(PVOID&)app::CharacterLoader_Awake, dCharacterLoader_Awake) != 0) return;
-	if (DetourDetach(&(PVOID&)app::CharacterLoader_OnOutfit, dCharacterLoader_OnOutfit) != 0) return;
-	if (DetourDetach(&(PVOID&)app::SceneManager_Internal_ActiveSceneChanged, dSceneManager_Internal_ActiveSceneChanged) != 0) return;
-	if (DetourDetach(&(PVOID&)app::ObjectInteractable_Interact, dObjectInteractable_Interact) != 0) return;
-	if (DetourDetach(&(PVOID&)app::InGameHelpers_CreateDroppedObject, dInGameHelpers_CreateDroppedObject) != 0) return;
-	if (DetourDetach(&(PVOID&)app::ObjectInteractable_Awake, dObjectInteractable_Awake) != 0) return;
-
-	if (DetourDetach(&(PVOID&)app::SurvivalLobbyController_Update, dSurvivalLobbyController_Update) != 0) return;
-	if (DetourDetach(&(PVOID&)app::RoomProtocolToken_Write, dRoomProtocolToken_Write) != 0) return;
-	if (DetourDetach(&(PVOID&)app::BoltMatchmaking_UpdateSession, dBoltMatchmaking_UpdateSession) != 0) return;
-	if (DetourDetach(&(PVOID&)app::SurvivalLobbyController_AllPlayersReady, dSurvivalLobbyController_AllPlayersReady) != 0) return;
-	if (DetourDetach(&(PVOID&)app::MouseFollower_Update, dMouseFollower_Update) != 0) return;
+	if (DetourDetach(&(PVOID&) app::SurvivalAzazelBehaviour_Update, dSurvivalAzazelBehaviour_Update) != 0) return;
+	if (DetourDetach(&(PVOID&) app::AzazelAprilBehaviour_Update, dAzazelAprilBehaviour_Update) != 0) return;
 
 
-	if (DetourDetach(&(PVOID&)app::ServerConnectToken_Write, dServerConnectToken_Write) != 0) return;
-	if (DetourDetach(&(PVOID&)app::ServerConnectToken_Read, dServerConnectToken_Read) != 0) return;
+	if (DetourDetach(&(PVOID&) app::CharacterLoader_Awake, dCharacterLoader_Awake) != 0) return;
+	if (DetourDetach(&(PVOID&) app::CharacterLoader_OnOutfit, dCharacterLoader_OnOutfit) != 0) return;
+	if (DetourDetach(&(PVOID&) app::SceneManager_Internal_ActiveSceneChanged, dSceneManager_Internal_ActiveSceneChanged) != 0) return;
+	if (DetourDetach(&(PVOID&) app::ObjectInteractable_Interact, dObjectInteractable_Interact) != 0) return;
+	if (DetourDetach(&(PVOID&) app::InGameHelpers_CreateDroppedObject, dInGameHelpers_CreateDroppedObject) != 0) return;
+	if (DetourDetach(&(PVOID&) app::ObjectInteractable_Awake, dObjectInteractable_Awake) != 0) return;
 
-	if (DetourDetach(&(PVOID&)app::ServerAcceptToken_Read, dServerAcceptToken_Read) != 0) return;
-	if (DetourDetach(&(PVOID&)app::ServerBrowser_Populate, dServerBrowser_Populate) != 0) return;
-	if (DetourDetach(&(PVOID&)app::PhotonRoomProperties_Read, dPhotonRoomProperties_Read) != 0) return;
-	if (DetourDetach(&(PVOID&)app::SteamUser_GetSteamID, dSteamUser_GetSteamID) != 0) return;
-	if (DetourDetach(&(PVOID&)app::ServerBrowser_JoinSession, dServerBrowser_JoinSession) != 0) return;
-	if (DetourDetach(&(PVOID&)app::SteamFriends_GetPersonaName, dSteamFriends_GetPersonaName) != 0) return;
-	if (DetourDetach(&(PVOID&)app::ShouldCalmDown_OnUpdate, dShouldCalmDown_OnUpdate) != 0) return;
-	if (DetourDetach(&(PVOID&)app::PlayersFocusingMeWait_OnUpdate, dPlayersFocusingMeWait_OnUpdate) != 0) return;
-	if (DetourDetach(&(PVOID&)app::SurvivalAzazelBehaviour_AnnaFrying, dSurvivalAzazelBehaviour_AnnaFrying) != 0) return;
-	if (DetourDetach(&(PVOID&)app::EnemyState_get_MultipleFocus, dEnemyState_get_MultipleFocus) != 0) return;
-	if (DetourDetach(&(PVOID&)app::EnemyState_set_MultipleFocus, dEnemyState_set_MultipleFocus) != 0) return;
-	if (DetourDetach(&(PVOID&)app::Menu_SetupOutfit, dMenu_SetupOutfit) != 0) return;
-	if (DetourDetach(&(PVOID&)app::SteamInventoryManager_UserHasItem, dSteamInventoryManager_UserHasItem) != 0) return;
-	if (DetourDetach(&(PVOID&)app::Menu_get_boltConfig, dMenu_get_boltConfig) != 0) return;
-	if (DetourDetach(&(PVOID&)app::UIOutfitSelectionType_SetLocked, dUIOutfitSelectionType_SetLocked) != 0) return;
-	if (DetourDetach(&(PVOID&)app::CharacterOutfit__ctor, dCharacterOutfit__ctor) != 0) return;
-	if (DetourDetach(&(PVOID&)app::ProtocolTokenUtils_ReadToken, dProtocolTokenUtils_ReadToken) != 0) return;
+	if (DetourDetach(&(PVOID&) app::SurvivalLobbyController_Update, dSurvivalLobbyController_Update) != 0) return;
+	if (DetourDetach(&(PVOID&) app::RoomProtocolToken_Write, dRoomProtocolToken_Write) != 0) return;
+	if (DetourDetach(&(PVOID&) app::BoltMatchmaking_UpdateSession, dBoltMatchmaking_UpdateSession) != 0) return;
+	if (DetourDetach(&(PVOID&) app::SurvivalLobbyController_AllPlayersReady, dSurvivalLobbyController_AllPlayersReady) != 0) return;
+	if (DetourDetach(&(PVOID&) app::MouseFollower_Update, dMouseFollower_Update) != 0) return;
+
+
+	if (DetourDetach(&(PVOID&) app::ServerConnectToken_Write, dServerConnectToken_Write) != 0) return;
+	if (DetourDetach(&(PVOID&) app::ServerConnectToken_Read, dServerConnectToken_Read) != 0) return;
+
+	if (DetourDetach(&(PVOID&) app::ServerAcceptToken_Read, dServerAcceptToken_Read) != 0) return;
+	if (DetourDetach(&(PVOID&) app::ServerBrowser_Populate, dServerBrowser_Populate) != 0) return;
+	if (DetourDetach(&(PVOID&) app::PhotonRoomProperties_Read, dPhotonRoomProperties_Read) != 0) return;
+	if (DetourDetach(&(PVOID&) app::SteamUser_GetSteamID, dSteamUser_GetSteamID) != 0) return;
+	if (DetourDetach(&(PVOID&) app::ServerBrowser_JoinSession, dServerBrowser_JoinSession) != 0) return;
+	if (DetourDetach(&(PVOID&) app::SteamFriends_GetPersonaName, dSteamFriends_GetPersonaName) != 0) return;
+	if (DetourDetach(&(PVOID&) app::ShouldCalmDown_OnUpdate, dShouldCalmDown_OnUpdate) != 0) return;
+	if (DetourDetach(&(PVOID&) app::PlayersFocusingMeWait_OnUpdate, dPlayersFocusingMeWait_OnUpdate) != 0) return;
+	if (DetourDetach(&(PVOID&) app::SurvivalAzazelBehaviour_AnnaFrying, dSurvivalAzazelBehaviour_AnnaFrying) != 0) return;
+	if (DetourDetach(&(PVOID&) app::EnemyState_get_MultipleFocus, dEnemyState_get_MultipleFocus) != 0) return;
+	if (DetourDetach(&(PVOID&) app::EnemyState_set_MultipleFocus, dEnemyState_set_MultipleFocus) != 0) return;
+	if (DetourDetach(&(PVOID&) app::Menu_SetupOutfit, dMenu_SetupOutfit) != 0) return;
+	if (DetourDetach(&(PVOID&) app::SteamInventoryManager_UserHasItem, dSteamInventoryManager_UserHasItem) != 0) return;
+	if (DetourDetach(&(PVOID&) app::Menu_get_boltConfig, dMenu_get_boltConfig) != 0) return;
+	if (DetourDetach(&(PVOID&) app::UIOutfitSelectionType_SetLocked, dUIOutfitSelectionType_SetLocked) != 0) return;
+	if (DetourDetach(&(PVOID&) app::CharacterOutfit__ctor, dCharacterOutfit__ctor) != 0) return;
+	if (DetourDetach(&(PVOID&) app::ProtocolTokenUtils_ReadToken, dProtocolTokenUtils_ReadToken) != 0) return;
 
 	if (DetourDetach(&(PVOID&) app::SurvivalReviveInteractable_CanInteract, dSurvivalReviveInteractable_CanInteract) != 0) return;
-	if (DetourDetach(&(PVOID&) app::Interactable_CanInteract, dInteractable_CanInteract) != 0) return;
 	if (DetourDetach(&(PVOID&) app::NolanBehaviour_StartCarry, dNolanBehaviour_StartCarry) != 0) return;
+	if (DetourDetach(&(PVOID&) app::KeyHelpers_IsKeyInArray, dKeyHelpers_IsKeyInArray) != 0) return;
+	if (DetourDetach(&(PVOID&) app::DoorBehaviour_IsLocked, dDoorBehaviour_IsLocked) != 0) return;
 }
