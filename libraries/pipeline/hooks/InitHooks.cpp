@@ -907,9 +907,19 @@ void dCollectableInteractable__ctor(app::CollectableInteractable* __this, Method
 
 		if (obj)
 		{
-			std::cout << "collactable -> " << ToString(obj);
+			// TODO: Collectable Object ESP
 		}
 	}
+}
+
+void dNolanBehaviour_StartCarry(app::NolanBehaviour* __this, app::String* objectName, MethodInfo* method) {
+
+	if (PlayerHelper::IsLocalPlayer(__this) && objectName != nullptr)
+	{
+		std::cout << "carry object name: " << il2cppi_to_string(objectName) << "\n";
+	}
+
+	app::NolanBehaviour_StartCarry(__this, objectName, method);
 }
 
 bool HookFunction(PVOID* ppPointer, PVOID pDetour, const char* functionName)
@@ -1235,6 +1245,29 @@ void DetourInitilization()
 		return;
 	}
 
+	if (!HookFunction(&(PVOID&) app::SurvivalReviveInteractable_CanInteract, dSurvivalReviveInteractable_CanInteract, "dSurvivalReviveInteractable_CanInteract"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::Interactable_CanInteract, dInteractable_CanInteract, "dInteractable_CanInteract"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::CollectableInteractable__ctor, dCollectableInteractable__ctor, "dCollectableInteractable__ctor"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&) app::NolanBehaviour_StartCarry, dNolanBehaviour_StartCarry, "dNolanBehaviour_StartCarry"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
 
 	DetourTransactionCommit();
 }
@@ -1324,5 +1357,5 @@ void DetourUninitialization()
 	if (DetourDetach(&(PVOID&) app::SurvivalReviveInteractable_CanInteract, dSurvivalReviveInteractable_CanInteract) != 0) return;
 	if (DetourDetach(&(PVOID&) app::Interactable_CanInteract, dInteractable_CanInteract) != 0) return;
 	if (DetourDetach(&(PVOID&) app::CollectableInteractable__ctor, dCollectableInteractable__ctor) != 0) return;
-
+	if (DetourDetach(&(PVOID&) app::NolanBehaviour_StartCarry, dNolanBehaviour_StartCarry) != 0) return;
 }

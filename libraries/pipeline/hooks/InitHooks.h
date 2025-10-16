@@ -155,3 +155,6 @@ bool dInteractable_CanInteract(app::Interactable* __this, app::GameObject* chara
 
 // DO_APP_FUNC(0x0072E090, void, CollectableInteractable__ctor, (CollectableInteractable * __this, MethodInfo * method));
 void dCollectableInteractable__ctor(app::CollectableInteractable* __this, MethodInfo* method);
+
+// DO_APP_FUNC(0x005FDEB0, void, NolanBehaviour_StartCarry, (NolanBehaviour * __this, String * objectName, MethodInfo * method));
+void dNolanBehaviour_StartCarry(app::NolanBehaviour* __this, app::String* objectName, MethodInfo* method);
