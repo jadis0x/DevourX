@@ -108,10 +108,10 @@ void dServerConnectToken_Write(app::ServerConnectToken* __this, app::UdpPacket* 
 
 	if (settings.bGhostMod)
 	{
-		f.playerId = nullptr;
-		f.uniqueId = nullptr;
-		f.username = nullptr;
-		f.survivalPrefabIdPreference = nullptr;
+		f.playerId = convert_to_system_string("");
+		f.uniqueId = convert_to_system_string("");
+		f.username = convert_to_system_string("");
+		f.survivalPrefabIdPreference = convert_to_system_string("");
 	}
 
 	if (settings.bForcePublic)
@@ -127,10 +127,10 @@ void dServerConnectToken_Read(app::ServerConnectToken* __this, app::UdpPacket* p
 
 	if (settings.bGhostMod)
 	{
-		f.playerId = nullptr;
-		f.uniqueId = nullptr;
-		f.username = nullptr;
-		f.survivalPrefabIdPreference = nullptr; // test
+		f.playerId = convert_to_system_string("");
+		f.uniqueId = convert_to_system_string("");
+		f.username = convert_to_system_string("");
+		f.survivalPrefabIdPreference = convert_to_system_string(""); // test
 	}
 
 	if (settings.bForcePublic)
