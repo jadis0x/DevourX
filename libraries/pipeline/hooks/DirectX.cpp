@@ -15,6 +15,13 @@
 #include <esp/esp.h>
 #include "devour/devourbase.h"
 
+#include "pipeline/localization/LocalizationManager.h"
+#include <algorithm>
+#include <cctype>
+#include <string>
+#include <string_view>
+#include <unordered_set>
+
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 HWND DirectX::window;
@@ -26,6 +33,143 @@ WNDPROC oWndProc;
 
 HANDLE DirectX::hRenderSemaphore;
 constexpr DWORD MAX_RENDER_THREAD_COUNT = 5;
+
+namespace
+{
+	bool StartsWithInsensitive(const std::string& value, std::string_view prefix)
+	{
+		if (value.size() < prefix.size())
+		{
+			return false;
+		}
+
+		for (size_t i = 0; i < prefix.size(); ++i)
+		{
+			if (std::tolower(static_cast<unsigned char>(value[i])) != std::tolower(static_cast<unsigned char>(prefix[i])))
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	void AddRangeIfNeeded(ImFontGlyphRangesBuilder& builder, std::unordered_set<std::string>& addedScripts, const char* key, const ImWchar* ranges)
+	{
+		if (!ranges)
+		{
+			return;
+		}
+
+		if (addedScripts.insert(key).second)
+		{
+			builder.AddRanges(ranges);
+		}
+	}
+
+	void AddTurkishCharacters(ImFontGlyphRangesBuilder& builder, std::unordered_set<std::string>& addedScripts)
+	{
+		static const ImWchar kLatinExtendedARange[] = {
+				0x0100, 0x017F,
+				0,
+		};
+
+		if (addedScripts.insert("latin_extended_a").second)
+		{
+			builder.AddRanges(kLatinExtendedARange);
+		}
+	}
+
+	void AppendRangesForCulture(const std::string& culture, ImGuiIO& io, ImFontGlyphRangesBuilder& builder, std::unordered_set<std::string>& addedScripts)
+	{
+		if (culture.empty())
+		{
+			return;
+		}
+
+		std::string lowerCulture = culture;
+		std::transform(lowerCulture.begin(), lowerCulture.end(), lowerCulture.begin(), [](unsigned char ch) { return static_cast<char>(std::tolower(ch)); });
+
+		if (StartsWithInsensitive(lowerCulture, "tr"))
+		{
+			AddTurkishCharacters(builder, addedScripts);
+			return;
+		}
+
+		if (StartsWithInsensitive(lowerCulture, "zh-hant") || StartsWithInsensitive(lowerCulture, "zh-tw") || StartsWithInsensitive(lowerCulture, "zh-hk"))
+		{
+			AddRangeIfNeeded(builder, addedScripts, "chinese_full", io.Fonts->GetGlyphRangesChineseFull());
+			return;
+		}
+
+		if (StartsWithInsensitive(lowerCulture, "zh"))
+		{
+			AddRangeIfNeeded(builder, addedScripts, "chinese_simplified", io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
+			return;
+		}
+
+		if (StartsWithInsensitive(lowerCulture, "ja"))
+		{
+			AddRangeIfNeeded(builder, addedScripts, "japanese", io.Fonts->GetGlyphRangesJapanese());
+			return;
+		}
+
+		if (StartsWithInsensitive(lowerCulture, "ko"))
+		{
+			AddRangeIfNeeded(builder, addedScripts, "korean", io.Fonts->GetGlyphRangesKorean());
+			return;
+		}
+
+		if (StartsWithInsensitive(lowerCulture, "ru") || StartsWithInsensitive(lowerCulture, "uk") || StartsWithInsensitive(lowerCulture, "bg") ||
+			StartsWithInsensitive(lowerCulture, "mk") || StartsWithInsensitive(lowerCulture, "sr") || StartsWithInsensitive(lowerCulture, "be"))
+		{
+			AddRangeIfNeeded(builder, addedScripts, "cyrillic", io.Fonts->GetGlyphRangesCyrillic());
+			return;
+		}
+
+		if (StartsWithInsensitive(lowerCulture, "el"))
+		{
+			AddRangeIfNeeded(builder, addedScripts, "greek", io.Fonts->GetGlyphRangesGreek());
+			return;
+		}
+
+		if (StartsWithInsensitive(lowerCulture, "th"))
+		{
+			AddRangeIfNeeded(builder, addedScripts, "thai", io.Fonts->GetGlyphRangesThai());
+			return;
+		}
+
+		if (StartsWithInsensitive(lowerCulture, "vi"))
+		{
+			AddRangeIfNeeded(builder, addedScripts, "vietnamese", io.Fonts->GetGlyphRangesVietnamese());
+			return;
+		}
+
+		// Default Latin range is already included.
+	}
+
+	const ImWchar* BuildSupportedGlyphRanges(ImGuiIO& io)
+	{
+		static ImVector<ImWchar> mergedRanges;
+		ImFontGlyphRangesBuilder builder;
+		std::unordered_set<std::string> addedScripts;
+
+		AddRangeIfNeeded(builder, addedScripts, "default", io.Fonts->GetGlyphRangesDefault());
+
+		const auto availableCultures = Localization::GetAvailableCultures();
+		for (const auto& culture : availableCultures)
+		{
+			AppendRangesForCulture(culture, io, builder, addedScripts);
+		}
+
+		AppendRangesForCulture(Localization::GetFallbackCulture(), io, builder, addedScripts);
+		AppendRangesForCulture(Localization::GetCurrentCulture(), io, builder, addedScripts);
+
+		mergedRanges.clear();
+		builder.BuildRanges(&mergedRanges);
+		return mergedRanges.Data;
+	}
+}
 
 typedef struct Cache
 {
@@ -111,12 +255,16 @@ bool ImGuiInitialization(IDXGISwapChain* pSwapChain) {
 		ImGui_ImplWin32_Init(DirectX::window);
 		ImGui_ImplDX11_Init(pDevice, pContext);
 
+		// Ensure the default UI font contains glyphs for all supported locales
+		const ImWchar* glyphRanges = BuildSupportedGlyphRanges(io);
+
 		ImFontConfig config{};
 		config.OversampleH = 3;
 		config.OversampleV = 1;
 		config.PixelSnapH = true;
+		config.GlyphRanges = glyphRanges;
 
-		if (ImFont* font = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\segoeuib.ttf", 17.0f, &config))
+		if (ImFont* font = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\segoeuib.ttf", 17.0f, &config, glyphRanges))
 			io.FontDefault = font;
 		else
 			std::cout << "[WARN] Font not loaded, using consolas.\n";
