@@ -15,6 +15,7 @@
 #include "pipeline/gui/widgets.h"
 #include "pipeline/keybinds.h"
 #include "pipeline/settings.h"
+#include "pipeline/localization/LocalizationManager.h"
 
 #include <string>
 
@@ -35,33 +36,38 @@ namespace
 			ImGui::Columns(3, nullptr, false);
 
 			ImGui::PushStyleColor(ImGuiCol_Text, kAccentColour);
-			ImGui::TextUnformatted("DevourX");
+			ImGui::TextUnformatted(Localization::Get("menu.header.title").c_str());
 			ImGui::PopStyleColor();
 			const std::string version = "2.1";
-			ImGui::Text("Build %s", version.empty() ? "-" : version.c_str());
-			ImGui::Text("Toggle Menu: %s", KeyBinds::ToString(settings.KeyBinds.Toggle_Menu));
+			const std::string buildLabel = Localization::Format("menu.header.build", version.empty() ? Localization::Get("common.placeholder_dash").c_str() : version.c_str());
+			ImGui::TextUnformatted(buildLabel.c_str());
+			const std::string toggleLabel = Localization::Format("menu.header.toggle", KeyBinds::ToString(settings.KeyBinds.Toggle_Menu));
+			ImGui::TextUnformatted(toggleLabel.c_str());
 
 			ImGui::NextColumn();
-			ImGui::TextColored(kAccentColour, "Steam Account");
-			ImGui::Text("ID: %llu",
+			ImGui::TextColored(kAccentColour, Localization::Get("menu.header.steam_account").c_str());
+			const std::string steamIdLabel = Localization::Format("menu.header.steam_id",
 				static_cast<unsigned long long>(Base::Steam::GetUserID()));
+			ImGui::TextUnformatted(steamIdLabel.c_str());
 			const bool isHost = Base::DevourNet::IsHost();
 			ImGui::TextColored(isHost ? kSuccessColour : kWarningColour,
-				isHost ? "Hosting Lobby" : "Client");
+				Localization::Get(isHost ? "menu.header.host" : "menu.header.client").c_str());
 
 			ImGui::NextColumn();
-			ImGui::TextColored(kAccentColour, "Game State");
+			ImGui::TextColored(kAccentColour, Localization::Get("menu.header.game_state").c_str());
 			const std::string scene = Base::Gameplay::GetSceneName();
-			ImGui::Text("Scene: %s", scene.empty() ? "-" : scene.c_str());
+			const std::string sceneLabel = Localization::Format("menu.header.scene",
+				scene.empty() ? Localization::Get("common.placeholder_dash").c_str() : scene.c_str());
+			ImGui::TextUnformatted(sceneLabel.c_str());
 			const float ping = Base::DevourNet::IsHost() ? 0.0f : Base::DevourNet::GetPing();
 			if (!Base::DevourNet::IsHost())
 			{
 				const ImVec4 pingColour = ping < 60.0f ? kSuccessColour : (ping < 110.0f ? kWarningColour : kDangerColour);
-				ImGui::TextColored(pingColour, "Ping: %d ms", static_cast<int>(ping));
+				ImGui::TextColored(pingColour, Localization::Format("menu.header.ping", static_cast<int>(ping)).c_str());
 			}
 			else
 			{
-				ImGui::TextColored(kSuccessColour, "Ping: 0 ms");
+				ImGui::TextColored(kSuccessColour, Localization::Format("menu.header.ping", 0).c_str());
 			}
 
 			ImGui::Columns(1);
@@ -77,24 +83,25 @@ namespace
 		if (ImGui::BeginChild("##quick_actions", ImVec2(0.0f, 0.0f), true,
 			ImGuiWindowFlags_NoScrollbar))
 		{
-			GuiWidgets::SectionTitle("Quick Actions", kAccentColour);
+			GuiWidgets::SectionTitle("menu.quick_actions.title", kAccentColour);
 
-			ImGui::Checkbox("Azazel ESP", &settings.bAzazelEsp);
-			GuiWidgets::HelpMarker("Highlights the main azazel's position, even through walls.");
-			ImGui::Checkbox("Player ESP", &settings.bPlayerEsp);
-			GuiWidgets::HelpMarker("Shows every player's outline and distance for rapid coordination.");
-			ImGui::Checkbox("Interactable ESP", &settings.bInteractableEsp);
-			GuiWidgets::HelpMarker("Draws markers for keys, fuses and other important pick-ups.");
-
-			ImGui::Spacing();
-			GuiWidgets::SectionTitle("Environment", kAccentColour);
-			ImGui::Checkbox("Fullbright", &settings.bFullbright);
-			GuiWidgets::HelpMarker("Removes almost all darkness.");
-			ImGui::Checkbox("Unlimited UV Light", &settings.bUnlimitedUVLight);
+			ImGui::Checkbox(Localization::Get("menu.quick_actions.azazel_esp").c_str(), &settings.bAzazelEsp);
+			GuiWidgets::HelpMarker("menu.quick_actions.azazel_esp_help");
+			ImGui::Checkbox(Localization::Get("menu.quick_actions.player_esp").c_str(), &settings.bPlayerEsp);
+			GuiWidgets::HelpMarker("menu.quick_actions.player_esp_help");
+			ImGui::Checkbox(Localization::Get("menu.quick_actions.interactable_esp").c_str(), &settings.bInteractableEsp);
+			GuiWidgets::HelpMarker("menu.quick_actions.interactable_esp_help");
 
 			ImGui::Spacing();
-			GuiWidgets::SectionTitle("Status", kAccentColour);
-			ImGui::Text("Auth: %s", settings.bSteamInitialized ? "OK" : "Waiting for Steam");
+			GuiWidgets::SectionTitle("menu.environment.title", kAccentColour);
+			ImGui::Checkbox(Localization::Get("menu.environment.fullbright").c_str(), &settings.bFullbright);
+			GuiWidgets::HelpMarker("menu.environment.fullbright_help");
+			ImGui::Checkbox(Localization::Get("menu.environment.unlimited_uv").c_str(), &settings.bUnlimitedUVLight);
+
+			ImGui::Spacing();
+			GuiWidgets::SectionTitle("menu.status.title", kAccentColour);
+			const std::string& authState = settings.bSteamInitialized ? Localization::Get("menu.status.ok") : Localization::Get("menu.status.waiting");
+			ImGui::TextUnformatted(Localization::Format("menu.status.auth", authState.c_str()).c_str());
 		}
 		ImGui::EndChild();
 		ImGui::PopStyleColor();
@@ -115,7 +122,7 @@ namespace Menu {
 		if (!init)
 			Menu::Init();
 
-		ImGui::Begin("DevourX by Jadis0x", &settings.bShowMenu, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
+		ImGui::Begin(Localization::Get("menu.window.title").c_str(), &settings.bShowMenu, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
 
 		if (firstRender)
 		{

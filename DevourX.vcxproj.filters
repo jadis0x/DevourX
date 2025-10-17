@@ -106,6 +106,9 @@
     <ClCompile Include="libraries\imgui\imgui_widgets.cpp">
       <Filter>libraries\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="libraries\pipeline\localization\LocalizationManager.cpp">
+      <Filter>libraries\pipeline\localization</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="user\main.h">
@@ -237,6 +240,9 @@
     <ClInclude Include="appdata\il2cpp-types-ptr.h">
       <Filter>appdata</Filter>
     </ClInclude>
+    <ClInclude Include="libraries\pipeline\localization\LocalizationManager.h">
+      <Filter>libraries\pipeline\localization</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="appdata">
@@ -283,6 +289,9 @@
     </Filter>
     <Filter Include="user\devour\esp">
       <UniqueIdentifier>{98f8aa45-2495-4f50-9d6c-a988f28d8741}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libraries\pipeline\localization">
+      <UniqueIdentifier>{9662bc46-9a38-49b9-8c3f-8c6b56fcde19}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

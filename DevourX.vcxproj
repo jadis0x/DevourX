@@ -80,6 +80,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="libraries\pipeline\localization\LocalizationManager.cpp" />
     <ClCompile Include="libraries\pipeline\scene_explorer.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -182,6 +183,7 @@
     <ClInclude Include="libraries\pipeline\gui\tabs\PlayerTAB.h" />
     <ClInclude Include="libraries\pipeline\gui\tabs\ServerBrowserTAB.h" />
     <ClInclude Include="libraries\pipeline\gui\widgets.h" />
+    <ClInclude Include="libraries\pipeline\localization\LocalizationManager.h" />
     <ClInclude Include="libraries\resolver\il2cpp_resolver.h" />
     <ClInclude Include="user\devour\devourbase.h" />
     <ClInclude Include="user\esp\esp.h" />
