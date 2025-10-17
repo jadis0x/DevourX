@@ -35,6 +35,7 @@ C:\Program Files (x86)\Steam\steamapps\common\Devour
 - Fullbright
 - Unlimited UV Light
 - UV Light Color Customizer
+- Prefab Spawner
 - Force Lobby Start
 - Unlock Robes
 - Unlock Doors
@@ -49,6 +50,26 @@ C:\Program Files (x86)\Steam\steamapps\common\Devour
 - Create Lobby Without Player Limit
 - SteamID & Name Hook
 - Ghost Join
+
+## Language Support
+DevourX ships with multi-language localization files. The in-game menu can be switched between:
+
+- English (`en-US`)
+- Turkish (`tr-TR`)
+- Simplified Chinese (`zh-CN`)
+- Korean (`ko-KR`)
+
+By default, DevourX prompts you to pick a language on startup. You can change the language at any time from the **Settings → Language** tab inside the menu or by editing `localization/config.json` (`localizationCulture`).
+
+### Adding new languages
+To contribute another language:
+
+1. Duplicate `localization/en-US.json` (or whichever language is closest) and name the copy with your locale code, e.g. `localization/es-ES.json`.
+2. Translate each string value while keeping the JSON keys intact. Values support standard ImGui formatting tokens such as `%s` and `%d`—leave those placeholders untouched so runtime substitutions keep working.
+3. Update the `languages` map at the top of the file so DevourX can display your language name in the selection dropdown.
+4. (Optional) Set your locale as the default by adjusting `localization/config.json` if you want to test it immediately.
+
+Submit the updated JSON file(s) through a pull request.
 
 ## Uninstalling
 1. Close Devour.
