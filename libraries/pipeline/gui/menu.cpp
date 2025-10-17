@@ -1,5 +1,5 @@
-#include "pch-il2cpp.h"
 
+#include "pch-il2cpp.h"
 #include "imgui/imgui.h"
 #include "menu.h"
 
@@ -10,7 +10,6 @@
 #include "pipeline/gui/tabs/MiscTab.h"
 #include "pipeline/gui/tabs/NetworkTab.h"
 #include "pipeline/gui/tabs/PlayerTAB.h"
-#include "pipeline/gui/tabs/ServerBrowserTAB.h"
 #include "pipeline/gui/tabs/SettingsTAB.h"
 #include "pipeline/gui/widgets.h"
 #include "pipeline/keybinds.h"
@@ -18,6 +17,11 @@
 #include "pipeline/localization/LocalizationManager.h"
 
 #include <string>
+#include <limits>
+
+#ifdef max
+#undef max
+#endif
 
 namespace
 {
@@ -40,6 +44,19 @@ namespace
 		gLanguagePromptDontShowAgain = !settings.showLanguagePromptOnStart;
 	}
 
+	void PrepareCenteredModal(float minimumWidth = 0.0f)
+	{
+		const ImGuiViewport* viewport = ImGui::GetMainViewport();
+		ImGui::SetNextWindowPos(viewport->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+		if (minimumWidth > 0.0f)
+		{
+			const float maxWidth = std::numeric_limits<float>::max();
+			ImGui::SetNextWindowSize(ImVec2(minimumWidth, 0.0f), ImGuiCond_Appearing);
+			ImGui::SetNextWindowSizeConstraints(ImVec2(minimumWidth, 0.0f), ImVec2(maxWidth, maxWidth));
+		}
+	}
+
 	void RenderLanguagePrompt()
 	{
 		const std::string title = Localization::Get("popups.language.change_prompt_title");
@@ -49,6 +66,8 @@ namespace
 			ImGui::OpenPopup(popupId.c_str());
 			gOpenLanguagePrompt = false;
 		}
+
+		PrepareCenteredModal(360.0f);
 
 		if (ImGui::BeginPopupModal(popupId.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 		{
@@ -139,6 +158,8 @@ namespace
 			ImGui::OpenPopup(popupId.c_str());
 			gOpenLanguageRestartPopup = false;
 		}
+
+		PrepareCenteredModal(360.0f);
 
 		if (ImGui::BeginPopupModal(popupId.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 		{
@@ -285,7 +306,6 @@ namespace Menu {
 				ItemTAB::Render();
 				PlayerTAB::Render();
 				MapTAB::Render();
-				// ServerBrowserTAB::Render(); marked for removal
 				ImGui::EndTabBar();
 			}
 		}

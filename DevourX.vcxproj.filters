@@ -85,9 +85,6 @@
     <ClCompile Include="libraries\pipeline\gui\tabs\MapTab.cpp">
       <Filter>libraries\pipeline\gui\tabs</Filter>
     </ClCompile>
-    <ClCompile Include="libraries\pipeline\gui\tabs\ServerBrowserTAB.cpp">
-      <Filter>libraries\pipeline\gui\tabs</Filter>
-    </ClCompile>
     <ClCompile Include="libraries\imgui\imgui.cpp">
       <Filter>libraries\imgui</Filter>
     </ClCompile>
@@ -190,9 +187,6 @@
       <Filter>libraries\pipeline\gui\tabs</Filter>
     </ClInclude>
     <ClInclude Include="libraries\pipeline\gui\tabs\MapTab.h">
-      <Filter>libraries\pipeline\gui\tabs</Filter>
-    </ClInclude>
-    <ClInclude Include="libraries\pipeline\gui\tabs\ServerBrowserTAB.h">
       <Filter>libraries\pipeline\gui\tabs</Filter>
     </ClInclude>
     <ClInclude Include="libraries\pipeline\gui\widgets.h">

@@ -14,7 +14,6 @@
 #include <devour/devourbase.h>
 #include <esp/esp.h>
 #include <unordered_map>
-#include <pipeline/gui/tabs/ServerBrowserTAB.h>
 
 using app::Debug_2_Log;
 using app::Debug_2_LogError;
@@ -202,16 +201,6 @@ void dServerAcceptToken_Read(app::ServerAcceptToken* __this, app::UdpPacket* pac
 	}
 
 	app::ServerAcceptToken_Read(__this, packet, method);
-}
-
-void dServerBrowser_Populate(app::ServerBrowser* __this, app::Map_2_System_Guid_UdpSession_* sessions, MethodInfo* method) {
-	// global vars
-	Base::GlobalVar::__browser = __this;
-	g_ServerList.clear();
-
-	app::ServerBrowser_Populate(__this, sessions, method);
-
-	ServerBrowserTAB::CollectServers(sessions);
 }
 
 void dPhotonRoomProperties_Read(app::PhotonRoomProperties* __this, app::UdpPacket* packet, MethodInfo* method) {
@@ -1198,12 +1187,6 @@ void DetourInitilization() {
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&) app::ServerBrowser_Populate, dServerBrowser_Populate, "ServerBrowser_Populate"))
-	{
-		DetourTransactionAbort();
-		return;
-	}
-
 	if (!HookFunction(&(PVOID&) app::PhotonRoomProperties_Read, dPhotonRoomProperties_Read, "dPhotonRoomProperties_Read"))
 	{
 		DetourTransactionAbort();
@@ -1390,7 +1373,6 @@ void DetourUninitialization() {
 	if (DetourDetach(&(PVOID&) app::ServerConnectToken_Read, dServerConnectToken_Read) != 0) return;
 
 	if (DetourDetach(&(PVOID&) app::ServerAcceptToken_Read, dServerAcceptToken_Read) != 0) return;
-	if (DetourDetach(&(PVOID&) app::ServerBrowser_Populate, dServerBrowser_Populate) != 0) return;
 	if (DetourDetach(&(PVOID&) app::PhotonRoomProperties_Read, dPhotonRoomProperties_Read) != 0) return;
 	if (DetourDetach(&(PVOID&) app::SteamUser_GetSteamID, dSteamUser_GetSteamID) != 0) return;
 	if (DetourDetach(&(PVOID&) app::ServerBrowser_JoinSession, dServerBrowser_JoinSession) != 0) return;

@@ -99,9 +99,6 @@ void dMenu_Update(app::Menu* __this, MethodInfo* method);
 // DO_APP_FUNC(0x00746020, void, ServerAcceptToken_Read, (ServerAcceptToken * __this, UdpPacket * packet, MethodInfo * method));
 void dServerAcceptToken_Read(app::ServerAcceptToken* __this, app::UdpPacket* packet, MethodInfo* method);
 
-// DO_APP_FUNC(0x00748010, void, ServerBrowser_Populate, (ServerBrowser * __this, Map_2_System_Guid_UdpSession_ * sessions, MethodInfo * method));
-void dServerBrowser_Populate(app::ServerBrowser* __this, app::Map_2_System_Guid_UdpSession_* sessions, MethodInfo* method);
-
 // DO_APP_FUNC(0x007453D0, void, RoomProtocolToken_Read, (RoomProtocolToken * __this, UdpPacket * packet, MethodInfo * method));
 void dPhotonRoomProperties_Read(app::PhotonRoomProperties* __this, app::UdpPacket* packet, MethodInfo* method);
 
