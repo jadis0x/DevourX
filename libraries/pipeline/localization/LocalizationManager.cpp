@@ -208,7 +208,13 @@ namespace Localization
             return cultures;
         }
 
-        for (const auto& entry : fs::directory_iterator(gLocalizationRoot))
+        if (!fs::exists(gLocalizationRoot) || !fs::is_directory(gLocalizationRoot))
+        {
+            return cultures;
+        }
+
+        std::error_code iteratorError;
+        for (const auto& entry : fs::directory_iterator(gLocalizationRoot, iteratorError))
         {
             if (!entry.is_regular_file())
             {
@@ -221,6 +227,12 @@ namespace Localization
             }
 
             cultures.emplace_back(entry.path().stem().string());
+        }
+
+        if (iteratorError)
+        {
+            cultures.clear();
+            return cultures;
         }
 
         std::sort(cultures.begin(), cultures.end());
