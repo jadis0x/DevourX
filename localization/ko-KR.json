@@ -1,0 +1,269 @@
+{
+  "languages": {
+    "en-US": "영어",
+    "tr-TR": "터키어",
+    "zh-CN": "중국어(간체)",
+    "ko-KR": "한국어"
+  },
+  "common": {
+    "help_icon": "(?)",
+    "placeholder_dash": "-",
+    "language_unavailable": "로컬라이즈 파일을 찾을 수 없습니다.",
+    "ok": "확인",
+    "cancel": "취소",
+    "save": "저장"
+  },
+  "menu": {
+    "window": {
+      "title": "DevourX (제작: Jadis0x)"
+    },
+    "header": {
+      "title": "DevourX",
+      "build": "빌드 %s",
+      "toggle": "메뉴 전환: %s",
+      "steam_account": "Steam 계정",
+      "steam_id": "ID: %llu",
+      "host": "로비 호스트",
+      "client": "클라이언트",
+      "game_state": "게임 상태",
+      "scene": "장면: %s",
+      "ping": "핑: %d ms",
+      "ping_host": "핑: 0 ms"
+    },
+    "quick_actions": {
+      "title": "빠른 동작",
+      "azazel_esp": "아자젤 ESP",
+      "azazel_esp_help": "주요 아자젤의 위치를 벽 너머에서도 강조합니다.",
+      "player_esp": "플레이어 ESP",
+      "player_esp_help": "모든 플레이어의 윤곽과 거리를 표시해 빠른 협동을 돕습니다.",
+      "interactable_esp": "상호작용 ESP",
+      "interactable_esp_help": "열쇠, 퓨즈 등 중요한 아이템에 마커를 표시합니다."
+    },
+    "environment": {
+      "title": "환경",
+      "fullbright": "풀브라이트",
+      "fullbright_help": "어둠을 거의 모두 제거합니다.",
+      "unlimited_uv": "무제한 UV 빛"
+    },
+    "status": {
+      "title": "상태",
+      "auth": "인증: %s",
+      "ok": "정상",
+      "waiting": "Steam 대기 중"
+    }
+  },
+  "popups": {
+    "language": {
+      "change_prompt_title": "언어를 변경할까요?",
+      "change_prompt_message": "DevourX에서 사용할 언어를 변경하시겠습니까?",
+      "dont_show_again": "다시 표시하지 않기",
+      "restart_title": "재시작 필요",
+      "restart_required": "언어 변경을 적용하려면 게임을 다시 시작하세요."
+    }
+  },
+  "tabs": {
+    "settings": {
+      "title": "설정",
+      "session": {
+        "title": "세션",
+        "framerate": "프레임레이트: %.1f",
+        "version": "버전: %s",
+        "menu_toggle": "메뉴 전환: %s",
+        "discord": "Discord: Jadis0x"
+      },
+      "language": {
+        "title": "언어",
+        "dropdown": "언어",
+        "missing": "사용 가능한 언어가 없습니다"
+      },
+      "visual": {
+        "title": "시각 오버라이드",
+        "post_fx": "포스트 FX 오버라이드 (실험적)",
+        "post_fx_help": "다음 레벨 로드시 사용자 정의 후처리 설정을 강제로 적용합니다.\n공포 맵을 밝히기에 좋지만 경기 중에는 끌 수 없습니다.",
+        "unity_logs": "Unity 로그 표시"
+      },
+      "hint": "DevourX를 빠르게 숨겨야 하나요? 언제든지 %s 를 눌러 메뉴를 전환하세요.",
+      "unhook_button": "안전하게 언후크하고 닫기"
+    },
+    "esp": {
+      "title": "ESP",
+      "visual_tracking": "시각 추적",
+      "azazel": {
+        "title": "아자젤",
+        "enable": "ESP 활성화",
+        "offscreen": "오프스크린 표시"
+      },
+      "players": {
+        "title": "플레이어",
+        "enable": "플레이어 ESP",
+        "help": "벽 너머에서도 플레이어와 거리를 보여줍니다.",
+        "offscreen": "플레이어 오프스크린 라인"
+      },
+      "items": {
+        "title": "월드 아이템",
+        "enable": "상호작용 아이템 ESP",
+        "help": "열쇠, 의식 아이템 등을 강조해 빠르게 찾을 수 있습니다."
+      }
+    },
+    "misc": {
+      "title": "기타",
+      "progression": {
+        "title": "진행도",
+        "modify_exp": "EXP 획득 조정",
+        "xp_slider": "경험치",
+        "modify_uv": "UV 색상 조정"
+      },
+      "world": {
+        "title": "월드 편의 기능",
+        "unlock_doors": "문 잠금 해제",
+        "disable_long_interact": "긴 상호작용 비활성화",
+        "auto_calm": "근처에서 자동 진정",
+        "never_calm": "절대 진정 안 함"
+      },
+      "azazel": {
+        "title": "아자젤 행동",
+        "modify_speed": "아자젤 속도 조정",
+        "help": "아자젤이 맵을 이동하는 속도를 변경합니다.",
+        "speed_slider": "새 속도"
+      }
+    },
+    "network": {
+      "title": "네트워크",
+      "ping": "핑: %dms",
+      "manager": {
+        "title": "로비 관리자",
+        "region": "지역",
+        "lobby_size": "로비 크기",
+        "private_lobby": "비공개 로비",
+        "create": "로비 생성"
+      },
+      "control": {
+        "title": "로비 제어",
+        "change_room": "방 이름 변경",
+        "new_room": "새 방 이름",
+        "ghost": "고스트 모드 (은신 참가)",
+        "ghost_help": "보이지 않는 상태로 참가합니다. 당신은 모두를 보고 들을 수 있지만, 아무도 당신을 볼 수 없습니다!",
+        "force_public": "로비 공개하기",
+        "force_public_help": "활성화하면 현재 비공개 로비를 강제로 모두에게 공개합니다.",
+        "fake_state": "가짜 게임 상태",
+        "fake_state_help": "활성화하면 현재 로비가 진행 중인지 아닌지 속일 수 있습니다."
+      },
+      "spoof": {
+        "name": "Steam 이름 위장",
+        "custom_name": "사용자 정의 Steam 이름",
+        "id": "Steam ID 위장",
+        "custom_id": "사용자 정의 Steam ID",
+        "generate": "랜덤 SteamID 생성"
+      }
+    },
+    "items": {
+      "title": "아이템",
+      "spawn": "소환",
+      "items_section": {
+        "title": "아이템",
+        "hay": "건초",
+        "first_aid": "구급상자",
+        "spade": "삽",
+        "cake": "케이크",
+        "battery": "배터리",
+        "gasoline": "가솔린",
+        "fuse": "퓨즈",
+        "food": "음식",
+        "bleach": "표백제",
+        "bone": "뼈",
+        "salt": "소금",
+        "ritual_book_inactive": "의식서(비활성)",
+        "ritual_book_active": "의식서(활성)",
+        "matchbox": "성냥갑",
+        "egg_1": "알-1",
+        "egg_2": "알-2",
+        "egg_3": "알-3",
+        "egg_4": "알-4",
+        "egg_5": "알-5",
+        "egg_6": "알-6",
+        "egg_7": "알-7",
+        "egg_8": "알-8",
+        "egg_9": "알-9",
+        "egg_10": "알-10",
+        "head_dirty_gardener": "머리 (더러움/정원사)",
+        "head_clean_gardener": "머리 (깨끗함/정원사)",
+        "head_dirty_butler": "머리 (더러움/집사)",
+        "head_clean_butler": "머리 (깨끗함/집사)",
+        "head_dirty_bridesmaid_01": "머리 (더러움/브라이드메이드_01)",
+        "head_clean_bridesmaid_01": "머리 (깨끗함/브라이드메이드_01)",
+        "head_dirty_bridesmaid_02": "머리 (더러움/브라이드메이드_02)",
+        "head_clean_bridesmaid_02": "머리 (깨끗함/브라이드메이드_02)",
+        "head_dirty_cook": "머리 (더러움/요리사)",
+        "head_clean_cook": "머리 (깨끗함/요리사)",
+        "head_dirty_groomsman_01": "머리 (더러움/그룸스맨_01)",
+        "head_clean_groomsman_01": "머리 (깨끗함/그룸스맨_01)",
+        "head_dirty_groomsman_02": "머리 (더러움/그룸스맨_02)",
+        "head_clean_groomsman_02": "머리 (깨끗함/그룸스맨_02)",
+        "head_dirty_maid": "머리 (더러움/하녀)",
+        "head_clean_maid": "머리 (깨끗함/하녀)",
+        "head_dirty_photographer": "머리 (더러움/사진가)",
+        "head_clean_photographer": "머리 (깨끗함/사진가)",
+        "head_dirty_priest": "머리 (더러움/사제)",
+        "head_clean_priest": "머리 (깨끗함/사제)",
+        "coin": "동전",
+        "music_box_idle": "뮤직 박스 (대기)",
+        "music_box_armed": "뮤직 박스 (작동)",
+        "survival_doll_head": "인형 머리"
+      },
+      "animals_section": {
+        "title": "동물",
+        "rat": "쥐",
+        "goat": "염소",
+        "pig": "돼지"
+      },
+      "prefabs_section": {
+        "title": "프리팹"
+      }
+    },
+    "player": {
+      "title": "플레이어 관리자",
+      "local_options": "로컬 플레이어 옵션:",
+      "modify_rank": "플레이어 랭크 조정",
+      "rank_slider": "새 랭크",
+      "modify_speed": "플레이어 속도 조정",
+      "speed_slider": "새 속도",
+      "fly": "비행",
+      "fly_speed": "비행 속도",
+      "fullbright": "풀브라이트",
+      "unlimited_uv": "무제한 UV 빛",
+      "list_title": "플레이어 목록:",
+      "table": {
+        "id": "ID",
+        "name": "이름",
+        "null": "null"
+      },
+      "actions": {
+        "kill": "처치",
+        "revive": "부활",
+        "jumpscare": "깜짝 놀래키기",
+        "teleport": "순간이동",
+        "teleport_azazel": "아자젤에게 순간이동",
+        "shoot": "발사"
+      },
+      "no_players": "플레이어를 찾을 수 없습니다."
+    },
+    "map": {
+      "title": "맵 관리자",
+      "mouse_follower": "[로비] 동적 마우스 추적기",
+      "offset_x": "X 오프셋",
+      "offset_y": "Y 오프셋",
+      "lerp_speed": "보간 속도",
+      "force_start": "[강제] 로비 시작",
+      "force_progress": "[강제] 진행도 설정:",
+      "progress_slider": "맵 진행도"
+    },
+    "server_browser": {
+      "title": "서버 브라우저",
+      "fix_button": "로딩에 멈췄나요? 수정하기",
+      "search_placeholder": "서버 검색...",
+      "unknown_name": "*<알 수 없음>",
+      "session_id": "세션 ID:",
+      "join_button": "참여"
+    }
+  }
+}

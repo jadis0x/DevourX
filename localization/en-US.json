@@ -1,7 +1,9 @@
 {
   "languages": {
     "en-US": "English",
-    "tr-TR": "Turkish"
+    "tr-TR": "Turkish",
+    "zh-CN": "Chinese",
+    "ko-KR": "Korean"
   },
   "common": {
     "help_icon": "(?)",

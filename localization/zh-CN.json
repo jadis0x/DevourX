@@ -1,0 +1,269 @@
+{
+  "languages": {
+    "en-US": "英语",
+    "tr-TR": "土耳其语",
+    "zh-CN": "简体中文",
+    "ko-KR": "韩语"
+  },
+  "common": {
+    "help_icon": "(?)",
+    "placeholder_dash": "-",
+    "language_unavailable": "未找到本地化文件。",
+    "ok": "确定",
+    "cancel": "取消",
+    "save": "保存"
+  },
+  "menu": {
+    "window": {
+      "title": "DevourX（作者 Jadis0x）"
+    },
+    "header": {
+      "title": "DevourX",
+      "build": "构建 %s",
+      "toggle": "切换菜单：%s",
+      "steam_account": "Steam 账户",
+      "steam_id": "ID：%llu",
+      "host": "主持大厅",
+      "client": "客户端",
+      "game_state": "游戏状态",
+      "scene": "场景：%s",
+      "ping": "延迟：%d ms",
+      "ping_host": "延迟：0 ms"
+    },
+    "quick_actions": {
+      "title": "快速操作",
+      "azazel_esp": "阿扎泽尔透视",
+      "azazel_esp_help": "高亮主阿扎泽尔的位置，即使隔着墙。",
+      "player_esp": "玩家透视",
+      "player_esp_help": "显示每位玩家的轮廓与距离，便于快速协作。",
+      "interactable_esp": "互动物品透视",
+      "interactable_esp_help": "为钥匙、保险丝等重要拾取物显示标记。"
+    },
+    "environment": {
+      "title": "环境",
+      "fullbright": "全亮",
+      "fullbright_help": "移除几乎所有黑暗。",
+      "unlimited_uv": "无限 UV 光"
+    },
+    "status": {
+      "title": "状态",
+      "auth": "认证：%s",
+      "ok": "正常",
+      "waiting": "等待 Steam"
+    }
+  },
+  "popups": {
+    "language": {
+      "change_prompt_title": "更改语言？",
+      "change_prompt_message": "要更改 DevourX 使用的语言吗？",
+      "dont_show_again": "不再提示",
+      "restart_title": "需要重启",
+      "restart_required": "重新启动游戏以使语言更改生效。"
+    }
+  },
+  "tabs": {
+    "settings": {
+      "title": "设置",
+      "session": {
+        "title": "会话",
+        "framerate": "帧率：%.1f",
+        "version": "版本：%s",
+        "menu_toggle": "菜单切换：%s",
+        "discord": "Discord：Jadis0x"
+      },
+      "language": {
+        "title": "语言",
+        "dropdown": "语言",
+        "missing": "没有可用的语言"
+      },
+      "visual": {
+        "title": "视觉覆盖",
+        "post_fx": "后处理覆盖（实验性）",
+        "post_fx_help": "在下一次加载关卡时强制使用自定义后期处理设置。\n非常适合照亮恐怖地图，但无法在对局中途关闭。",
+        "unity_logs": "显示 Unity 日志"
+      },
+      "hint": "需要快速隐藏 DevourX？随时按下 %s 切换菜单。",
+      "unhook_button": "安全卸载并关闭"
+    },
+    "esp": {
+      "title": "透视",
+      "visual_tracking": "视觉追踪",
+      "azazel": {
+        "title": "阿扎泽尔",
+        "enable": "启用透视",
+        "offscreen": "屏外指示"
+      },
+      "players": {
+        "title": "玩家",
+        "enable": "玩家透视",
+        "help": "透视显示玩家并显示距离。",
+        "offscreen": "玩家屏外指示线"
+      },
+      "items": {
+        "title": "世界物品",
+        "enable": "互动物品透视",
+        "help": "高亮钥匙、仪式道具等目标，方便快速规划。"
+      }
+    },
+    "misc": {
+      "title": "杂项",
+      "progression": {
+        "title": "进度",
+        "modify_exp": "调整经验获取",
+        "xp_slider": "经验",
+        "modify_uv": "调整 UV 颜色"
+      },
+      "world": {
+        "title": "世界便利功能",
+        "unlock_doors": "解锁门",
+        "disable_long_interact": "禁用长时间互动",
+        "auto_calm": "靠近时自动安抚",
+        "never_calm": "永不安抚"
+      },
+      "azazel": {
+        "title": "阿扎泽尔行为",
+        "modify_speed": "修改阿扎泽尔速度",
+        "help": "调整阿扎泽尔在地图上移动的速度。",
+        "speed_slider": "新速度"
+      }
+    },
+    "network": {
+      "title": "网络",
+      "ping": "延迟：%dms",
+      "manager": {
+        "title": "大厅管理",
+        "region": "地区",
+        "lobby_size": "大厅人数",
+        "private_lobby": "私人大厅",
+        "create": "创建大厅"
+      },
+      "control": {
+        "title": "大厅控制",
+        "change_room": "更改房间名称",
+        "new_room": "新房间名称",
+        "ghost": "幽灵模式（潜入加入）",
+        "ghost_help": "以隐形身份加入。没人能看到你，但你能看到并听到他们！",
+        "force_public": "强制公开大厅",
+        "force_public_help": "启用后，将强制把当前私人大厅设为公开，对所有人可见。",
+        "fake_state": "伪装游戏状态",
+        "fake_state_help": "启用后，当前大厅将显示为游戏仍在进行或未开始。"
+      },
+      "spoof": {
+        "name": "伪装 Steam 名称",
+        "custom_name": "自定义 Steam 名称",
+        "id": "伪装 Steam ID",
+        "custom_id": "自定义 Steam ID",
+        "generate": "生成随机 SteamID"
+      }
+    },
+    "items": {
+      "title": "物品",
+      "spawn": "生成",
+      "items_section": {
+        "title": "物品",
+        "hay": "干草",
+        "first_aid": "急救包",
+        "spade": "铁锹",
+        "cake": "蛋糕",
+        "battery": "电池",
+        "gasoline": "汽油",
+        "fuse": "保险丝",
+        "food": "食物",
+        "bleach": "漂白剂",
+        "bone": "骨头",
+        "salt": "盐",
+        "ritual_book_inactive": "仪式书（未激活）",
+        "ritual_book_active": "仪式书（已激活）",
+        "matchbox": "火柴盒",
+        "egg_1": "蛋-1",
+        "egg_2": "蛋-2",
+        "egg_3": "蛋-3",
+        "egg_4": "蛋-4",
+        "egg_5": "蛋-5",
+        "egg_6": "蛋-6",
+        "egg_7": "蛋-7",
+        "egg_8": "蛋-8",
+        "egg_9": "蛋-9",
+        "egg_10": "蛋-10",
+        "head_dirty_gardener": "头颅（脏/园丁）",
+        "head_clean_gardener": "头颅（干净/园丁）",
+        "head_dirty_butler": "头颅（脏/管家）",
+        "head_clean_butler": "头颅（干净/管家）",
+        "head_dirty_bridesmaid_01": "头颅（脏/伴娘_01）",
+        "head_clean_bridesmaid_01": "头颅（干净/伴娘_01）",
+        "head_dirty_bridesmaid_02": "头颅（脏/伴娘_02）",
+        "head_clean_bridesmaid_02": "头颅（干净/伴娘_02）",
+        "head_dirty_cook": "头颅（脏/厨师）",
+        "head_clean_cook": "头颅（干净/厨师）",
+        "head_dirty_groomsman_01": "头颅（脏/伴郎_01）",
+        "head_clean_groomsman_01": "头颅（干净/伴郎_01）",
+        "head_dirty_groomsman_02": "头颅（脏/伴郎_02）",
+        "head_clean_groomsman_02": "头颅（干净/伴郎_02）",
+        "head_dirty_maid": "头颅（脏/女仆）",
+        "head_clean_maid": "头颅（干净/女仆）",
+        "head_dirty_photographer": "头颅（脏/摄影师）",
+        "head_clean_photographer": "头颅（干净/摄影师）",
+        "head_dirty_priest": "头颅（脏/牧师）",
+        "head_clean_priest": "头颅（干净/牧师）",
+        "coin": "硬币",
+        "music_box_idle": "八音盒（待机）",
+        "music_box_armed": "八音盒（激活）",
+        "survival_doll_head": "玩偶头颅"
+      },
+      "animals_section": {
+        "title": "动物",
+        "rat": "老鼠",
+        "goat": "山羊",
+        "pig": "猪"
+      },
+      "prefabs_section": {
+        "title": "预制体"
+      }
+    },
+    "player": {
+      "title": "玩家管理",
+      "local_options": "本地玩家选项：",
+      "modify_rank": "修改玩家段位",
+      "rank_slider": "新段位",
+      "modify_speed": "修改玩家速度",
+      "speed_slider": "新速度",
+      "fly": "飞行",
+      "fly_speed": "飞行速度",
+      "fullbright": "全亮",
+      "unlimited_uv": "无限 UV 光",
+      "list_title": "玩家列表：",
+      "table": {
+        "id": "ID",
+        "name": "名称",
+        "null": "null"
+      },
+      "actions": {
+        "kill": "击杀",
+        "revive": "复活",
+        "jumpscare": "惊吓",
+        "teleport": "传送",
+        "teleport_azazel": "传送到阿扎泽尔",
+        "shoot": "射击"
+      },
+      "no_players": "未找到玩家。"
+    },
+    "map": {
+      "title": "地图管理",
+      "mouse_follower": "[大厅] 动态鼠标跟随",
+      "offset_x": "X 偏移",
+      "offset_y": "Y 偏移",
+      "lerp_speed": "插值速度",
+      "force_start": "[强制] 大厅开始",
+      "force_progress": "[强制] 设置进度为：",
+      "progress_slider": "地图进度"
+    },
+    "server_browser": {
+      "title": "服务器浏览器",
+      "fix_button": "卡在加载？尝试修复",
+      "search_placeholder": "搜索服务器...",
+      "unknown_name": "*<未知>",
+      "session_id": "会话 ID：",
+      "join_button": "加入"
+    }
+  }
+}

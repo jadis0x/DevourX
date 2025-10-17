@@ -7,6 +7,8 @@
 #include <resolver/il2cpp_resolver.h>
 #include <random>
 #include <iostream>
+#include <string_view>
+
 
 app::ServerConnectToken* Base::GlobalVar::__g_connectToken = nullptr;
 
@@ -338,18 +340,63 @@ void Base::Gameplay::InstantiatePrefab(const char* prefabName, app::PrefabId app
 	if (!transform) return;
 
 	app::Vector3 pos = app::Transform_get_position(transform, nullptr);
-	app::Quaternion rot{ 0.f, 0.f, 0.f, 1.f };
+	app::Vector3 forward = app::Transform_get_forward(transform, nullptr);
+
+	pos.x += forward.x * 1.5f;
+	pos.y += forward.y * 1.5f;
+	pos.z += forward.z * 1.5f;
+
+	app::Quaternion rot = app::Transform_get_rotation(transform, nullptr);
 
 	const app::PrefabId prefabId = typeInfo->static_fields->*prefabField;
-	auto* spawned = app::BoltNetwork_Instantiate_6(prefabId, pos, rot, nullptr);
 
 	SafePtr::safe_call([&]() {
-		spawned = app::BoltNetwork_Instantiate_6(prefabId, pos, rot, nullptr);
+		auto* spawned = app::BoltNetwork_Instantiate_6(prefabId, pos, rot, nullptr);
 
 		if (spawned && spawned->klass)
 		{
 			std::cout << "[+] Spawn successful: "
 				<< (prefabName ? prefabName : "<unknown>") << " -> " << spawned << std::endl;
+
+			auto* gameObject = app::Component_get_gameObject(reinterpret_cast<app::Component*>(spawned), nullptr);
+			if (!gameObject) return;
+
+			app::String* compName = convert_to_system_string("SurvivalAzazelBehaviour");
+			auto* behaviourComp = app::GameObject_GetComponentByName(gameObject, compName, nullptr);
+
+			if (behaviourComp)
+			{
+				std::cout << "[+] Found SurvivalAzazelBehaviour, calling Spawn()\n";
+
+				Il2CppClass* behaviourKlass = il2cpp_object_get_class(reinterpret_cast<Il2CppObject*>(behaviourComp));
+				il2cpp_runtime_class_init(behaviourKlass);
+
+				const MethodInfo* spawnMethod = il2cpp_class_get_method_from_name(behaviourKlass, "Spawn", 0);
+				if (spawnMethod)
+				{
+					Il2CppException* exc = nullptr;
+					il2cpp_runtime_invoke(spawnMethod, behaviourComp, nullptr, &exc);
+
+					if (exc)
+					{
+						char msg[512];
+						il2cpp_format_exception(exc, msg, sizeof(msg));
+						std::cout << "[-] Exception calling Spawn(): " << msg << std::endl;
+					}
+					else
+					{
+						std::cout << "[+] AI Spawn() called successfully.\n";
+					}
+				}
+				else
+				{
+					std::cout << "[-] Spawn() method not found on SurvivalAzazelBehaviour.\n";
+				}
+			}
+			else
+			{
+				std::cout << "[-] SurvivalAzazelBehaviour component not found on prefab.\n";
+			}
 		}
 		else
 		{
