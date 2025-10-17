@@ -27,7 +27,6 @@ namespace {
 			{ "Food", "tabs.items.items_section.food" },
 			{ "Bleach", "tabs.items.items_section.bleach" },
 			{ "Bone", "tabs.items.items_section.bone" },
-			{ "Salt", "tabs.items.items_section.salt" },
 			{ "Ritual Book (in-active)", "tabs.items.items_section.ritual_book_inactive" },
 			{ "Ritual Book (active)", "tabs.items.items_section.ritual_book_active" },
 			{ "Matchbox", "tabs.items.items_section.matchbox" },
