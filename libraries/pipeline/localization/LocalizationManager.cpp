@@ -19,7 +19,7 @@ namespace
     using json = nlohmann::json;
     namespace fs = std::filesystem;
 
-    constexpr const char* kLocalizationDirectory = "Localization";
+    constexpr const char* kLocalizationDirectory = "localization";
     const std::string kFallbackCultureCode = "en-US";
 
     std::mutex gLocalizationMutex;

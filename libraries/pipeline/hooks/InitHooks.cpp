@@ -27,6 +27,23 @@ using app::Exception;
 std::unordered_map<int32_t, std::vector<app::SteamItemDetails_t>> spoofedResults;
 app::Menu* globalMenu;
 
+namespace
+{
+	void HandleUnityLog(const char* level, const std::string& message)
+	{
+		if (!settings.bEnableUnityLogs || !level)
+		{
+			return;
+		}
+
+		std::string formattedMessage = "[UNITY][";
+		formattedMessage.append(level).append("] ").append(message);
+
+		il2cppi_log_write(formattedMessage);
+		std::cout << formattedMessage << std::endl;
+	}
+}
+
 std::vector<int> spoofedItemIDs = {
 	121, 11, 8, 10, 6, 7, 16, 24, 14, 15, 4, 48, 12, 17, 28, 13, 23, 31, 38,
 	9, 25, 26, 32, 33, 30, 49, 51, 97, 68, 80, 75, 62, 85, 59, 61, 57, 78,
@@ -36,32 +53,44 @@ std::vector<int> spoofedItemIDs = {
 static bool fxApplied = false;
 
 void dDebug_Log(Object* message, MethodInfo* method) {
-	if (settings.bEnableUnityLogs)
-		std::cout << "[UNITY]: " << ToString(message) << std::endl;
+	HandleUnityLog("Log", ToString(message));
 
 	app::Debug_2_Log(message, method);
 }
 
 void dDebug_LogError(Object* message, MethodInfo* method) {
-	if (settings.bEnableUnityLogs)
-		std::cout << "[UNITY]: " << ToString(message) << std::endl;
+	HandleUnityLog("Error", ToString(message));
 
 	app::Debug_2_LogError(message, method);
 }
 
 void dDebug_LogException(Exception* exception, MethodInfo* method) {
-	if (settings.bEnableUnityLogs)
+	if (exception != nullptr)
 	{
 		std::string excMsg = il2cppi_to_string(exception->fields._message);
 		std::cout << "[UNITY]: " << excMsg << std::endl;
+
+		if (auto* stackTrace = exception->fields._stackTraceString; stackTrace != nullptr)
+		{
+			const std::string stack = il2cppi_to_string(stackTrace);
+			if (!stack.empty())
+			{
+				excMsg.append("\n").append(stack);
+			}
+		}
+
+		HandleUnityLog("Exception", excMsg);
+	}
+	else
+	{
+		HandleUnityLog("Exception", "<nullptr exception>");
 	}
 
 	app::Debug_2_LogException(exception, method);
 }
 
 void dDebug_LogWarning(app::Object* message, MethodInfo* method) {
-	if (settings.bEnableUnityLogs)
-		std::cout << "[UNITY]: " << ToString(message) << std::endl;
+	HandleUnityLog("Warning", ToString(message));
 
 	app::Debug_2_LogWarning(message, method);
 }
