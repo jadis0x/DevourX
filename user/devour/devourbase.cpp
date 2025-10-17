@@ -34,9 +34,9 @@ void Base::Gameplay::FullBright(app::NolanBehaviour* localPlayer_nolanBehaviour)
 	{
 		if (app::Light* flashlight = localPlayer_nolanBehaviour->fields.flashlightSpot; flashlight != nullptr)
 		{
-			app::Light_set_intensity(flashlight, 1.0f, nullptr);
-			app::Light_set_range(flashlight, 90.f, nullptr);
-			app::Light_set_spotAngle(flashlight, 178.f, nullptr);
+			app::Light_set_intensity(flashlight, 1.5f, nullptr);
+			app::Light_set_range(flashlight, 300.f, nullptr);
+			app::Light_set_spotAngle(flashlight, 170.f, nullptr);
 
 			app::Light_set_shadows(flashlight, app::LightShadows__Enum::None, nullptr);
 		}

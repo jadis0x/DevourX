@@ -21,6 +21,7 @@
 #include <string>
 #include <string_view>
 #include <unordered_set>
+#include <filesystem>
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -148,7 +149,60 @@ namespace
 		// Default Latin range is already included.
 	}
 
-	const ImWchar* BuildSupportedGlyphRanges(ImGuiIO& io)
+	bool TryAddFallbackFont(ImGuiIO& io, const char* fontPath, float size, const ImWchar* glyphRanges)
+	{
+		if (!glyphRanges)
+		{
+			return false;
+		}
+
+		namespace fs = std::filesystem;
+		if (!fs::exists(fontPath))
+		{
+			std::cout << "[WARN] Fallback font file not found: " << fontPath << "\n";
+			return false;
+		}
+
+		ImFontConfig mergeConfig{};
+		mergeConfig.MergeMode = true;
+		mergeConfig.PixelSnapH = true;
+		mergeConfig.OversampleH = 3;
+		mergeConfig.OversampleV = 1;
+		mergeConfig.GlyphRanges = glyphRanges;
+
+		if (ImFont* font = io.Fonts->AddFontFromFileTTF(fontPath, size, &mergeConfig, glyphRanges))
+		{
+			std::cout << "[INFO] Loaded fallback font: " << fontPath << "\n";
+			return true;
+		}
+
+		std::cout << "[WARN] Failed to load fallback font: " << fontPath << "\n";
+		return false;
+	}
+
+	void LoadFallbackFonts(ImGuiIO& io, const std::unordered_set<std::string>& requiredScripts, float size)
+	{
+		if (requiredScripts.count("chinese_full"))
+		{
+			TryAddFallbackFont(io, "C:\\Windows\\Fonts\\msjh.ttc", size, io.Fonts->GetGlyphRangesChineseFull());
+		}
+		else if (requiredScripts.count("chinese_simplified"))
+		{
+			TryAddFallbackFont(io, "C:\\Windows\\Fonts\\msyh.ttc", size, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
+		}
+
+		if (requiredScripts.count("japanese"))
+		{
+			TryAddFallbackFont(io, "C:\\Windows\\Fonts\\meiryo.ttc", size, io.Fonts->GetGlyphRangesJapanese());
+		}
+
+		if (requiredScripts.count("korean"))
+		{
+			TryAddFallbackFont(io, "C:\\Windows\\Fonts\\malgun.ttf", size, io.Fonts->GetGlyphRangesKorean());
+		}
+	}
+
+	const ImWchar* BuildSupportedGlyphRanges(ImGuiIO& io, std::unordered_set<std::string>* outScripts = nullptr)
 	{
 		static ImVector<ImWchar> mergedRanges;
 		ImFontGlyphRangesBuilder builder;
@@ -165,9 +219,45 @@ namespace
 		AppendRangesForCulture(Localization::GetFallbackCulture(), io, builder, addedScripts);
 		AppendRangesForCulture(Localization::GetCurrentCulture(), io, builder, addedScripts);
 
+		if (outScripts)
+		{
+			*outScripts = addedScripts;
+		}
+
 		mergedRanges.clear();
 		builder.BuildRanges(&mergedRanges);
 		return mergedRanges.Data;
+	}
+
+	ImFont* LoadFontsForCultures(ImGuiIO& io)
+	{
+		const float fontSize = 17.0f;
+		std::unordered_set<std::string> requiredScripts;
+		const ImWchar* glyphRanges = BuildSupportedGlyphRanges(io, &requiredScripts);
+
+		io.Fonts->Clear();
+
+		ImFontConfig config{};
+		config.OversampleH = 3;
+		config.OversampleV = 1;
+		config.PixelSnapH = true;
+		config.GlyphRanges = glyphRanges;
+
+		ImFont* font = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\segoeuib.ttf", fontSize, &config, glyphRanges);
+		if (!font)
+		{
+			std::cout << "[WARN] Font not loaded, falling back to default font.\n";
+			font = io.Fonts->AddFontDefault();
+		}
+
+		LoadFallbackFonts(io, requiredScripts, fontSize);
+
+		if (font)
+		{
+			io.FontDefault = font;
+		}
+
+		return font;
 	}
 }
 
@@ -187,27 +277,7 @@ bool ReloadFontsPreservingScale()
 	const float previousFontGlobalScale = io.FontGlobalScale;
 #endif
 
-	const ImWchar* glyphRanges = BuildSupportedGlyphRanges(io);
-
-	io.Fonts->Clear();
-
-	ImFontConfig config{};
-	config.OversampleH = 3;
-	config.OversampleV = 1;
-	config.PixelSnapH = true;
-	config.GlyphRanges = glyphRanges;
-
-	ImFont* font = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\segoeuib.ttf", 17.0f, &config, glyphRanges);
-	if (font)
-	{
-		io.FontDefault = font;
-	}
-	else
-	{
-		std::cout << "[WARN] Font not loaded, falling back to default font.\n";
-		font = io.Fonts->AddFontDefault();
-		io.FontDefault = font;
-	}
+	ImFont* font = LoadFontsForCultures(io);
 
 	if (!ImGui_ImplDX11_CreateDeviceObjects())
 	{
@@ -308,19 +378,10 @@ bool ImGuiInitialization(IDXGISwapChain* pSwapChain) {
 		ImGui_ImplWin32_Init(DirectX::window);
 		ImGui_ImplDX11_Init(pDevice, pContext);
 
-		// Ensure the default UI font contains glyphs for all supported locales
-		const ImWchar* glyphRanges = BuildSupportedGlyphRanges(io);
-
-		ImFontConfig config{};
-		config.OversampleH = 3;
-		config.OversampleV = 1;
-		config.PixelSnapH = true;
-		config.GlyphRanges = glyphRanges;
-
-		if (ImFont* font = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\segoeuib.ttf", 17.0f, &config, glyphRanges))
-			io.FontDefault = font;
-		else
+		if (!LoadFontsForCultures(io))
+		{
 			std::cout << "[WARN] Font not loaded, using consolas.\n";
+		}
 
 		ImGui_ImplDX11_InvalidateDeviceObjects();
 		ImGui_ImplDX11_CreateDeviceObjects();
