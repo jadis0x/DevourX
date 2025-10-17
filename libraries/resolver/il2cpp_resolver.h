@@ -44,7 +44,7 @@ namespace SafePtr {
 		if (!ptr) return false;
 
 		uintptr_t addr = reinterpret_cast<uintptr_t>(ptr);
-		if (addr < 0x10000 || addr > 0x7FFFFFFFFFFF) 
+		if (addr < 0x10000 || addr > 0x7FFFFFFFFFFF)
 			return false;
 
 		__try {
@@ -110,6 +110,7 @@ public:
 	static const MethodInfo* FindMethod(Il2CppClass* klass, const char* methodName, int paramCount);
 	static Il2CppObject* InvokeStatic(const MethodInfo* method, void** args);
 	static void DumpMethods(Il2CppClass* klass, const char* className);
+	static const MethodInfo* FindMethodByParamNames(Il2CppClass* klass, const char* methodName, std::initializer_list<const char*> paramTypeNames);
 };
 
 class Il2cppData {
@@ -160,10 +161,10 @@ private:
 
 class UCamera {
 public:
-	app::Camera* FindMain();       
-	app::Camera* Get();            
+	app::Camera* FindMain();
+	app::Camera* Get();
 
-	app::Vector3 GetPosition();    
+	app::Vector3 GetPosition();
 	app::Vector3 GetForward();
 	app::Vector3 GetRight();
 	app::Vector3 GetUp();
@@ -172,8 +173,8 @@ public:
 
 	float DistanceTo(const app::Vector3& target);
 
-	void Reset();            
-	bool IsValid();          
+	void Reset();
+	bool IsValid();
 
 private:
 	app::Camera* camera = nullptr;
@@ -307,7 +308,7 @@ namespace Func {
 		if (!_appType) return nullptr;
 
 		if (app::Object_1_FindObjectOfType_1 == nullptr) return nullptr;
-		
+
 		app::Object_1* result = app::Object_1_FindObjectOfType_1(_appType, false, nullptr);
 
 		if (!SafePtr::IsValid(result)) return nullptr;

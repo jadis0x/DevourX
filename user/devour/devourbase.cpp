@@ -6,8 +6,8 @@
 #include <player/player.h>
 #include <resolver/il2cpp_resolver.h>
 #include <random>
+#include <iostream>
 
-app::ServerBrowser* Base::GlobalVar::__browser = nullptr;
 app::ServerConnectToken* Base::GlobalVar::__g_connectToken = nullptr;
 
 uint64_t Base::Steam::GetUserID() {
@@ -262,34 +262,34 @@ void Base::Gameplay::StartCarryItem(const char* itemName) {
 	const std::string internal_name = it->second;
 
 	SafePtr::safe_call([&]()
-	{
-		il2cpp_thread_attach(il2cpp_domain_get());
-
-		Il2CppClass* k = il2cpp_object_get_class(reinterpret_cast<Il2CppObject*>(nolan));
-		il2cpp_runtime_class_init(k);
-
-		const MethodInfo* baseMi = il2cpp_class_get_method_from_name(k, "StartCarry", 1);
-		if (!baseMi) { std::printf("StartCarry could NOT be resolved (base)\n"); return; }
-
-		const MethodInfo* mi = il2cpp_object_get_virtual_method(reinterpret_cast<Il2CppObject*>(nolan), baseMi);
-		if (!mi) { std::printf("StartCarry could NOT be resolved (virtual)\n"); return; }
-
-		Il2CppString* il2str = il2cpp_string_new(internal_name.c_str());
-		if (!il2str) { std::printf("string_new null\n"); return; }
-
-		void* args[1] = { il2str };
-		Il2CppException* exc = nullptr;
-		il2cpp_runtime_invoke(mi, nolan, args, &exc);
-
-		if (exc)
 		{
-			char msg[1024] = {};
-			char st[2048] = {};
-			il2cpp_format_exception(exc, msg, sizeof(msg) - 1);
-			il2cpp_format_stack_trace(exc, st, sizeof(st) - 1);
-			std::printf("[StartCarry] EXC: %s\nSTACK:\n%s\n", msg, st);
-		}
-	});
+			il2cpp_thread_attach(il2cpp_domain_get());
+
+			Il2CppClass* k = il2cpp_object_get_class(reinterpret_cast<Il2CppObject*>(nolan));
+			il2cpp_runtime_class_init(k);
+
+			const MethodInfo* baseMi = il2cpp_class_get_method_from_name(k, "StartCarry", 1);
+			if (!baseMi) { std::printf("StartCarry could NOT be resolved (base)\n"); return; }
+
+			const MethodInfo* mi = il2cpp_object_get_virtual_method(reinterpret_cast<Il2CppObject*>(nolan), baseMi);
+			if (!mi) { std::printf("StartCarry could NOT be resolved (virtual)\n"); return; }
+
+			Il2CppString* il2str = il2cpp_string_new(internal_name.c_str());
+			if (!il2str) { std::printf("string_new null\n"); return; }
+
+			void* args[1] = { il2str };
+			Il2CppException* exc = nullptr;
+			il2cpp_runtime_invoke(mi, nolan, args, &exc);
+
+			if (exc)
+			{
+				char msg[1024] = {};
+				char st[2048] = {};
+				il2cpp_format_exception(exc, msg, sizeof(msg) - 1);
+				il2cpp_format_stack_trace(exc, st, sizeof(st) - 1);
+				std::printf("[StartCarry] EXC: %s\nSTACK:\n%s\n", msg, st);
+			}
+		});
 }
 
 void Base::Gameplay::StartCarryAnimal(const char* animal_name) {
@@ -310,6 +310,53 @@ void Base::Gameplay::StartCarryAnimal(const char* animal_name) {
 	{
 		app::NolanBehaviour_StartCarry(LocalPlayer::GetNolan(), convert_to_system_string(carry_animal.c_str()), nullptr);
 	}
+}
+
+void Base::Gameplay::InstantiatePrefab(const char* prefabName, app::PrefabId app::BoltPrefabs__StaticFields::* prefabField)
+{
+	if (!prefabField || !Base::DevourNet::IsHost())
+	{
+		return;
+	}
+
+	auto* typeInfo = (*app::BoltPrefabs__TypeInfo);
+	if (!typeInfo || !typeInfo->static_fields)
+	{
+		std::cout << "[-] BoltPrefabs static_fields not found.\n";
+		return;
+	}
+
+	il2cpp_thread_attach(il2cpp_domain_get());
+
+	Il2CppClass* boltKlass = reinterpret_cast<Il2CppClass*>((*app::BoltNetwork__TypeInfo));
+	il2cpp_runtime_class_init(boltKlass);
+
+	auto* playerGO = LocalPlayer::GetLocalPlayer();
+	if (!playerGO) return;
+
+	auto* transform = app::GameObject_get_transform(playerGO, nullptr);
+	if (!transform) return;
+
+	app::Vector3 pos = app::Transform_get_position(transform, nullptr);
+	app::Quaternion rot{ 0.f, 0.f, 0.f, 1.f };
+
+	const app::PrefabId prefabId = typeInfo->static_fields->*prefabField;
+	auto* spawned = app::BoltNetwork_Instantiate_6(prefabId, pos, rot, nullptr);
+
+	SafePtr::safe_call([&]() {
+		spawned = app::BoltNetwork_Instantiate_6(prefabId, pos, rot, nullptr);
+
+		if (spawned && spawned->klass)
+		{
+			std::cout << "[+] Spawn successful: "
+				<< (prefabName ? prefabName : "<unknown>") << " -> " << spawned << std::endl;
+		}
+		else
+		{
+			std::cout << "[-] Spawn nullptr or invalid: "
+				<< (prefabName ? prefabName : "<unknown>") << std::endl;
+		}
+	});
 }
 
 std::string Base::Gameplay::GetSceneName() {
@@ -419,7 +466,7 @@ void Base::Gameplay::Revive(app::GameObject* target_player) {
 	{
 		if (app::Quaternion_get_identity && app::NolanBehaviour_TeleportTo)
 		{
-			constexpr app::Vector3 vec { 0.f, -150.f, 0.f };
+			constexpr app::Vector3 vec{ 0.f, -150.f, 0.f };
 			app::NolanBehaviour_TeleportTo(nb, vec, app::Quaternion_get_identity(nullptr), false, nullptr);
 		}
 	}
@@ -571,7 +618,7 @@ std::string Base::System::generate_random_unique_id(int length) {
 		"0123456789"
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 		"abcdefghijklmnopqrstuvwxyz";
-	static std::mt19937 rng(std::random_device {}());
+	static std::mt19937 rng(std::random_device{}());
 	static std::uniform_int_distribution<> dist(0, sizeof(charset) - 2);
 
 	std::string id;

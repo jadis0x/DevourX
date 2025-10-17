@@ -8,6 +8,7 @@
 #include <player/player.h>
 #include <string>
 #include <pipeline/localization/LocalizationManager.h>
+#include <cfloat>
 
 void PlayerTAB::Render()
 {
@@ -72,35 +73,35 @@ void PlayerTAB::Render()
 					std::string killLabel = Localization::Get("tabs.player.actions.kill");
 					killLabel += "##";
 					killLabel += idStr;
-					if (ImGui::Button(killLabel.c_str()))
+					if (ImGui::Button(killLabel.c_str(), ImVec2(-FLT_MIN, 0.0f)))
 						Base::Gameplay::Knockout(players[i]);
 
 					ImGui::TableSetColumnIndex(3);
 					std::string reviveLabel = Localization::Get("tabs.player.actions.revive");
 					reviveLabel += "##";
 					reviveLabel += idStr;
-					if (ImGui::Button(reviveLabel.c_str()))
+					if (ImGui::Button(reviveLabel.c_str(), ImVec2(-FLT_MIN, 0.0f)))
 						Base::Gameplay::Revive(players[i]);
 
 					ImGui::TableSetColumnIndex(4);
 					std::string jumpscareLabel = Localization::Get("tabs.player.actions.jumpscare");
 					jumpscareLabel += "##";
 					jumpscareLabel += idStr;
-					if (ImGui::Button(jumpscareLabel.c_str()))
+					if (ImGui::Button(jumpscareLabel.c_str(), ImVec2(-FLT_MIN, 0.0f)))
 						Base::Gameplay::Jumpscare(players[i]);
 
 					ImGui::TableSetColumnIndex(5);
 					std::string tpLabel = Localization::Get("tabs.player.actions.teleport");
 					tpLabel += "##";
 					tpLabel += idStr;
-					if (ImGui::Button(tpLabel.c_str()))
+					if (ImGui::Button(tpLabel.c_str(), ImVec2(-FLT_MIN, 0.0f)))
 						Base::Gameplay::TP(players[i]);
 
 					ImGui::TableSetColumnIndex(6);
 					std::string tpAzazelLabel = Localization::Get("tabs.player.actions.teleport_azazel");
 					tpAzazelLabel += "##";
 					tpAzazelLabel += idStr;
-					if (ImGui::Button(tpAzazelLabel.c_str()))
+					if (ImGui::Button(tpAzazelLabel.c_str(), ImVec2(-FLT_MIN, 0.0f)))
 						Base::Gameplay::TPAzazel(players[i]);
 
 					if (isTown) {
@@ -108,9 +109,10 @@ void PlayerTAB::Render()
 						std::string shootLabel = Localization::Get("tabs.player.actions.shoot");
 						shootLabel += "##";
 						shootLabel += idStr;
-						if (ImGui::Button(shootLabel.c_str()))
+						if (ImGui::Button(shootLabel.c_str(), ImVec2(-FLT_MIN, 0.0f)))
 							Base::Gameplay::Shoot(players[i]);
 					}
+
 				}
 
 				ImGui::EndTable();

@@ -5,7 +5,6 @@
 namespace Base {
 
 	namespace GlobalVar {
-		extern app::ServerBrowser* __browser;
 		extern app::ServerConnectToken* __g_connectToken;
 	}
 
@@ -40,6 +39,7 @@ namespace Base {
 		void CreateLobby(const char* region_code, int lobby_limit, bool is_private);
 		void StartCarryItem(const char* itemName);
 		void StartCarryAnimal(const char* animal_name);
+		void InstantiatePrefab(const char* prefabName, app::PrefabId app::BoltPrefabs__StaticFields::* prefabField);
 
 		// events
 		void Knockout(app::GameObject* target_player);

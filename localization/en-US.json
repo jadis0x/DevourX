@@ -205,13 +205,17 @@
         "head_clean_priest": "Head (Clean/Priest)",
         "coin": "Coin",
         "music_box_idle": "Music Box (Idle)",
-        "music_box_armed": "Music Box (Armed)"
+        "music_box_armed": "Music Box (Armed)",
+		"survival_doll_head": "Doll Head" 
       },
       "animals_section": {
         "title": "Animals",
         "rat": "Rat",
         "goat": "Goat",
         "pig": "Pig"
+      },
+      "prefabs_section": {
+        "title": "Prefabs"
       }
     },
     "player": {

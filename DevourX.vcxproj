@@ -199,6 +199,7 @@
     <ClInclude Include="user\player\player.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="user\devour\prefab_list.def" />
     <None Include="version.def" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

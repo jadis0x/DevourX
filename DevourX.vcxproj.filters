@@ -290,5 +290,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="version.def" />
+    <None Include="user\devour\prefab_list.def">
+      <Filter>user\devour</Filter>
+    </None>
   </ItemGroup>
 </Project>

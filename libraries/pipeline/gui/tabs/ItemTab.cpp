@@ -62,13 +62,26 @@ namespace {
 			{ "Head (Clean/Priest)", "tabs.items.items_section.head_clean_priest" },
 			{ "Coin", "tabs.items.items_section.coin" },
 			{ "Music Box (Idle)", "tabs.items.items_section.music_box_idle" },
-			{ "Music Box (Armed)", "tabs.items.items_section.music_box_armed" }
+			{ "Music Box (Armed)", "tabs.items.items_section.music_box_armed" },
+			{ "SurvivalDollHead", "tabs.items.items_section.survival_doll_head"}
 	};
 
 	constexpr ItemDefinition kAnimals[] = {
 			{ "Rat", "tabs.items.animals_section.rat" },
 			{ "Goat", "tabs.items.animals_section.goat" },
 			{ "Pig", "tabs.items.animals_section.pig" }
+	};
+
+	struct PrefabDefinition
+	{
+		const char* label;
+		app::PrefabId app::BoltPrefabs__StaticFields::* field;
+	};
+
+	constexpr PrefabDefinition kPrefabs[] = {
+#define PREFAB_ENTRY(label, field) { label, &app::BoltPrefabs__StaticFields::field },
+#include "devour/prefab_list.def"
+#undef PREFAB_ENTRY
 	};
 }
 
@@ -132,6 +145,43 @@ void ItemTAB::Render()
 		if (ImGui::Button(spawnAnimalLabel.c_str())) {
 			Base::Gameplay::StartCarryAnimal(kAnimals[animal_current].id);
 		}
+
+		ImGui::Spacing();
+		ImGui::Spacing();
+
+		GuiWidgets::SectionTitle("tabs.items.prefabs_section.title", ImVec4(0.95f, 0.75f, 0.55f, 1.0f));
+		static int prefab_current = 0;
+		if (prefab_current >= static_cast<int>(std::size(kPrefabs)))
+		{
+			prefab_current = 0;
+		}
+		const char* currentPrefabLabel = kPrefabs[prefab_current].label;
+		if (ImGui::BeginCombo("##prefabs_combo", currentPrefabLabel))
+		{
+			for (int i = 0; i < static_cast<int>(std::size(kPrefabs)); ++i)
+			{
+				const bool isSelected = (prefab_current == i);
+				if (ImGui::Selectable(kPrefabs[i].label, isSelected))
+				{
+					prefab_current = i;
+				}
+				if (isSelected)
+				{
+					ImGui::SetItemDefaultFocus();
+				}
+			}
+			ImGui::EndCombo();
+		}
+
+		std::string spawnPrefabLabel = Localization::Get("tabs.items.spawn");
+		spawnPrefabLabel += "##pf";
+		if (ImGui::Button(spawnPrefabLabel.c_str()))
+		{
+			Base::Gameplay::InstantiatePrefab(
+				kPrefabs[prefab_current].label,
+				kPrefabs[prefab_current].field);
+		}
+
 
 		ImGui::EndTabItem();
 	}

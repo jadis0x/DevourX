@@ -366,3 +366,30 @@ void Il2CppInvoker::DumpMethods(Il2CppClass* klass, const char* className)
 	}
 	std::cout << "=== Dump End ===\n";
 }
+
+const MethodInfo* Il2CppInvoker::FindMethodByParamNames(Il2CppClass* klass, const char* methodName, std::initializer_list<const char*> paramTypeNames)
+{
+	if (!klass) return nullptr;
+
+	void* iter = nullptr;
+	const MethodInfo* m = nullptr;
+	for (;;)
+	{
+		m = il2cpp_class_get_methods(klass, &iter);
+		if (!m) break;
+		if (strcmp(m->name, methodName) != 0) continue;
+		if (m->parameters_count != (int)paramTypeNames.size()) continue;
+
+		bool match = true;
+		int i = 0;
+		for (auto want : paramTypeNames)
+		{
+			const Il2CppType* p = m->parameters[i++];
+			Il2CppClass* pc = il2cpp_type_get_class_or_element_class(p);
+			const char* got = pc ? il2cpp_class_get_name(pc) : "";
+			if (strcmp(got, want) != 0) { match = false; break; }
+		}
+		if (match) return m;
+	}
+	return nullptr;
+}

@@ -205,13 +205,17 @@
         "head_clean_priest": "Kafa (Temiz/Papaz)",
         "coin": "Madeni Para",
         "music_box_idle": "Müzik Kutusu (Beklemede)",
-        "music_box_armed": "Müzik Kutusu (Kurulu)"
+        "music_box_armed": "Müzik Kutusu (Kurulu)",
+		"survival_doll_head": "Bebek Kafası" 
       },
       "animals_section": {
         "title": "Hayvanlar",
         "rat": "Sıçan",
         "goat": "Keçi",
         "pig": "Domuz"
+      },
+	  "prefabs_section": {
+        "title": "Prefabler"
       }
     },
     "player": {
