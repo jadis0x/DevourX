@@ -10,6 +10,8 @@ public:
 	};
 
 	std::string localizationCulture = "en-US";
+	bool showLanguagePromptOnStart = true;
+	bool queueLanguageRestartNotification = false;
 
 	int selectedRegion = 0;
 	const char* regions[7] = { "TR", "EU", "US", "ASIA", "RU", "JP", "AU" };
@@ -31,6 +33,7 @@ public:
 
 	bool ImGuiInitialized = false;
 	bool bShowMenu = false;
+	bool bPendingFontReload = false;
 	bool bEnableUnityLogs = false;
 	bool bSteamInitialized = true;
 	bool bMouseFollower = false;
@@ -66,3 +69,6 @@ public:
 };
 
 extern Settings settings;
+
+bool LoadSettingsFromConfig();
+bool SaveSettingsToConfig();

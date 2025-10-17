@@ -26,6 +26,135 @@ namespace
 	constexpr ImVec4 kWarningColour{ 0.95f, 0.78f, 0.28f, 1.0f };
 	constexpr ImVec4 kDangerColour{ 0.95f, 0.39f, 0.39f, 1.0f };
 
+	bool gOpenLanguagePrompt = false;
+	bool gLanguagePromptDontShowAgain = false;
+	std::string gLanguagePromptSelection;
+	bool gOpenLanguageRestartPopup = false;
+
+	void QueueLanguagePrompt()
+	{
+		gOpenLanguagePrompt = true;
+		gLanguagePromptSelection = settings.localizationCulture.empty()
+			? Localization::GetFallbackCulture()
+			: settings.localizationCulture;
+		gLanguagePromptDontShowAgain = !settings.showLanguagePromptOnStart;
+	}
+
+	void RenderLanguagePrompt()
+	{
+		const std::string title = Localization::Get("popups.language.change_prompt_title");
+		const std::string popupId = title + "##LanguagePrompt";
+		if (gOpenLanguagePrompt)
+		{
+			ImGui::OpenPopup(popupId.c_str());
+			gOpenLanguagePrompt = false;
+		}
+
+		if (ImGui::BeginPopupModal(popupId.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+		{
+			ImGui::TextWrapped("%s", Localization::Get("popups.language.change_prompt_message").c_str());
+			ImGui::Spacing();
+
+			const auto cultures = Localization::GetAvailableCultures();
+			if (cultures.empty())
+			{
+				ImGui::TextUnformatted(Localization::Get("common.language_unavailable").c_str());
+			}
+			else
+			{
+				std::string previewLabel = Localization::GetDisplayName(gLanguagePromptSelection);
+				if (previewLabel.empty())
+				{
+					previewLabel = gLanguagePromptSelection;
+				}
+
+				if (ImGui::BeginCombo("##language_prompt_selection", previewLabel.c_str()))
+				{
+					for (const auto& culture : cultures)
+					{
+						const bool isSelected = (culture == gLanguagePromptSelection);
+						std::string displayName = Localization::GetDisplayName(culture);
+						if (displayName.empty())
+						{
+							displayName = culture;
+						}
+
+						if (ImGui::Selectable(displayName.c_str(), isSelected))
+						{
+							gLanguagePromptSelection = culture;
+						}
+
+						if (isSelected)
+						{
+							ImGui::SetItemDefaultFocus();
+						}
+					}
+					ImGui::EndCombo();
+				}
+			}
+
+			ImGui::Spacing();
+			ImGui::Checkbox(Localization::Get("popups.language.dont_show_again").c_str(), &gLanguagePromptDontShowAgain);
+			ImGui::Spacing();
+
+			const std::string saveLabel = Localization::Get("common.save");
+			if (ImGui::Button(saveLabel.c_str(), ImVec2(120.0f, 0.0f)))
+			{
+				const bool languageChanged = (gLanguagePromptSelection != settings.localizationCulture);
+				settings.localizationCulture = gLanguagePromptSelection;
+				settings.showLanguagePromptOnStart = !gLanguagePromptDontShowAgain;
+				SaveSettingsToConfig();
+
+				if (languageChanged)
+				{
+					settings.queueLanguageRestartNotification = true;
+				}
+
+				ImGui::CloseCurrentPopup();
+			}
+
+			ImGui::SameLine();
+			const std::string cancelLabel = Localization::Get("common.cancel");
+			if (ImGui::Button(cancelLabel.c_str(), ImVec2(120.0f, 0.0f)))
+			{
+				ImGui::CloseCurrentPopup();
+			}
+
+			ImGui::EndPopup();
+		}
+	}
+
+	void RenderLanguageRestartPopup()
+	{
+		if (settings.queueLanguageRestartNotification)
+		{
+			settings.queueLanguageRestartNotification = false;
+			gOpenLanguageRestartPopup = true;
+		}
+
+		const std::string title = Localization::Get("popups.language.restart_title");
+		const std::string popupId = title + "##LanguageRestart";
+		if (gOpenLanguageRestartPopup)
+		{
+			ImGui::OpenPopup(popupId.c_str());
+			gOpenLanguageRestartPopup = false;
+		}
+
+		if (ImGui::BeginPopupModal(popupId.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+		{
+			ImGui::TextWrapped("%s", Localization::Get("popups.language.restart_required").c_str());
+			ImGui::Spacing();
+
+			const std::string okLabel = Localization::Get("common.ok");
+			if (ImGui::Button(okLabel.c_str(), ImVec2(120.0f, 0.0f)))
+			{
+				ImGui::CloseCurrentPopup();
+			}
+
+			ImGui::EndPopup();
+		}
+	}
+
 	void RenderHeader()
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(18.0f, 14.0f));
@@ -122,11 +251,18 @@ namespace Menu {
 		if (!init)
 			Menu::Init();
 
-		ImGui::Begin(Localization::Get("menu.window.title").c_str(), &settings.bShowMenu, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
+		const std::string windowLabel = Localization::Get("menu.window.title");
+		const std::string windowId = windowLabel + "##menu_window";
+		ImGui::Begin(windowId.c_str(), &settings.bShowMenu, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
 
 		if (firstRender)
 		{
 			firstRender = false;
+
+			if (settings.showLanguagePromptOnStart)
+			{
+				QueueLanguagePrompt();
+			}
 		}
 
 		RenderHeader();
@@ -157,6 +293,9 @@ namespace Menu {
 		ImGui::PopStyleColor();
 
 		ImGui::Columns(1);
+
+		RenderLanguagePrompt();
+		RenderLanguageRestartPopup();
 
 		ImGui::End();
 	}

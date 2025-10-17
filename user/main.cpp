@@ -136,6 +136,17 @@ void Run(LPVOID lpParam)
 	hModule = static_cast<HMODULE>(lpParam);
 
 	il2cppi_log_write("Initializing..");
+
+	if (!LoadSettingsFromConfig())
+	{
+		SaveSettingsToConfig();
+	}
+
+	if (settings.localizationCulture.empty())
+	{
+		settings.localizationCulture = Localization::GetFallbackCulture();
+	}
+
 	Localization::Initialize(settings.localizationCulture);
 
 #ifdef _DEBUG

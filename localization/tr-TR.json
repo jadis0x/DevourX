@@ -6,7 +6,10 @@
   "common": {
     "help_icon": "(?)",
     "placeholder_dash": "-",
-    "language_unavailable": "Yerelleştirme dosyası bulunamadı."
+    "language_unavailable": "Yerelleştirme dosyası bulunamadı.",
+    "ok": "Tamam",
+    "cancel": "İptal",
+    "save": "Kaydet"
   },
   "menu": {
     "window": {
@@ -45,6 +48,15 @@
       "auth": "Kimlik Doğrulama: %s",
       "ok": "Tamam",
       "waiting": "Steam bekleniyor"
+    }
+  },
+   "popups": {
+    "language": {
+      "change_prompt_title": "Dil değiştirilsin mi?",
+      "change_prompt_message": "DevourX için kullanılan dili değiştirmek ister misiniz?",
+      "dont_show_again": "Bir daha gösterme",
+      "restart_title": "Yeniden Başlatma Gerekli",
+      "restart_required": "dil değişikliğinin geçerli olması için oyunu yeniden başlatın"
     }
   },
   "tabs": {

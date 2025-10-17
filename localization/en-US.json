@@ -6,7 +6,10 @@
   "common": {
     "help_icon": "(?)",
     "placeholder_dash": "-",
-    "language_unavailable": "No localization files found."
+    "language_unavailable": "No localization files found.",
+    "ok": "OK",
+    "cancel": "Cancel",
+    "save": "Save"
   },
   "menu": {
     "window": {
@@ -45,6 +48,15 @@
       "auth": "Auth: %s",
       "ok": "OK",
       "waiting": "Waiting for Steam"
+    }
+  },
+  "popups": {
+    "language": {
+      "change_prompt_title": "Change Language?",
+      "change_prompt_message": "Would you like to change the language used by DevourX?",
+      "dont_show_again": "Don't show again",
+      "restart_title": "Restart Required",
+      "restart_required": "Restart the game for the language change to take effect."
     }
   },
   "tabs": {

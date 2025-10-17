@@ -171,6 +171,59 @@ namespace
 	}
 }
 
+bool ReloadFontsPreservingScale()
+{
+	if (!ImGui::GetCurrentContext())
+	{
+		return false;
+	}
+
+	ImGuiIO& io = ImGui::GetIO();
+	ImGuiStyle& style = ImGui::GetStyle();
+
+	const float previousFontScaleMain = style.FontScaleMain;
+	const float previousFontScaleDpi = style.FontScaleDpi;
+#ifndef IMGUI_DISABLE_OBSOLETE_FUNCTIONS
+	const float previousFontGlobalScale = io.FontGlobalScale;
+#endif
+
+	const ImWchar* glyphRanges = BuildSupportedGlyphRanges(io);
+
+	io.Fonts->Clear();
+
+	ImFontConfig config{};
+	config.OversampleH = 3;
+	config.OversampleV = 1;
+	config.PixelSnapH = true;
+	config.GlyphRanges = glyphRanges;
+
+	ImFont* font = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\segoeuib.ttf", 17.0f, &config, glyphRanges);
+	if (font)
+	{
+		io.FontDefault = font;
+	}
+	else
+	{
+		std::cout << "[WARN] Font not loaded, falling back to default font.\n";
+		font = io.Fonts->AddFontDefault();
+		io.FontDefault = font;
+	}
+
+	if (!ImGui_ImplDX11_CreateDeviceObjects())
+	{
+		std::cout << "[ERROR]: Failed to recreate ImGui device objects after font reload.\n";
+		return false;
+	}
+
+	style.FontScaleMain = previousFontScaleMain;
+	style.FontScaleDpi = previousFontScaleDpi;
+#ifndef IMGUI_DISABLE_OBSOLETE_FUNCTIONS
+	io.FontGlobalScale = previousFontGlobalScale;
+#endif
+
+	return font != nullptr;
+}
+
 typedef struct Cache
 {
 	ImGuiWindow* Window = nullptr;
@@ -302,6 +355,15 @@ HRESULT __stdcall dPresent(IDXGISwapChain* __this, UINT SyncInterval, UINT Flags
 	}
 
 	WaitForSingleObject(DirectX::hRenderSemaphore, INFINITE);
+
+	if (settings.bPendingFontReload)
+	{
+		if (ReloadFontsPreservingScale())
+		{
+			std::cout << "[INFO]: ImGui fonts reloaded after culture change.\n";
+		}
+		settings.bPendingFontReload = false;
+	}
 
 	// resolution changed
 	if (!pRenderTargetView) {

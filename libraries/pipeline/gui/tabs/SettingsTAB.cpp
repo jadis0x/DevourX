@@ -39,18 +39,30 @@ void SettingsTAB::Render()
 		{
 			const std::string comboLabel = Localization::Get("tabs.settings.language.dropdown");
 			std::string comboId = comboLabel + "##language_selection";
-			const std::string currentDisplay = Localization::GetDisplayName(settings.localizationCulture);
+			std::string currentDisplay = Localization::GetDisplayName(settings.localizationCulture);
+			if (currentDisplay.empty())
+			{
+				currentDisplay = settings.localizationCulture;
+			}
+
 			if (ImGui::BeginCombo(comboId.c_str(), currentDisplay.c_str()))
 			{
 				for (const auto& culture : cultures)
 				{
 					const bool isSelected = (culture == settings.localizationCulture);
-					const std::string displayName = Localization::GetDisplayName(culture);
+					std::string displayName = Localization::GetDisplayName(culture);
+					if (displayName.empty())
+					{
+						displayName = culture;
+					}
+
 					if (ImGui::Selectable(displayName.c_str(), isSelected))
 					{
-						if (Localization::SetCulture(culture))
+						if (culture != settings.localizationCulture)
 						{
 							settings.localizationCulture = culture;
+							SaveSettingsToConfig();
+							settings.queueLanguageRestartNotification = true;
 						}
 					}
 					if (isSelected)
