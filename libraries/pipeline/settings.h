@@ -1,12 +1,15 @@
 #pragma once
 
 #include "keybinds.h"
+#include <string>
 
 class Settings {
 public:
 	KeyBinds::Config KeyBinds = {
 		VK_TAB
 	};
+
+	std::string localizationCulture = "en-US";
 
 	int selectedRegion = 0;
 	const char* regions[7] = { "TR", "EU", "US", "ASIA", "RU", "JP", "AU" };

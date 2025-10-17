@@ -15,6 +15,8 @@
 
 #include <devour/devourbase.h>
 #include <pipeline/hooks/InitHooks.h>
+#include <pipeline/localization/LocalizationManager.h>
+#include <pipeline/settings.h>
 
 // Set the name of your log file here
 extern const LPCWSTR LOG_FILE = L"Logs.txt";
@@ -134,6 +136,7 @@ void Run(LPVOID lpParam)
 	hModule = static_cast<HMODULE>(lpParam);
 
 	il2cppi_log_write("Initializing..");
+	Localization::Initialize(settings.localizationCulture);
 
 #ifdef _DEBUG
 	il2cppi_new_console();

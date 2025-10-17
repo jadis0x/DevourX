@@ -1,0 +1,251 @@
+{
+  "languages": {
+    "en-US": "İngilizce",
+    "tr-TR": "Türkçe"
+  },
+  "common": {
+    "help_icon": "(?)",
+    "placeholder_dash": "-",
+    "language_unavailable": "Yerelleştirme dosyası bulunamadı."
+  },
+  "menu": {
+    "window": {
+      "title": "Jadis0x tarafından DevourX"
+    },
+    "header": {
+      "title": "DevourX",
+      "build": "Yapı %s",
+      "toggle": "Menüyü Aç/Kapat: %s",
+      "steam_account": "Steam Hesabı",
+      "steam_id": "Kimlik: %llu",
+      "host": "Lobiye Ev Sahipliği",
+      "client": "İstemci",
+      "game_state": "Oyun Durumu",
+      "scene": "Sahne: %s",
+      "ping": "Gecikme: %d ms",
+      "ping_host": "Gecikme: 0 ms"
+    },
+    "quick_actions": {
+      "title": "Hızlı İşlemler",
+      "azazel_esp": "Azazel ESP",
+      "azazel_esp_help": "Azazel'in konumunu duvarların ardından bile vurgular.",
+      "player_esp": "Oyuncu ESP",
+      "player_esp_help": "Tüm oyuncuların siluetini ve mesafesini gösterir.",
+      "interactable_esp": "Etkileşilebilir ESP",
+      "interactable_esp_help": "Anahtarlar, sigortalar ve diğer önemli eşyalar için işaretçiler yerleştirir."
+    },
+    "environment": {
+      "title": "Ortam",
+      "fullbright": "Tam Parlaklık",
+      "fullbright_help": "Neredeyse tüm karanlığı ortadan kaldırır.",
+      "unlimited_uv": "Sınırsız UV Işığı"
+    },
+    "status": {
+      "title": "Durum",
+      "auth": "Kimlik Doğrulama: %s",
+      "ok": "Tamam",
+      "waiting": "Steam bekleniyor"
+    }
+  },
+  "tabs": {
+    "settings": {
+      "title": "Ayarlar",
+      "session": {
+        "title": "Oturum",
+        "framerate": "Kare Hızı: %.1f",
+        "version": "Sürüm: %s",
+        "menu_toggle": "Menü Tuşu: %s",
+        "discord": "Discord: Jadis0x"
+      },
+      "language": {
+        "title": "Dil",
+        "dropdown": "Dil",
+        "missing": "Dil bulunamadı"
+      },
+      "visual": {
+        "title": "Görsel Geçersiz Kılmalar",
+        "post_fx": "Post FX Geçersiz Kılma (Deneysel)",
+        "post_fx_help": "Bir sonraki harita yüklemesinde özel post-processing ayarlarını zorlar.\nKaranlık haritaları aydınlatmak için harika ancak maç ortasında kapatılamaz.",
+        "unity_logs": "Unity Günlüklerini Göster"
+      },
+      "hint": "DevourX'i hızlıca gizlemeniz mi gerekiyor? Menüyü her zaman %s ile açıp kapatabilirsiniz.",
+      "unhook_button": "Güvenle Çık ve Kapat"
+    },
+    "esp": {
+      "title": "ESP",
+      "visual_tracking": "Görsel Takip",
+      "azazel": {
+        "title": "Azazel",
+        "enable": "ESP'yi Etkinleştir",
+        "offscreen": "Ekran Dışı Gösterge"
+      },
+      "players": {
+        "title": "Oyuncular",
+        "enable": "Oyuncu ESP",
+        "help": "Oyuncuları duvarların ardından mesafeleriyle birlikte gösterir.",
+        "offscreen": "Oyuncu Ekran Dışı Çizgi"
+      },
+      "items": {
+        "title": "Dünya Öğeleri",
+        "enable": "Etkileşilebilir Eşya ESP",
+        "help": "Anahtarlar, ritüel parçaları ve diğer hedefler için işaretçiler oluşturur."
+      }
+    },
+    "misc": {
+      "title": "Diğer",
+      "progression": {
+        "title": "İlerleme",
+        "modify_exp": "Deneyim Kazancını Düzenle",
+        "xp_slider": "XP",
+        "modify_uv": "UV Rengini Düzenle"
+      },
+      "world": {
+        "title": "Dünya Yaşam Kolaylığı",
+        "unlock_doors": "Kapıları Kilitsiz Yap",
+        "disable_long_interact": "Uzun Etkileşimi Devre Dışı Bırak",
+        "auto_calm": "Yakındayken Otomatik Sakinleştir",
+        "never_calm": "Asla Sakinleşmesin"
+      },
+      "azazel": {
+        "title": "Azazel Davranışı",
+        "modify_speed": "Azazel Hızını Düzenle",
+        "help": "Azazel'in haritada ne kadar hızlı hareket ettiğini değiştir.",
+        "speed_slider": "Yeni Hız"
+      }
+    },
+    "network": {
+      "title": "Ağ",
+      "ping": "Gecikme: %dms",
+      "manager": {
+        "title": "Lobi Yöneticisi",
+        "region": "Bölge",
+        "lobby_size": "Lobi Boyutu",
+        "private_lobby": "Özel Lobi",
+        "create": "Lobi Oluştur"
+      },
+      "control": {
+        "title": "Lobi Kontrolü",
+        "change_room": "Oda Adını Değiştir",
+        "new_room": "Yeni Oda Adı",
+        "ghost": "Hayalet Modu (Gizli Katıl)",
+        "ghost_help": "Görünmez olarak katıl. Seni kimse görmez ama sen herkesi görür ve duyarsın!",
+        "force_public": "Lobiyi Herkese Aç",
+        "force_public_help": "Etkinleştirilirse mevcut özel lobi zorla herkese açık hale gelir ve herkes tarafından görülebilir.",
+        "fake_state": "Sahte Oyun Durumu",
+        "fake_state_help": "Etkinse lobi oyunun devam ettiği ya da etmediği şeklinde görünür."
+      },
+      "spoof": {
+        "name": "Steam Adını Sahtele",
+        "custom_name": "Özel Steam Adı",
+        "id": "Steam Kimliğini Sahtele",
+        "custom_id": "Özel Steam Kimliği",
+        "generate": "Rastgele Steam Kimliği Oluştur"
+      }
+    },
+    "items": {
+      "title": "Eşyalar",
+      "spawn": "Üret",
+      "items_section": {
+        "title": "Eşyalar",
+        "hay": "Saman",
+        "first_aid": "İlkyardım",
+        "spade": "Kürek",
+        "cake": "Pasta",
+        "battery": "Pil",
+        "gasoline": "Benzin",
+        "fuse": "Sigorta",
+        "food": "Yem",
+        "bleach": "Çamaşır Suyu",
+        "bone": "Kemik",
+        "salt": "Tuz",
+        "ritual_book_inactive": "Ritüel Kitabı (pasif)",
+        "ritual_book_active": "Ritüel Kitabı (aktif)",
+        "matchbox": "Kibrit Kutusu",
+        "egg_1": "Yumurta-1",
+        "egg_2": "Yumurta-2",
+        "egg_3": "Yumurta-3",
+        "egg_4": "Yumurta-4",
+        "egg_5": "Yumurta-5",
+        "egg_6": "Yumurta-6",
+        "egg_7": "Yumurta-7",
+        "egg_8": "Yumurta-8",
+        "egg_9": "Yumurta-9",
+        "egg_10": "Yumurta-10",
+        "head_dirty_gardener": "Kafa (Kirli/Bahçıvan)",
+        "head_clean_gardener": "Kafa (Temiz/Bahçıvan)",
+        "head_dirty_butler": "Kafa (Kirli/Uşak)",
+        "head_clean_butler": "Kafa (Temiz/Uşak)",
+        "head_dirty_bridesmaid_01": "Kafa (Kirli/Nedime_01)",
+        "head_clean_bridesmaid_01": "Kafa (Temiz/Nedime_01)",
+        "head_dirty_bridesmaid_02": "Kafa (Kirli/Nedime_02)",
+        "head_clean_bridesmaid_02": "Kafa (Temiz/Nedime_02)",
+        "head_dirty_cook": "Kafa (Kirli/Aşçı)",
+        "head_clean_cook": "Kafa (Temiz/Aşçı)",
+        "head_dirty_groomsman_01": "Kafa (Kirli/Sağdıç_01)",
+        "head_clean_groomsman_01": "Kafa (Temiz/Sağdıç_01)",
+        "head_dirty_groomsman_02": "Kafa (Kirli/Sağdıç_02)",
+        "head_clean_groomsman_02": "Kafa (Temiz/Sağdıç_02)",
+        "head_dirty_maid": "Kafa (Kirli/Hizmetçi)",
+        "head_clean_maid": "Kafa (Temiz/Hizmetçi)",
+        "head_dirty_photographer": "Kafa (Kirli/Fotoğrafçı)",
+        "head_clean_photographer": "Kafa (Temiz/Fotoğrafçı)",
+        "head_dirty_priest": "Kafa (Kirli/Papaz)",
+        "head_clean_priest": "Kafa (Temiz/Papaz)",
+        "coin": "Madeni Para",
+        "music_box_idle": "Müzik Kutusu (Beklemede)",
+        "music_box_armed": "Müzik Kutusu (Kurulu)"
+      },
+      "animals_section": {
+        "title": "Hayvanlar",
+        "rat": "Sıçan",
+        "goat": "Keçi",
+        "pig": "Domuz"
+      }
+    },
+    "player": {
+      "title": "Oyuncu Yöneticisi",
+      "local_options": "Yerel Oyuncu Ayarları:",
+      "modify_rank": "Oyuncu Rütbesini Düzenle",
+      "rank_slider": "Yeni Rütbe",
+      "modify_speed": "Oyuncu Hızını Düzenle",
+      "speed_slider": "Yeni Hız",
+      "fly": "Uç",
+      "fly_speed": "Uçuş Hızı",
+      "fullbright": "Tam Parlaklık",
+      "unlimited_uv": "Sınırsız UV Işığı",
+      "list_title": "Oyuncu Listesi:",
+      "table": {
+        "id": "Kimlik",
+        "name": "İsim",
+        "null": "boş"
+      },
+      "actions": {
+        "kill": "Öldür",
+        "revive": "Dirilt",
+        "jumpscare": "Korkut",
+        "teleport": "Işınlan",
+        "teleport_azazel": "Azazel'e Işınla",
+        "shoot": "Vur"
+      },
+      "no_players": "Oyuncu bulunamadı."
+    },
+    "map": {
+      "title": "Harita Yöneticisi",
+      "mouse_follower": "[Lobi] Dinamik Fare Takipçisi",
+      "offset_x": "Ofset X",
+      "offset_y": "Ofset Y",
+      "lerp_speed": "Yumuşatma Hızı",
+      "force_start": "[ZORLA] Lobi Başlat",
+      "force_progress": "[ZORLA] İlerlemeyi Ayarla:",
+      "progress_slider": "Harita İlerlemesi"
+    },
+    "server_browser": {
+      "title": "Sunucu Tarayıcısı",
+      "fix_button": "Yüklemede mi Kaldı? Düzelt",
+      "search_placeholder": "Sunucuları ara...",
+      "unknown_name": "*<bilinmiyor>",
+      "session_id": "Oturum Kimliği:",
+      "join_button": "Katıl"
+    }
+  }
+}

@@ -1,0 +1,251 @@
+{
+  "languages": {
+    "en-US": "English",
+    "tr-TR": "Turkish"
+  },
+  "common": {
+    "help_icon": "(?)",
+    "placeholder_dash": "-",
+    "language_unavailable": "No localization files found."
+  },
+  "menu": {
+    "window": {
+      "title": "DevourX by Jadis0x"
+    },
+    "header": {
+      "title": "DevourX",
+      "build": "Build %s",
+      "toggle": "Toggle Menu: %s",
+      "steam_account": "Steam Account",
+      "steam_id": "ID: %llu",
+      "host": "Hosting Lobby",
+      "client": "Client",
+      "game_state": "Game State",
+      "scene": "Scene: %s",
+      "ping": "Ping: %d ms",
+      "ping_host": "Ping: 0 ms"
+    },
+    "quick_actions": {
+      "title": "Quick Actions",
+      "azazel_esp": "Azazel ESP",
+      "azazel_esp_help": "Highlights the main azazel's position, even through walls.",
+      "player_esp": "Player ESP",
+      "player_esp_help": "Shows every player's outline and distance for rapid coordination.",
+      "interactable_esp": "Interactable ESP",
+      "interactable_esp_help": "Draws markers for keys, fuses and other important pick-ups."
+    },
+    "environment": {
+      "title": "Environment",
+      "fullbright": "Fullbright",
+      "fullbright_help": "Removes almost all darkness.",
+      "unlimited_uv": "Unlimited UV Light"
+    },
+    "status": {
+      "title": "Status",
+      "auth": "Auth: %s",
+      "ok": "OK",
+      "waiting": "Waiting for Steam"
+    }
+  },
+  "tabs": {
+    "settings": {
+      "title": "Settings",
+      "session": {
+        "title": "Session",
+        "framerate": "Framerate: %.1f",
+        "version": "Version: %s",
+        "menu_toggle": "Menu Toggle: %s",
+        "discord": "Discord: Jadis0x"
+      },
+      "language": {
+        "title": "Language",
+        "dropdown": "Language",
+        "missing": "No languages available"
+      },
+      "visual": {
+        "title": "Visual Overrides",
+        "post_fx": "Post FX Override (Experimental)",
+        "post_fx_help": "Forces custom post-processing settings on the next level load.\nGreat for brightening horror maps but cannot be disabled mid-match.",
+        "unity_logs": "Show Unity Logs"
+      },
+      "hint": "Need to hide DevourX quickly? Press %s at any time to toggle the menu.",
+      "unhook_button": "Safely Unhook & Close"
+    },
+    "esp": {
+      "title": "ESP",
+      "visual_tracking": "Visual Tracking",
+      "azazel": {
+        "title": "Azazel",
+        "enable": "Enable ESP",
+        "offscreen": "Off-Screen Indicator"
+      },
+      "players": {
+        "title": "Players",
+        "enable": "Player ESP",
+        "help": "Shows players through walls alongside their distance.",
+        "offscreen": "Player Off-Screen Line"
+      },
+      "items": {
+        "title": "World Items",
+        "enable": "Interactable Item ESP",
+        "help": "Highlights keys, ritual pieces and other objectives for quick routing."
+      }
+    },
+    "misc": {
+      "title": "Misc",
+      "progression": {
+        "title": "Progression",
+        "modify_exp": "Modify EXP Gain",
+        "xp_slider": "XP",
+        "modify_uv": "Modify UV Color"
+      },
+      "world": {
+        "title": "World Quality of Life",
+        "unlock_doors": "Unlock Doors",
+        "disable_long_interact": "Disable Long Interact",
+        "auto_calm": "Auto-Calm When Nearby",
+        "never_calm": "Never Calm"
+      },
+      "azazel": {
+        "title": "Azazel Behaviour",
+        "modify_speed": "Modify Azazel Speed",
+        "help": "Change how quickly Azazel moves across the map.",
+        "speed_slider": "New Speed"
+      }
+    },
+    "network": {
+      "title": "Network",
+      "ping": "Ping: %dms",
+      "manager": {
+        "title": "Lobby Manager",
+        "region": "Region",
+        "lobby_size": "Lobby Size",
+        "private_lobby": "Private Lobby",
+        "create": "Create Lobby"
+      },
+      "control": {
+        "title": "Lobby Control",
+        "change_room": "Change Room Name",
+        "new_room": "New Room Name",
+        "ghost": "Ghost Mode (Stealth Join)",
+        "ghost_help": "Join as invisible. No one sees you, but you see and hear them!",
+        "force_public": "Make Lobby Public",
+        "force_public_help": "If enabled, the current private lobby will be forcibly made public and visible to everyone.",
+        "fake_state": "Fake Game State",
+        "fake_state_help": "If enabled, the current lobby will appear as if the game is still in progress or not."
+      },
+      "spoof": {
+        "name": "Spoof Steam Name",
+        "custom_name": "Custom Steam Name",
+        "id": "Spoof Steam ID",
+        "custom_id": "Custom Steam ID",
+        "generate": "Generate Random SteamID"
+      }
+    },
+    "items": {
+      "title": "Items",
+      "spawn": "Spawn",
+      "items_section": {
+        "title": "Items",
+        "hay": "Hay",
+        "first_aid": "First Aid",
+        "spade": "Spade",
+        "cake": "Cake",
+        "battery": "Battery",
+        "gasoline": "Gasoline",
+        "fuse": "Fuse",
+        "food": "Food",
+        "bleach": "Bleach",
+        "bone": "Bone",
+        "salt": "Salt",
+        "ritual_book_inactive": "Ritual Book (inactive)",
+        "ritual_book_active": "Ritual Book (active)",
+        "matchbox": "Matchbox",
+        "egg_1": "Egg-1",
+        "egg_2": "Egg-2",
+        "egg_3": "Egg-3",
+        "egg_4": "Egg-4",
+        "egg_5": "Egg-5",
+        "egg_6": "Egg-6",
+        "egg_7": "Egg-7",
+        "egg_8": "Egg-8",
+        "egg_9": "Egg-9",
+        "egg_10": "Egg-10",
+        "head_dirty_gardener": "Head (Dirty/Gardener)",
+        "head_clean_gardener": "Head (Clean/Gardener)",
+        "head_dirty_butler": "Head (Dirty/Butler)",
+        "head_clean_butler": "Head (Clean/Butler)",
+        "head_dirty_bridesmaid_01": "Head (Dirty/Bridesmaid_01)",
+        "head_clean_bridesmaid_01": "Head (Clean/Bridesmaid_01)",
+        "head_dirty_bridesmaid_02": "Head (Dirty/Bridesmaid_02)",
+        "head_clean_bridesmaid_02": "Head (Clean/Bridesmaid_02)",
+        "head_dirty_cook": "Head (Dirty/Cook)",
+        "head_clean_cook": "Head (Clean/Cook)",
+        "head_dirty_groomsman_01": "Head (Dirty/Groomsman_01)",
+        "head_clean_groomsman_01": "Head (Clean/Groomsman_01)",
+        "head_dirty_groomsman_02": "Head (Dirty/Groomsman_02)",
+        "head_clean_groomsman_02": "Head (Clean/Groomsman_02)",
+        "head_dirty_maid": "Head (Dirty/Maid)",
+        "head_clean_maid": "Head (Clean/Maid)",
+        "head_dirty_photographer": "Head (Dirty/Photographer)",
+        "head_clean_photographer": "Head (Clean/Photographer)",
+        "head_dirty_priest": "Head (Dirty/Priest)",
+        "head_clean_priest": "Head (Clean/Priest)",
+        "coin": "Coin",
+        "music_box_idle": "Music Box (Idle)",
+        "music_box_armed": "Music Box (Armed)"
+      },
+      "animals_section": {
+        "title": "Animals",
+        "rat": "Rat",
+        "goat": "Goat",
+        "pig": "Pig"
+      }
+    },
+    "player": {
+      "title": "Player Manager",
+      "local_options": "Local Player Options:",
+      "modify_rank": "Modify Player Rank",
+      "rank_slider": "New Rank",
+      "modify_speed": "Modify Player Speed",
+      "speed_slider": "New Speed",
+      "fly": "Fly",
+      "fly_speed": "Fly Speed",
+      "fullbright": "Fullbright",
+      "unlimited_uv": "Unlimited UV Light",
+      "list_title": "Player List:",
+      "table": {
+        "id": "ID",
+        "name": "Name",
+        "null": "null"
+      },
+      "actions": {
+        "kill": "Kill",
+        "revive": "Revive",
+        "jumpscare": "Jumpscare",
+        "teleport": "TP",
+        "teleport_azazel": "TP Azazel",
+        "shoot": "Shoot"
+      },
+      "no_players": "No players found."
+    },
+    "map": {
+      "title": "Map Manager",
+      "mouse_follower": "[Lobby] Dynamic Mouse Follower",
+      "offset_x": "Offset X",
+      "offset_y": "Offset Y",
+      "lerp_speed": "Lerp Speed",
+      "force_start": "[FORCE] Lobby Start",
+      "force_progress": "[FORCE] Set Progress To:",
+      "progress_slider": "Map Progress"
+    },
+    "server_browser": {
+      "title": "Server Browser",
+      "fix_button": "Stuck on Loading? Fix It",
+      "search_placeholder": "Search servers...",
+      "unknown_name": "*<unknown>",
+      "session_id": "Session ID:",
+      "join_button": "Join"
+    }
+  }
+}
