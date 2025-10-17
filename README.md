@@ -14,7 +14,12 @@ DevourX is an open-source C++ mod menu developed specifically for the co-op horr
 ## Quick Start Installation
 
 #### 1. Download the files
-Download the version.dll file from the [Releases](https://github.com/jadis0x/DevourX/releases) section of this repository.
+Get the latest release from this repository's [Releases](https://github.com/jadis0x/DevourX/releases) section.
+
+The package now includes:
+- version.dll
+- localization/ folder
+- localization/config.json
 
 #### 2. Locate your Devour installation folder
  - Default Steam path (might differ):
@@ -22,8 +27,8 @@ Download the version.dll file from the [Releases](https://github.com/jadis0x/Dev
 C:\Program Files (x86)\Steam\steamapps\common\Devour
 ```
 
-#### 3. Copy the mod file
- - Place version.dll directly into the main game folder (the same directory as Devour.exe).
+#### 3. Copy all files
+ - Extract everything into the main game directory, the same folder as Devour.exe
 
 #### 4. Launch the game
  - Start Devour normally through Steam or a shortcut.
