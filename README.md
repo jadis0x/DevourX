@@ -60,10 +60,10 @@ C:\Program Files (x86)\Steam\steamapps\common\Devour
 ## Language Support
 DevourX ships with multi-language localization files. The in-game menu can be switched between:
 
-- English (`en-US`)
-- Turkish (`tr-TR`)
-- Simplified Chinese (`zh-CN`)
-- Korean (`ko-KR`)
+- 🇺🇸 English (`en-US`)
+- 🇹🇷 Turkish (`tr-TR`)
+- 🇨🇳 Simplified Chinese (`zh-CN`)
+- 🇰🇷 Korean (`ko-KR`)
 
 By default, DevourX prompts you to pick a language on startup. You can change the language at any time from the **Settings → Language** tab inside the menu or by editing `localization/config.json` (`localizationCulture`).
 
