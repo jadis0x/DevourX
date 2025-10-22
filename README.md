@@ -58,24 +58,22 @@ C:\Program Files (x86)\Steam\steamapps\common\Devour
 - Ghost Join
 
 ## Language Support
-DevourX ships with multi-language localization files. The in-game menu can be switched between:
+DevourX includes menu text in several languages:
 
-- English (`en-US`)
-- Turkish (`tr-TR`)
-- Simplified Chinese (`zh-CN`)
-- Korean (`ko-KR`)
+- 🇺🇸 English (`en-US`)
+- 🇹🇷 Turkish (`tr-TR`)
+- 🇨🇳 Simplified Chinese (`zh-CN`)
+- 🇰🇷 Korean (`ko-KR`)
 
-By default, DevourX prompts you to pick a language on startup. You can change the language at any time from the **Settings → Language** tab inside the menu or by editing `localization/config.json` (`localizationCulture`).
+The game asks for your preferred language the first time it runs. You can change it later from **Settings → Language** in the menu or by editing `localization/config.json` and updating `localizationCulture`.
 
-### Adding new languages
-To contribute another language:
+### Add another language
+1. Copy `localization/en-US.json` (or the closest file) and rename it with your locale, for example `localization/es-ES.json`.
+2. Translate the values, but leave the JSON keys and any placeholders like `%s` or `%d` unchanged.
+3. Add your language name to the `languages` section at the top of the file so it shows up in the menu.
+4. (Optional) Set it as default in `localization/config.json` while testing.
 
-1. Duplicate `localization/en-US.json` (or whichever language is closest) and name the copy with your locale code, e.g. `localization/es-ES.json`.
-2. Translate each string value while keeping the JSON keys intact. Values support standard ImGui formatting tokens such as `%s` and `%d`—leave those placeholders untouched so runtime substitutions keep working.
-3. Update the `languages` map at the top of the file so DevourX can display your language name in the selection dropdown.
-4. (Optional) Set your locale as the default by adjusting `localization/config.json` if you want to test it immediately.
-
-Submit the updated JSON file(s) through a pull request.
+When you are done, send the new JSON file in a pull request.
 
 ## Uninstalling
 1. Close Devour.
