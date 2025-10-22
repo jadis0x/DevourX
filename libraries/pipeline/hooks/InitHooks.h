@@ -1,16 +1,27 @@
 #pragma once
 
-#define SYS_STR_LOG(x) \
-    do { \
-        if (x) std::cout << il2cppi_to_string(x) << "\n"; \
-        else std::cout << "<null string>\n"; \
-    } while (0)
+#include <vector>
+#include <string>
+
+namespace neo {
+	extern std::vector<int> spoofedItemIDs;
+	extern app::Menu* globalMenu;
+}
+
+namespace esp_manager {
+	extern float interactableEspTimer;
+	extern float playerEspTimer;
+	constexpr float espRefreshInterval = 3.0f;
+}
+
+namespace UnityLogger {
+	void HandleUnityLog(const char* level, const std::string& message);
+}
 
 void DetourInitilization();
 void DetourUninitialization();
 
 // Unity.Debug
-
 void dDebug_Log(app::Object* message, MethodInfo* method);
 void dDebug_LogError(app::Object* message, MethodInfo* method);
 void dDebug_LogException(app::Exception* exception, MethodInfo* method);
@@ -107,7 +118,6 @@ app::CSteamID dSteamUser_GetSteamID(MethodInfo* method);
 
 // DO_APP_FUNC(0x0074A140, void, ServerBrowser_JoinSession, (ServerBrowser * __this, PhotonSession * photonSession, RoomProtocolToken * token, String * password, MethodInfo * method));
 void dServerBrowser_JoinSession(app::ServerBrowser* __this, app::PhotonSession* photonSession, app::RoomProtocolToken* token, app::String* password, MethodInfo* method);
-
 
 // DO_APP_FUNC(0x00C934E0, String *, SteamFriends_GetPersonaName, (MethodInfo * method));
 app::String* dSteamFriends_GetPersonaName(MethodInfo* method);
