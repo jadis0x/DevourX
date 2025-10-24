@@ -84,8 +84,10 @@ void NetworkTAB::Render()
 	ImGui::InputText(Localization::Get("tabs.network.control.new_room").c_str(), settings.customRoomName, IM_ARRAYSIZE(settings.customRoomName));
 	ImGui::EndDisabled();
 
+	/*
 	ImGui::Checkbox(Localization::Get("tabs.network.control.ghost").c_str(), &settings.bGhostMod);
 	ImGui::TextWrapped("%s", Localization::Get("tabs.network.control.ghost_help").c_str());
+	*/
 
 	ImGui::Checkbox(Localization::Get("tabs.network.control.force_public").c_str(), &settings.bForcePublic);
 	ImGui::TextWrapped("%s", Localization::Get("tabs.network.control.force_public_help").c_str());

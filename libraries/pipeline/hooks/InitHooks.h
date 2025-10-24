@@ -51,11 +51,6 @@ void dSurvivalAzazelBehaviour_Update(app::SurvivalAzazelBehaviour* __this, Metho
 // DO_APP_FUNC(0x004B6C30, void, AzazelAprilBehaviour_Update, (AzazelAprilBehaviour * __this, MethodInfo * method));
 void dAzazelAprilBehaviour_Update(app::AzazelAprilBehaviour* __this, MethodInfo* method);
 
-void dCharacterLoader_Awake(app::CharacterLoader* __this, MethodInfo* method);
-
-void dCharacterLoader_OnOutfit(app::CharacterLoader* __this, MethodInfo* method);
-
-
 //DO_APP_FUNC(0x02FFD5B0, void, SceneManager_Internal_ActiveSceneChanged, (Scene previousActiveScene, Scene newActiveScene, MethodInfo * method));
 void dSceneManager_Internal_ActiveSceneChanged(app::Scene previousActiveScene, app::Scene newActiveScene, MethodInfo* method);
 
@@ -150,9 +145,6 @@ void dUIOutfitSelectionType_SetLocked(app::UIOutfitSelectionType* __this, bool l
 
 // DO_APP_FUNC(0x006B8F00, void, CharacterOutfit__ctor, (CharacterOutfit * __this, MethodInfo * method));
 void dCharacterOutfit__ctor(app::CharacterOutfit* __this, MethodInfo* method);
-
-// DO_APP_FUNC(0x00B90110, IProtocolToken *, ProtocolTokenUtils_ReadToken, (UdpPacket * packet, MethodInfo * method));
-app::IProtocolToken* dProtocolTokenUtils_ReadToken(app::UdpPacket* packet, MethodInfo* method);
 
 // DO_APP_FUNC(0x0074C340, bool, SurvivalReviveInteractable_CanInteract, (SurvivalReviveInteractable * __this, GameObject * character, MethodInfo * method));
 bool dSurvivalReviveInteractable_CanInteract(app::SurvivalReviveInteractable* __this, app::GameObject* character, MethodInfo* method);

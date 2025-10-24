@@ -129,44 +129,12 @@ float dInput_1_GetAxis(app::String* axisName, MethodInfo* method) {
 }
 
 void dServerConnectToken_Write(app::ServerConnectToken* __this, app::UdpPacket* packet, MethodInfo* method) {
-	if (settings.bSpoofSteamName)
-	{
-		__this->fields.username = convert_to_system_string(settings.customSteamname);
-	}
-
-	if (settings.bSpoofSteamName)
-	{
-		__this->fields.playerId = convert_to_system_string(settings.customSteamIdStr);
-	}
-
-	if (settings.bGhostMod)
-	{
-		__this->fields.dissonanceId = nullptr;
-		__this->fields.survivalPrefabIdPreference = nullptr;
-		__this->fields.uniqueId = nullptr;
-	}
-
+	
 	app::ServerConnectToken_Write(__this, packet, method);
 }
 
 void dServerConnectToken_Read(app::ServerConnectToken* __this, app::UdpPacket* packet, MethodInfo* method) {
 
-	if (settings.bSpoofSteamName)
-	{
-		__this->fields.username = convert_to_system_string(settings.customSteamname);
-	}
-
-	if (settings.bSpoofSteamName)
-	{
-		__this->fields.playerId = convert_to_system_string(settings.customSteamIdStr);
-	}
-
-	if (settings.bGhostMod)
-	{
-		__this->fields.dissonanceId = nullptr;
-		__this->fields.survivalPrefabIdPreference = nullptr;
-		__this->fields.uniqueId = nullptr;
-	}
 
 	app::ServerConnectToken_Read(__this, packet, method);
 }
@@ -236,13 +204,6 @@ app::CSteamID dSteamUser_GetSteamID(MethodInfo* method) {
 }
 
 
-void dCSteamID__ctor_1(app::CSteamID* __this, uint64_t ulSteamID, MethodInfo* method)
-{
-	std::cout << "[CSteamID__ctor_1] Original SteamID: " << __this->m_SteamID << std::endl;
-
-	app::CSteamID__ctor_1(__this, ulSteamID, method);
-}
-
 void dServerBrowser_JoinSession(app::ServerBrowser* __this, app::PhotonSession* photonSession, app::RoomProtocolToken* token, app::String* password, MethodInfo* method) {
 
 	if (settings.bForcePublic)
@@ -251,9 +212,9 @@ void dServerBrowser_JoinSession(app::ServerBrowser* __this, app::PhotonSession* 
 		token->fields.isPrivate = false;
 		token->fields.gameInProgress = false;
 
-		std::string fullUrl = "https://www.steamcommunity.com/profiles/" + std::to_string(token->fields.hostSteamId);
-
+		/*std::string fullUrl = "https://www.steamcommunity.com/profiles/" + std::to_string(token->fields.hostSteamId);
 		app::Application_OpenURL(convert_to_system_string(fullUrl.c_str()), nullptr);
+		*/
 
 		photonSession->fields._IsOpen_k__BackingField = true;
 		photonSession->fields._IsVisible_k__BackingField = true;
@@ -724,20 +685,6 @@ void dAzazelAprilBehaviour_Update(app::AzazelAprilBehaviour* __this, MethodInfo*
 	app::AzazelAprilBehaviour_Update(__this, method);
 }
 
-void dCharacterLoader_Awake(app::CharacterLoader* __this, MethodInfo* method) {
-
-	if (auto* loadedOutfit = __this->fields._loadedRobe_k__BackingField)
-	{
-		std::cout << il2cppi_to_string(loadedOutfit) << "\n";
-	}
-
-	app::CharacterLoader_Awake(__this, method);
-}
-
-void dCharacterLoader_OnOutfit(app::CharacterLoader* __this, MethodInfo* method) {
-	app::CharacterLoader_OnOutfit(__this, method);
-}
-
 void dSceneManager_Internal_ActiveSceneChanged(app::Scene previousActiveScene, app::Scene newActiveScene, MethodInfo* method) {
 	ESPManager::ResetAll();
 	Players::PlayersManager::Instance().ClearCache();
@@ -875,8 +822,6 @@ void dMouseFollower_Update(app::MouseFollower* __this, MethodInfo* method) {
 app::IProtocolToken* dProtocolTokenUtils_ReadToken(app::UdpPacket* packet, MethodInfo* method) {
 	auto* token = app::ProtocolTokenUtils_ReadToken(packet, method);
 
-	// test
-
 	return token;
 }
 
@@ -899,7 +844,6 @@ void dNolanBehaviour_StartCarry(app::NolanBehaviour* __this, app::String* object
 }
 
 bool dKeyHelpers_IsKeyInArray(app::KeyHelpers* __this, app::String* state, app::String* name, MethodInfo* method) {
-
 	return true;
 }
 
@@ -913,12 +857,11 @@ bool dDoorBehaviour_IsLocked(app::DoorBehaviour* __this, MethodInfo* method) {
 	return app::DoorBehaviour_IsLocked(__this, method);
 }
 
-void dSteamInventoryItem__ctor(app::SteamInventoryItem* __this, MethodInfo* method)
+app::IEnumerator* dMenu_Start(app::Menu* __this, MethodInfo* method)
 {
-	std::cout << "[dSteamInventoryItem__ctor] item id: " << __this->fields.itemID << "\n";
-	std::cout << "[dSteamInventoryItem__ctor] price: " << __this->fields.basePrice << "\n";
+	std::cout << "menu start..\n";
 
-	app::SteamInventoryItem__ctor(__this, method);
+	return app::Menu_Start(__this, method);
 }
 
 bool HookFunction(PVOID* ppPointer, PVOID pDetour, const char* functionName) {
@@ -1114,19 +1057,6 @@ void DetourInitilization() {
 		return;
 	}
 
-
-	if (!HookFunction(&(PVOID&)app::CharacterLoader_Awake, dCharacterLoader_Awake, "CharacterLoader_Awake"))
-	{
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::CharacterLoader_OnOutfit, dCharacterLoader_OnOutfit, "CharacterLoader_OnOutfit"))
-	{
-		DetourTransactionAbort();
-		return;
-	}
-
 	if (!HookFunction(&(PVOID&)app::SceneManager_Internal_ActiveSceneChanged, dSceneManager_Internal_ActiveSceneChanged, "SceneManager_Internal_ActiveSceneChanged"))
 	{
 		DetourTransactionAbort();
@@ -1287,12 +1217,6 @@ void DetourInitilization() {
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::ProtocolTokenUtils_ReadToken, dProtocolTokenUtils_ReadToken, "dProtocolTokenUtils_ReadToken"))
-	{
-		DetourTransactionAbort();
-		return;
-	}
-
 	if (!HookFunction(&(PVOID&)app::SurvivalReviveInteractable_CanInteract, dSurvivalReviveInteractable_CanInteract, "dSurvivalReviveInteractable_CanInteract"))
 	{
 		DetourTransactionAbort();
@@ -1313,18 +1237,6 @@ void DetourInitilization() {
 	}
 
 	if (!HookFunction(&(PVOID&)app::DoorBehaviour_IsLocked, dDoorBehaviour_IsLocked, "dDoorBehaviour_IsLocked"))
-	{
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::SteamInventoryItem__ctor, dSteamInventoryItem__ctor, "dSteamInventoryItem__ctor"))
-	{
-		DetourTransactionAbort();
-		return;
-	}
-
-	if (!HookFunction(&(PVOID&)app::CSteamID__ctor_1, dCSteamID__ctor_1, "dCSteamID__ctor_1"))
 	{
 		DetourTransactionAbort();
 		return;
@@ -1379,9 +1291,6 @@ void DetourUninitialization() {
 	if (DetourDetach(&(PVOID&)app::SurvivalAzazelBehaviour_Update, dSurvivalAzazelBehaviour_Update) != 0) return;
 	if (DetourDetach(&(PVOID&)app::AzazelAprilBehaviour_Update, dAzazelAprilBehaviour_Update) != 0) return;
 
-
-	if (DetourDetach(&(PVOID&)app::CharacterLoader_Awake, dCharacterLoader_Awake) != 0) return;
-	if (DetourDetach(&(PVOID&)app::CharacterLoader_OnOutfit, dCharacterLoader_OnOutfit) != 0) return;
 	if (DetourDetach(&(PVOID&)app::SceneManager_Internal_ActiveSceneChanged, dSceneManager_Internal_ActiveSceneChanged) != 0) return;
 	if (DetourDetach(&(PVOID&)app::ObjectInteractable_Interact, dObjectInteractable_Interact) != 0) return;
 	if (DetourDetach(&(PVOID&)app::InGameHelpers_CreateDroppedObject, dInGameHelpers_CreateDroppedObject) != 0) return;
