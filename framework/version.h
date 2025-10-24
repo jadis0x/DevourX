@@ -4,4 +4,5 @@
 
 extern HMODULE version_dll;
 
+bool PerformPreInjectionChecks();
 DWORD WINAPI Load(LPVOID lpParam);

@@ -857,12 +857,16 @@ bool dDoorBehaviour_IsLocked(app::DoorBehaviour* __this, MethodInfo* method) {
 	return app::DoorBehaviour_IsLocked(__this, method);
 }
 
-app::IEnumerator* dMenu_Start(app::Menu* __this, MethodInfo* method)
+int32_t dSurvivalLobbyController_PlayerPrefabsAttached(app::SurvivalLobbyController* __this, MethodInfo* method)
 {
-	std::cout << "menu start..\n";
-
-	return app::Menu_Start(__this, method);
+	return 4;
 }
+
+bool dMenu_CanPlayMode(app::Menu* __this, app::DevourGameMode__Enum gameMode, app::DevourMap__Enum map, MethodInfo* method)
+{
+	return true;
+}
+
 
 bool HookFunction(PVOID* ppPointer, PVOID pDetour, const char* functionName) {
 	if (const auto error = DetourAttach(ppPointer, pDetour); error != NO_ERROR)
@@ -1242,6 +1246,18 @@ void DetourInitilization() {
 		return;
 	}
 
+	if (!HookFunction(&(PVOID&)app::SurvivalLobbyController_PlayerPrefabsAttached, dSurvivalLobbyController_PlayerPrefabsAttached, "dSurvivalLobbyController_PlayerPrefabsAttached"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	if (!HookFunction(&(PVOID&)app::Menu_CanPlayMode, dMenu_CanPlayMode, "dMenu_CanPlayMode"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
 	DetourTransactionCommit();
 }
 
@@ -1327,4 +1343,6 @@ void DetourUninitialization() {
 	if (DetourDetach(&(PVOID&)app::NolanBehaviour_StartCarry, dNolanBehaviour_StartCarry) != 0) return;
 	if (DetourDetach(&(PVOID&)app::KeyHelpers_IsKeyInArray, dKeyHelpers_IsKeyInArray) != 0) return;
 	if (DetourDetach(&(PVOID&)app::DoorBehaviour_IsLocked, dDoorBehaviour_IsLocked) != 0) return;
+	if (DetourDetach(&(PVOID&)app::SurvivalLobbyController_PlayerPrefabsAttached, dSurvivalLobbyController_PlayerPrefabsAttached) != 0) return;
+	if (DetourDetach(&(PVOID&)app::Menu_CanPlayMode, dMenu_CanPlayMode) != 0) return;
 }

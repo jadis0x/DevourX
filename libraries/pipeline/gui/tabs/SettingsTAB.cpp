@@ -8,6 +8,7 @@
 #include <pipeline/settings.h>
 #include <string>
 #include <pipeline/localization/LocalizationManager.h>
+#include "build_info.h"
 
 void SettingsTAB::Render()
 {
@@ -23,7 +24,7 @@ void SettingsTAB::Render()
 		ImGui::TableNextColumn();
 		GuiWidgets::SectionTitle("tabs.settings.session.title", ImVec4(0.55f, 0.85f, 0.8f, 1.0f));
 		ImGui::TextUnformatted(Localization::Format("tabs.settings.session.framerate", ImGui::GetIO().Framerate).c_str());
-		ImGui::TextUnformatted(Localization::Format("tabs.settings.session.version", "2.0").c_str());
+		ImGui::TextUnformatted(Localization::Format("tabs.settings.session.version", BuildInfo::kVersion).c_str());
 		ImGui::TextUnformatted(Localization::Format("tabs.settings.session.menu_toggle", KeyBinds::ToString(settings.KeyBinds.Toggle_Menu)).c_str());
 		ImGui::Spacing();
 		ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), Localization::Get("tabs.settings.session.discord").c_str());

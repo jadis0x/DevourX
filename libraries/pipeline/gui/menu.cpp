@@ -15,6 +15,7 @@
 #include "pipeline/keybinds.h"
 #include "pipeline/settings.h"
 #include "pipeline/localization/LocalizationManager.h"
+#include "build_info.h"
 
 #include <string>
 #include <limits>
@@ -188,7 +189,7 @@ namespace
 			ImGui::PushStyleColor(ImGuiCol_Text, kAccentColour);
 			ImGui::TextUnformatted(Localization::Get("menu.header.title").c_str());
 			ImGui::PopStyleColor();
-			const std::string version = "2.2";
+			const std::string version = BuildInfo::kVersion;
 			const std::string buildLabel = Localization::Format("menu.header.build", version.empty() ? Localization::Get("common.placeholder_dash").c_str() : version.c_str());
 			ImGui::TextUnformatted(buildLabel.c_str());
 			const std::string toggleLabel = Localization::Format("menu.header.toggle", KeyBinds::ToString(settings.KeyBinds.Toggle_Menu));

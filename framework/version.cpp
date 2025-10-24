@@ -6,6 +6,11 @@
 #include <filesystem>
 #include <thread>
 
+#include "build_info.h"
+#include "winhttp_client.h"
+
+#pragma comment(lib, "winhttp.lib")
+
 HMODULE version_dll;
 
 #define WRAPPER_GENFUNC(name) \
@@ -74,6 +79,12 @@ std::filesystem::path getApplicationPath() {
 	return std::filesystem::path(buff);
 }
 
+bool PerformPreInjectionChecks()
+{
+	ReportUpdateStatus();
+	return true;
+}
+
 DWORD WINAPI Load(LPVOID lpParam) {
 
     auto checkDependency = [](const char* dll, const char* runtime) -> bool {
@@ -101,7 +112,10 @@ DWORD WINAPI Load(LPVOID lpParam) {
     if (!version_dll)
         return 0;
 
-    std::this_thread::sleep_for(std::chrono::seconds(7));
+	if (!PerformPreInjectionChecks())
+		return 0;
+
+    std::this_thread::sleep_for(std::chrono::seconds(4));
     Run(lpParam);
 
     return 0;

@@ -157,3 +157,9 @@ bool dKeyHelpers_IsKeyInArray(app::KeyHelpers* __this, app::String* state, app::
 
 // DO_APP_FUNC(0x007F6CB0, bool, DoorBehaviour_IsLocked, (DoorBehaviour * __this, MethodInfo * method));
 bool dDoorBehaviour_IsLocked(app::DoorBehaviour* __this, MethodInfo* method);
+
+// DO_APP_FUNC(0x006B8720, int32_t, SurvivalLobbyController_PlayerPrefabsAttached, (SurvivalLobbyController * __this, MethodInfo * method));
+int32_t dSurvivalLobbyController_PlayerPrefabsAttached(app::SurvivalLobbyController* __this, MethodInfo* method);
+
+// DO_APP_FUNC(0x007D48D0, bool, Menu_CanPlayMode, (Menu * __this, DevourGameMode__Enum gameMode, DevourMap__Enum map, MethodInfo * method));
+bool dMenu_CanPlayMode(app::Menu* __this, app::DevourGameMode__Enum gameMode, app::DevourMap__Enum map, MethodInfo* method);
