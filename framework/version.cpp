@@ -1,5 +1,7 @@
 ﻿#include "pch-il2cpp.h"
 
+#define NOMINMAX
+
 #include "main.h"
 #include "version.h"
 #include <chrono>
@@ -12,6 +14,118 @@
 #pragma comment(lib, "winhttp.lib")
 
 HMODULE version_dll;
+
+namespace
+{
+    constexpr const wchar_t* kGithubApiHost = L"api.github.com";
+
+    std::optional<std::string> FetchLatestReleaseVersion()
+    {
+        const std::wstring path = WinHttpClient::ToWide(std::string("/repos/") + BuildInfo::kGitHubOwner + "/" + BuildInfo::kGitHubRepo + "/releases/latest");
+        const std::wstring userAgent = WinHttpClient::ToWide(std::string("DevourXUpdater/") + BuildInfo::kVersion);
+
+        auto response = WinHttpClient::HttpGet(kGithubApiHost, path, userAgent,
+            L"Accept: application/vnd.github+json\r\nX-GitHub-Api-Version: 2022-11-28\r\n");
+
+        if (!response.has_value())
+        {
+            return std::nullopt;
+        }
+
+        const std::string& json = response.value();
+
+        const std::string key = "\"tag_name\"";
+        size_t keyPos = json.find(key);
+        if (keyPos == std::string::npos)
+        {
+            return std::nullopt;
+        }
+
+        size_t valueStart = json.find('"', json.find(':', keyPos));
+        if (valueStart == std::string::npos)
+        {
+            return std::nullopt;
+        }
+        ++valueStart;
+        size_t valueEnd = json.find('"', valueStart);
+        if (valueEnd == std::string::npos || valueEnd <= valueStart)
+        {
+            return std::nullopt;
+        }
+
+        std::string version = json.substr(valueStart, valueEnd - valueStart);
+        if (!version.empty() && (version.front() == 'v' || version.front() == 'V'))
+        {
+            version.erase(version.begin());
+        }
+
+        return version;
+    }
+
+    std::vector<int> ParseVersionComponents(const std::string& version)
+    {
+        std::vector<int> components;
+        std::stringstream ss(version);
+        std::string part;
+
+        while (std::getline(ss, part, '.'))
+        {
+            try
+            {
+                components.push_back(std::stoi(part));
+            }
+            catch (...)
+            {
+                components.push_back(0);
+            }
+        }
+
+        return components;
+    }
+
+    int CompareVersions(const std::string& lhs, const std::string& rhs)
+    {
+        const auto lhsComponents = ParseVersionComponents(lhs);
+        const auto rhsComponents = ParseVersionComponents(rhs);
+
+        const size_t maxSize = std::max(lhsComponents.size(), rhsComponents.size());
+        for (size_t i = 0; i < maxSize; ++i)
+        {
+            const int lhsValue = i < lhsComponents.size() ? lhsComponents[i] : 0;
+            const int rhsValue = i < rhsComponents.size() ? rhsComponents[i] : 0;
+
+            if (lhsValue < rhsValue)
+            {
+                return -1;
+            }
+            if (lhsValue > rhsValue)
+            {
+                return 1;
+            }
+        }
+
+        return 0;
+    }
+
+    void ReportUpdateStatus()
+    {
+        auto latestVersion = FetchLatestReleaseVersion();
+        if (!latestVersion.has_value())
+        {
+            return;
+        }
+
+        const std::string currentVersion = BuildInfo::kVersion;
+        if (CompareVersions(currentVersion, latestVersion.value()) >= 0)
+        {
+            return;
+        }
+
+        constexpr const char* kMessage = "A new version is available.";
+        MessageBoxA(nullptr, kMessage, "DevourX", MB_OK | MB_ICONINFORMATION | MB_SYSTEMMODAL);
+        OutputDebugStringA(kMessage);
+    }
+}
 
 #define WRAPPER_GENFUNC(name) \
     FARPROC o##name; \
