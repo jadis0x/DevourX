@@ -15,129 +15,216 @@
 
 HMODULE version_dll;
 
+std::filesystem::path getApplicationPath();
+
 namespace
 {
-    constexpr const wchar_t* kGithubApiHost = L"api.github.com";
+	constexpr const wchar_t* kGithubApiHost = L"api.github.com";
 
-    void ShowNotification(const std::string& message, UINT flags)
-    {
-        MessageBoxA(nullptr, message.c_str(), "DevourX", flags | MB_SYSTEMMODAL);
-        OutputDebugStringA(message.c_str());
-    }
+	struct ReleaseVersionInfo
+	{
+		std::string tag;
+		std::string modVersion;
+		std::string appVersion;
+	};
 
-    std::string GetLocalAppVersion()
-    {
-        return std::string(BuildInfo::kAppVersion);
-    }
+	void ShowNotification(const std::string& message, UINT flags)
+	{
+		MessageBoxA(nullptr, message.c_str(), "DevourX", flags | MB_SYSTEMMODAL);
+		OutputDebugStringA(message.c_str());
+	}
 
-    std::optional<std::string> FetchLatestReleaseVersion()
-    {
-        const std::wstring path = WinHttpClient::ToWide(std::string("/repos/") + BuildInfo::kGitHubOwner + "/" + BuildInfo::kGitHubRepo + "/releases/latest");
-        const std::wstring userAgent = WinHttpClient::ToWide(std::string("DevourXUpdater/") + BuildInfo::kVersion);
+	std::optional<ReleaseVersionInfo> ParseReleaseTag(const std::string& tag)
+	{
+		ReleaseVersionInfo info{};
+		info.tag = tag;
 
-        auto response = WinHttpClient::HttpGet(kGithubApiHost, path, userAgent,
-            L"Accept: application/vnd.github+json\r\nX-GitHub-Api-Version: 2022-11-28\r\n");
+		if (info.tag.empty())
+		{
+			return std::nullopt;
+		}
 
-        if (!response.has_value())
-        {
-            return std::nullopt;
-        }
+		std::string normalized = info.tag;
+		if (!normalized.empty() && (normalized.front() == 'v' || normalized.front() == 'V'))
+		{
+			normalized.erase(normalized.begin());
+		}
 
-        const std::string& json = response.value();
+		const auto findSeparator = [&normalized]() -> std::optional<size_t>
+			{
+				const size_t lower = normalized.find("_a");
+				if (lower != std::string::npos)
+				{
+					return lower;
+				}
 
-        const std::string key = "\"tag_name\"";
-        size_t keyPos = json.find(key);
-        if (keyPos == std::string::npos)
-        {
-            return std::nullopt;
-        }
+				const size_t upper = normalized.find("_A");
+				if (upper != std::string::npos)
+				{
+					return upper;
+				}
 
-        size_t valueStart = json.find('"', json.find(':', keyPos));
-        if (valueStart == std::string::npos)
-        {
-            return std::nullopt;
-        }
-        ++valueStart;
-        size_t valueEnd = json.find('"', valueStart);
-        if (valueEnd == std::string::npos || valueEnd <= valueStart)
-        {
-            return std::nullopt;
-        }
+				return std::nullopt;
+			};
 
-        std::string version = json.substr(valueStart, valueEnd - valueStart);
-        if (!version.empty() && (version.front() == 'v' || version.front() == 'V'))
-        {
-            version.erase(version.begin());
-        }
+		const auto separator = findSeparator();
+		if (!separator.has_value())
+		{
+			return std::nullopt;
+		}
 
-        return version;
-    }
+		const size_t splitIndex = separator.value();
+		if (splitIndex == 0 || splitIndex + 2 > normalized.size())
+		{
+			return std::nullopt;
+		}
 
-    std::vector<int> ParseVersionComponents(const std::string& version)
-    {
-        std::vector<int> components;
-        std::stringstream ss(version);
-        std::string part;
+		info.modVersion = normalized.substr(0, splitIndex);
+		info.appVersion = normalized.substr(splitIndex + 2);
 
-        while (std::getline(ss, part, '.'))
-        {
-            try
-            {
-                components.push_back(std::stoi(part));
-            }
-            catch (...)
-            {
-                components.push_back(0);
-            }
-        }
+		if (info.modVersion.empty() || info.appVersion.empty())
+		{
+			return std::nullopt;
+		}
 
-        return components;
-    }
+		return info;
+	}
 
-    int CompareVersions(const std::string& lhs, const std::string& rhs)
-    {
-        const auto lhsComponents = ParseVersionComponents(lhs);
-        const auto rhsComponents = ParseVersionComponents(rhs);
+	std::optional<ReleaseVersionInfo> FetchLatestReleaseVersion()
+	{
+		const std::wstring path = WinHttpClient::ToWide(std::string("/repos/") + BuildInfo::kGitHubOwner + "/" + BuildInfo::kGitHubRepo + "/releases/latest");
+		const std::wstring userAgent = WinHttpClient::ToWide(std::string("DevourXUpdater/") + BuildInfo::kVersion);
 
-        const size_t maxSize = std::max(lhsComponents.size(), rhsComponents.size());
-        for (size_t i = 0; i < maxSize; ++i)
-        {
-            const int lhsValue = i < lhsComponents.size() ? lhsComponents[i] : 0;
-            const int rhsValue = i < rhsComponents.size() ? rhsComponents[i] : 0;
+		auto response = WinHttpClient::HttpGet(kGithubApiHost, path, userAgent,
+			L"Accept: application/vnd.github+json\r\nX-GitHub-Api-Version: 2022-11-28\r\n");
 
-            if (lhsValue < rhsValue)
-            {
-                return -1;
-            }
-            if (lhsValue > rhsValue)
-            {
-                return 1;
-            }
-        }
+		if (!response.has_value())
+		{
+			return std::nullopt;
+		}
 
-        return 0;
-    }
+		const std::string& json = response.value();
 
-    void ReportUpdateStatus()
-    {
-        auto latestVersion = FetchLatestReleaseVersion();
-        if (!latestVersion.has_value())
-        {
-            return;
-        }
+		const std::string key = "\"tag_name\"";
+		size_t keyPos = json.find(key);
+		if (keyPos == std::string::npos)
+		{
+			return std::nullopt;
+		}
 
-        const std::string currentVersion = BuildInfo::kVersion;
-        const std::string& latest = latestVersion.value();
-        if (CompareVersions(currentVersion, latest) >= 0)
-        {
-            return;
-        }
+		size_t valueStart = json.find('"', json.find(':', keyPos));
+		if (valueStart == std::string::npos)
+		{
+			return std::nullopt;
+		}
+		++valueStart;
+		size_t valueEnd = json.find('"', valueStart);
+		if (valueEnd == std::string::npos || valueEnd <= valueStart)
+		{
+			return std::nullopt;
+		}
 
-        const std::string message =
-            "A new DevourX release (" + latest + ") is available.\nYou are running version " + currentVersion +
-            ".\nVisit the GitHub releases page to download the update.";
-        ShowNotification(message, MB_OK | MB_ICONINFORMATION);
-    }
+		std::string version = json.substr(valueStart, valueEnd - valueStart);
+
+		return ParseReleaseTag(version);
+	}
+
+	std::string FormatReleaseTag(const std::string& modVersion, const std::string& appVersion)
+	{
+		return "v" + modVersion + "_a" + appVersion;
+	}
+
+	std::vector<int> ParseVersionComponents(const std::string& version)
+	{
+		std::vector<int> components;
+		std::stringstream ss(version);
+		std::string part;
+
+		while (std::getline(ss, part, '.'))
+		{
+			try
+			{
+				components.push_back(std::stoi(part));
+			}
+			catch (...)
+			{
+				components.push_back(0);
+			}
+		}
+
+		return components;
+	}
+
+	int CompareVersions(const std::string& lhs, const std::string& rhs)
+	{
+		const auto lhsComponents = ParseVersionComponents(lhs);
+		const auto rhsComponents = ParseVersionComponents(rhs);
+
+		const size_t maxSize = std::max(lhsComponents.size(), rhsComponents.size());
+		for (size_t i = 0; i < maxSize; ++i)
+		{
+			const int lhsValue = i < lhsComponents.size() ? lhsComponents[i] : 0;
+			const int rhsValue = i < rhsComponents.size() ? rhsComponents[i] : 0;
+
+			if (lhsValue < rhsValue)
+			{
+				return -1;
+			}
+			if (lhsValue > rhsValue)
+			{
+				return 1;
+			}
+		}
+
+		return 0;
+	}
+
+
+
+	void ReportUpdateStatus()
+	{
+		auto latestVersion = FetchLatestReleaseVersion();
+		if (!latestVersion.has_value())
+		{
+			return;
+		}
+
+		const ReleaseVersionInfo& releaseInfo = latestVersion.value();
+
+		const std::string currentModVersion = BuildInfo::kVersion;
+		const std::string installedGameVersion = BuildInfo::kAppVersion;
+
+		if (CompareVersions(currentModVersion, releaseInfo.modVersion) < 0)
+		{
+			const std::string message =
+				"A new DevourX release (" + releaseInfo.tag + ") is available.\nYou are running version " +
+				FormatReleaseTag(currentModVersion, BuildInfo::kAppVersion) +
+				").\nVisit the GitHub releases page to download the update.";
+			ShowNotification(message, MB_OK | MB_ICONINFORMATION);
+		}
+
+		const int compatibility = CompareVersions(installedGameVersion, releaseInfo.appVersion);
+		if (compatibility == 0)
+		{
+			return;
+		}
+
+		std::string message;
+		if (compatibility < 0)
+		{
+			message = "DevourX " + releaseInfo.tag + " requires Devour version " + releaseInfo.appVersion +
+				").\nYour game reports version " + installedGameVersion +
+				").\nPlease update Devour before launching DevourX.";
+		}
+		else
+		{
+			message = "Devour has been updated to version " + installedGameVersion +
+				", but the latest DevourX release (" + releaseInfo.tag + ") only supports Devour " + releaseInfo.appVersion +
+				").\nRunning DevourX may cause crashes until it is updated.";
+		}
+
+		ShowNotification(message, MB_OK | MB_ICONERROR);
+	}
 }
 
 #define WRAPPER_GENFUNC(name) \
@@ -214,63 +301,41 @@ bool PerformPreInjectionChecks()
 
 bool EnsureCompatibleGameVersion()
 {
-    const std::string supportedVersion = BuildInfo::kAppVersion;
-    const int comparison = CompareVersions(installedVersion.value(), supportedVersion);
-    if (comparison == 0)
-    {
-        return true;
-    }
-
-    std::string message;
-    if (comparison < 0)
-    {
-        message = "DevourX requires Devour version " + supportedVersion +
-            ".\nYour game reports version " + installedVersion.value() +
-            ".\nPlease update Devour before launching DevourX.";
-    }
-    else
-    {
-        message = "DevourX does not yet support Devour version " + installedVersion.value() +
-            ".\nSupported version: " + supportedVersion +
-            ".\nPlease check for an updated DevourX release.";
-    }
-
-    ShowNotification(message, MB_OK | MB_ICONERROR);
-    return false;
+	return false;
 }
 
 DWORD WINAPI Load(LPVOID lpParam) {
 
-    auto checkDependency = [](const char* dll, const char* runtime) -> bool {
-        HMODULE mod = LoadLibraryA(dll);
-        if (mod) {
-            FreeLibrary(mod);
-            return true;
-        }
-        std::string msg = std::string("Missing dependency: ") + dll +
-            "\nPlease install " + runtime + ".";
-        MessageBoxA(NULL, msg.c_str(), "Devourx", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
-        OutputDebugStringA(msg.c_str());
-        return false;
-        };
+	auto checkDependency = [](const char* dll, const char* runtime) -> bool {
+		HMODULE mod = LoadLibraryA(dll);
+		if (mod) {
+			FreeLibrary(mod);
+			return true;
+		}
+		std::string msg = std::string("Missing dependency: ") + dll +
+			"\nPlease install " + runtime + ".";
+		MessageBoxA(NULL, msg.c_str(), "Devourx", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
+		OutputDebugStringA(msg.c_str());
+		return false;
+		};
 
-    if (!checkDependency("d3d11.dll", "the DirectX 11 runtime") ||
-        !checkDependency("dxgi.dll", "the DirectX 11 runtime") ||
-        !checkDependency("vcruntime140.dll", "the Microsoft Visual C++ Redistributable") ||
+	if (!checkDependency("d3d11.dll", "the DirectX 11 runtime") ||
+		!checkDependency("dxgi.dll", "the DirectX 11 runtime") ||
+		!checkDependency("vcruntime140.dll", "the Microsoft Visual C++ Redistributable") ||
 		!checkDependency("vcruntime140_1.dll", "the Microsoft Visual C++ Redistributable") ||
 		!checkDependency("msvcp140.dll", "the Microsoft Visual C++ Redistributable")) {
-        return 0;
-    }
+		return 0;
+	}
 
-    load_version();
-    if (!version_dll)
-        return 0;
+	load_version();
+	if (!version_dll)
+		return 0;
 
 	if (!PerformPreInjectionChecks())
 		return 0;
 
-    std::this_thread::sleep_for(std::chrono::seconds(4));
-    Run(lpParam);
+	std::this_thread::sleep_for(std::chrono::seconds(4));
+	Run(lpParam);
 
-    return 0;
+	return 0;
 }
