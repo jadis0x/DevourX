@@ -4,6 +4,4 @@
 
 extern HMODULE version_dll;
 
-bool PerformPreInjectionChecks();
-bool EnsureCompatibleGameVersion();
 DWORD WINAPI Load(LPVOID lpParam);
