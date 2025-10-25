@@ -255,6 +255,8 @@
       "lerp_speed": "보간 속도",
       "force_start": "[강제] 로비 시작",
       "force_progress": "[강제] 진행도 설정:",
+	   "map_name": "맵 이름",
+      "load_map": "[강제] 맵 불러오기",
       "progress_slider": "맵 진행도"
     },
     "server_browser": {

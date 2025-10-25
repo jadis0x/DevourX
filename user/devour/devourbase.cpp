@@ -659,6 +659,28 @@ void Base::Gameplay::setRank(app::GameObject* local_player, int32_t new_rank) {
 	}
 }
 
+void Base::Gameplay::LoadMap(const char* mapName)
+{
+	if (!Base::DevourNet::IsHost())
+	{
+		std::cout << "[!] You must be the host to use this command!\n";
+		return;
+	}
+
+	if (app::BoltNetwork_LoadScene == nullptr)
+	{
+		std::cout << "[-] BoltNetwork_LoadScene is unavailable.\n";
+		return;
+	}
+
+	SafePtr::safe_call([&]() {
+		app::String* sceneName = convert_to_system_string(mapName);
+		app::BoltNetwork_LoadScene(sceneName, nullptr);
+		});
+
+	std::cout << "[!] Please press the button only once, it may take some time for the map to load.\n";
+}
+
 
 std::string Base::System::generate_random_unique_id(int length) {
 	static const char charset[] =

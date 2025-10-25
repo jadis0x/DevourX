@@ -255,6 +255,8 @@
       "lerp_speed": "插值速度",
       "force_start": "[强制] 大厅开始",
       "force_progress": "[强制] 设置进度为：",
+	  "map_name": "地图名称",
+      "load_map": "[强制] 加载地图",
       "progress_slider": "地图进度"
     },
     "server_browser": {

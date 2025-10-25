@@ -255,6 +255,8 @@
       "lerp_speed": "Lerp Speed",
       "force_start": "[FORCE] Lobby Start",
       "force_progress": "[FORCE] Set Progress To:",
+	  "map_name": "Map Name",
+      "load_map": "[FORCE] Load Map",
       "progress_slider": "Map Progress"
     },
     "server_browser": {

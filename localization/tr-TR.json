@@ -255,6 +255,8 @@
       "lerp_speed": "Yumuşatma Hızı",
       "force_start": "[ZORLA] Lobi Başlat",
       "force_progress": "[ZORLA] İlerlemeyi Ayarla:",
+	  "map_name": "Harita Adı",
+      "load_map": "[ZORLA] Haritayı Yükle",
       "progress_slider": "Harita İlerlemesi"
     },
     "server_browser": {

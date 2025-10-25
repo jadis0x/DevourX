@@ -50,6 +50,7 @@ namespace Base {
 		void Shoot(app::GameObject* target_player);
 
 		void setRank(app::GameObject* local_player, int32_t new_rank);
+		void LoadMap(const char* mapName);
 	}
 }
 

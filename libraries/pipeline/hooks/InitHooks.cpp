@@ -859,7 +859,11 @@ bool dDoorBehaviour_IsLocked(app::DoorBehaviour* __this, MethodInfo* method) {
 
 int32_t dSurvivalLobbyController_PlayerPrefabsAttached(app::SurvivalLobbyController* __this, MethodInfo* method)
 {
-	return 4;
+	int32_t count = app::SurvivalLobbyController_PlayerPrefabsAttached(__this, method);
+
+	if (count > 4) count = 4;
+
+	return count;
 }
 
 bool dMenu_CanPlayMode(app::Menu* __this, app::DevourGameMode__Enum gameMode, app::DevourMap__Enum map, MethodInfo* method)
@@ -867,6 +871,17 @@ bool dMenu_CanPlayMode(app::Menu* __this, app::DevourGameMode__Enum gameMode, ap
 	return true;
 }
 
+void dGameStatsPlayerToken_Read(app::GameStatsPlayerToken* __this, app::UdpPacket* packet, MethodInfo* method)
+{
+	__this->fields.numDeaths = 9999;
+	__this->fields.numBanishes = 9999;
+	__this->fields.numRevives = 9999;
+	__this->fields.numStaggers = 9999;
+
+	std::cout << il2cppi_to_string(__this->fields.playerSteamName) << "\n";
+
+	app::GameStatsPlayerToken_Read(__this, packet, method);
+}
 
 bool HookFunction(PVOID* ppPointer, PVOID pDetour, const char* functionName) {
 	if (const auto error = DetourAttach(ppPointer, pDetour); error != NO_ERROR)
@@ -1258,6 +1273,12 @@ void DetourInitilization() {
 		return;
 	}
 
+	if (!HookFunction(&(PVOID&)app::GameStatsPlayerToken_Read, dGameStatsPlayerToken_Read, "dGameStatsPlayerToken_Read"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
 	DetourTransactionCommit();
 }
 
@@ -1345,4 +1366,5 @@ void DetourUninitialization() {
 	if (DetourDetach(&(PVOID&)app::DoorBehaviour_IsLocked, dDoorBehaviour_IsLocked) != 0) return;
 	if (DetourDetach(&(PVOID&)app::SurvivalLobbyController_PlayerPrefabsAttached, dSurvivalLobbyController_PlayerPrefabsAttached) != 0) return;
 	if (DetourDetach(&(PVOID&)app::Menu_CanPlayMode, dMenu_CanPlayMode) != 0) return;
+	if (DetourDetach(&(PVOID&)app::GameStatsPlayerToken_Read, dGameStatsPlayerToken_Read) != 0) return;
 }

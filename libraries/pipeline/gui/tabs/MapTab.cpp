@@ -1,4 +1,4 @@
-#include "pch-il2cpp.h"
+﻿#include "pch-il2cpp.h"
 #include "pipeline/gui/tabs/MapTab.h"
 #include "pipeline/settings.h"
 #include <devour/devourbase.h>
@@ -28,6 +28,28 @@ void MapTAB::Render()
 			Base::Gameplay::SetProgressTo(settings.progress);
 		}
 		ImGui::SliderInt(Localization::Get("tabs.map.progress_slider").c_str(), &settings.progress, 0, 10);
+
+		ImGui::Spacing();
+
+		static const char* maps[] = {
+			"Menu"
+			"Farmhouse",
+			"Asylum",
+			"Inn",
+			"Town",
+			"Slaughterhouse",
+			"Manor",
+			"Carnival"
+		};
+
+		static int currentMap = 0;
+
+		ImGui::Text("Select Map:");
+		ImGui::Combo("##MapSelect", &currentMap, maps, IM_ARRAYSIZE(maps));
+
+		if (ImGui::Button(Localization::Get("tabs.map.load_map").c_str())) {
+			Base::Gameplay::LoadMap(maps[currentMap]);
+		}
 
 		ImGui::EndTabItem();
 	}

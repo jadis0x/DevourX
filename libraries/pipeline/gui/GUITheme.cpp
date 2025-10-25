@@ -35,28 +35,28 @@ void ApplyTheme()
 
 
 	const ImVec4 transparent = ImVec4(0.0f, 0.0f, 0.0f, 0.0f);
-	const ImVec4 canvas = ImVec4(0.08f, 0.09f, 0.11f, 0.98f);
-	const ImVec4 surface = ImVec4(0.11f, 0.12f, 0.16f, 1.0f);
-	const ImVec4 surfaceHover = ImVec4(0.17f, 0.19f, 0.24f, 1.0f);
-	const ImVec4 surfaceActive = ImVec4(0.21f, 0.23f, 0.30f, 1.0f);
-	const ImVec4 panel = ImVec4(0.10f, 0.11f, 0.14f, 1.0f);
+	const ImVec4 canvas = ImVec4(0.04f, 0.04f, 0.05f, 0.98f);
+	const ImVec4 surface = ImVec4(0.06f, 0.06f, 0.08f, 1.0f);
+	const ImVec4 surfaceHover = ImVec4(0.10f, 0.09f, 0.12f, 1.0f);
+	const ImVec4 surfaceActive = ImVec4(0.13f, 0.12f, 0.16f, 1.0f);
+	const ImVec4 panel = ImVec4(0.05f, 0.05f, 0.07f, 1.0f);
 
-	const ImVec4 accentPrimary = ImVec4(0.43f, 0.60f, 0.99f, 1.0f);
-	const ImVec4 accentPrimaryHover = ImVec4(0.53f, 0.70f, 1.00f, 1.0f);
-	const ImVec4 accentPrimaryActive = ImVec4(0.35f, 0.52f, 0.93f, 1.0f);
-	const ImVec4 accentSecondary = ImVec4(0.32f, 0.39f, 0.56f, 1.0f);
-	const ImVec4 accentSecondaryHover = ImVec4(0.36f, 0.44f, 0.63f, 1.0f);
-	const ImVec4 accentSecondaryActive = ImVec4(0.28f, 0.35f, 0.52f, 1.0f);
+	const ImVec4 accentPrimary = ImVec4(0.82f, 0.21f, 0.48f, 1.0f);
+	const ImVec4 accentPrimaryHover = ImVec4(0.88f, 0.29f, 0.56f, 1.0f);
+	const ImVec4 accentPrimaryActive = ImVec4(0.70f, 0.16f, 0.40f, 1.0f);
+	const ImVec4 accentSecondary = ImVec4(0.35f, 0.16f, 0.28f, 1.0f);
+	const ImVec4 accentSecondaryHover = ImVec4(0.43f, 0.20f, 0.34f, 1.0f);
+	const ImVec4 accentSecondaryActive = ImVec4(0.28f, 0.12f, 0.22f, 1.0f);
 
-	const ImVec4 textPrimary = ImVec4(0.93f, 0.95f, 0.98f, 1.0f);
-	const ImVec4 textMuted = ImVec4(0.66f, 0.70f, 0.78f, 1.0f);
+	const ImVec4 textPrimary = ImVec4(0.93f, 0.90f, 0.94f, 1.0f);
+	const ImVec4 textMuted = ImVec4(0.60f, 0.56f, 0.62f, 1.0f);
 
-	const ImVec4 warning = ImVec4(0.98f, 0.82f, 0.40f, 1.0f);
-	const ImVec4 danger = ImVec4(0.95f, 0.42f, 0.55f, 1.0f);
-	const ImVec4 success = ImVec4(0.37f, 0.73f, 0.52f, 1.0f);
+	const ImVec4 warning = ImVec4(0.96f, 0.73f, 0.33f, 1.0f);
+	const ImVec4 danger = ImVec4(0.92f, 0.28f, 0.46f, 1.0f);
+	const ImVec4 success = ImVec4(0.34f, 0.62f, 0.42f, 1.0f);
 
-	const ImVec4 border = ImVec4(0.18f, 0.21f, 0.28f, 1.0f);
-	const ImVec4 borderStrong = ImVec4(0.12f, 0.14f, 0.20f, 1.0f);
+	const ImVec4 border = ImVec4(0.17f, 0.12f, 0.18f, 1.0f);
+	const ImVec4 borderStrong = ImVec4(0.10f, 0.08f, 0.12f, 1.0f);
 
 	colors[ImGuiCol_Text] = textPrimary;
 	colors[ImGuiCol_TextDisabled] = textMuted;
