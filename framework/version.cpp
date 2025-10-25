@@ -9,6 +9,7 @@
 #include <optional>
 #include <thread>
 #include <cctype>
+#include <type_traits>
 
 #include "build_info.h"
 #include "winhttp_client.h"
@@ -264,33 +265,51 @@ namespace
         }
 }
 
-#define WRAPPER_GENFUNC(name) \
-    FARPROC o##name; \
-    void _##name() \
-    { \
-        if (o##name) \
-            ((void(*)())o##name)(); \
-    }
+#define DEFINE_VERSION_WRAPPER(name, ret, ...)                                                \
+        using name##_t = ret(WINAPI*)(__VA_ARGS__);                                           \
+        static name##_t o##name = nullptr;                                                    \
+        extern "C" ret WINAPI _##name(__VA_ARGS__)                                           \
+        {                                                                                     \
+                if (!o##name)                                                                 \
+                {                                                                             \
+                        SetLastError(ERROR_PROC_NOT_FOUND);                                   \
+                        if constexpr (std::is_void_v<ret>)                                   \
+                        {                                                                     \
+                                return;                                                       \
+                        }                                                                     \
+                        else                                                                  \
+                        {                                                                     \
+                                return {};                                                    \
+                        }                                                                     \
+                }                                                                             \
+                return o##name(__VA_ARGS__);                                                  \
+        }
 
-WRAPPER_GENFUNC(GetFileVersionInfoA)
-WRAPPER_GENFUNC(GetFileVersionInfoByHandle)
-WRAPPER_GENFUNC(GetFileVersionInfoExW)
-WRAPPER_GENFUNC(GetFileVersionInfoExA)
-WRAPPER_GENFUNC(GetFileVersionInfoSizeA)
-WRAPPER_GENFUNC(GetFileVersionInfoSizeExA)
-WRAPPER_GENFUNC(GetFileVersionInfoSizeExW)
-WRAPPER_GENFUNC(GetFileVersionInfoSizeW)
-WRAPPER_GENFUNC(GetFileVersionInfoW)
-WRAPPER_GENFUNC(VerFindFileA)
-WRAPPER_GENFUNC(VerFindFileW)
-WRAPPER_GENFUNC(VerInstallFileA)
-WRAPPER_GENFUNC(VerInstallFileW)
-WRAPPER_GENFUNC(VerLanguageNameA)
-WRAPPER_GENFUNC(VerLanguageNameW)
-WRAPPER_GENFUNC(VerQueryValueA)
-WRAPPER_GENFUNC(VerQueryValueW)
+DEFINE_VERSION_WRAPPER(GetFileVersionInfoA, BOOL, LPCSTR, DWORD, DWORD, LPVOID);
+DEFINE_VERSION_WRAPPER(GetFileVersionInfoByHandle, BOOL, HANDLE, DWORD, DWORD, LPVOID);
+DEFINE_VERSION_WRAPPER(GetFileVersionInfoExW, BOOL, DWORD, LPCWSTR, DWORD, DWORD, LPVOID);
+DEFINE_VERSION_WRAPPER(GetFileVersionInfoExA, BOOL, DWORD, LPCSTR, DWORD, DWORD, LPVOID);
+DEFINE_VERSION_WRAPPER(GetFileVersionInfoSizeA, DWORD, LPCSTR, LPDWORD);
+DEFINE_VERSION_WRAPPER(GetFileVersionInfoSizeExA, DWORD, DWORD, LPCSTR, LPDWORD);
+DEFINE_VERSION_WRAPPER(GetFileVersionInfoSizeExW, DWORD, DWORD, LPCWSTR, LPDWORD);
+DEFINE_VERSION_WRAPPER(GetFileVersionInfoSizeW, DWORD, LPCWSTR, LPDWORD);
+DEFINE_VERSION_WRAPPER(GetFileVersionInfoW, BOOL, LPCWSTR, DWORD, DWORD, LPVOID);
+DEFINE_VERSION_WRAPPER(VerFindFileA, DWORD, DWORD, LPCSTR, LPCSTR, LPCSTR, LPSTR, PUINT, LPSTR, PUINT);
+DEFINE_VERSION_WRAPPER(VerFindFileW, DWORD, DWORD, LPCWSTR, LPCWSTR, LPCWSTR, LPWSTR, PUINT, LPWSTR, PUINT);
+DEFINE_VERSION_WRAPPER(VerInstallFileA, DWORD, DWORD, LPCSTR, LPCSTR, LPCSTR, LPCSTR, LPCSTR, LPSTR, PUINT);
+DEFINE_VERSION_WRAPPER(VerInstallFileW, DWORD, DWORD, LPCWSTR, LPCWSTR, LPCWSTR, LPCWSTR, LPCWSTR, LPWSTR, PUINT);
+DEFINE_VERSION_WRAPPER(VerLanguageNameA, DWORD, DWORD, LPSTR, DWORD);
+DEFINE_VERSION_WRAPPER(VerLanguageNameW, DWORD, DWORD, LPWSTR, DWORD);
+DEFINE_VERSION_WRAPPER(VerQueryValueA, BOOL, LPCVOID, LPCSTR, LPVOID*, PUINT);
+DEFINE_VERSION_WRAPPER(VerQueryValueW, BOOL, LPCVOID, LPCWSTR, LPVOID*, PUINT);
 
-#define WRAPPER_FUNC(name) o##name = GetProcAddress(version_dll, ###name);
+#undef DEFINE_VERSION_WRAPPER
+
+template <typename Fn>
+void LoadVersionFunction(Fn& function, const char* name)
+{
+        function = reinterpret_cast<Fn>(GetProcAddress(version_dll, name));
+}
 
 void load_version() {
 	char systemPath[MAX_PATH];
@@ -305,23 +324,23 @@ void load_version() {
 
 	if (!version_dll) return;
 
-	WRAPPER_FUNC(GetFileVersionInfoA);
-	WRAPPER_FUNC(GetFileVersionInfoByHandle);
-	WRAPPER_FUNC(GetFileVersionInfoExW);
-	WRAPPER_FUNC(GetFileVersionInfoExA);
-	WRAPPER_FUNC(GetFileVersionInfoSizeA);
-	WRAPPER_FUNC(GetFileVersionInfoSizeExW);
-	WRAPPER_FUNC(GetFileVersionInfoSizeExA);
-	WRAPPER_FUNC(GetFileVersionInfoSizeW);
-	WRAPPER_FUNC(GetFileVersionInfoW);
-	WRAPPER_FUNC(VerFindFileA);
-	WRAPPER_FUNC(VerFindFileW);
-	WRAPPER_FUNC(VerInstallFileA);
-	WRAPPER_FUNC(VerInstallFileW);
-	WRAPPER_FUNC(VerLanguageNameA);
-	WRAPPER_FUNC(VerLanguageNameW);
-	WRAPPER_FUNC(VerQueryValueA);
-	WRAPPER_FUNC(VerQueryValueW);
+        LoadVersionFunction(oGetFileVersionInfoA, "GetFileVersionInfoA");
+        LoadVersionFunction(oGetFileVersionInfoByHandle, "GetFileVersionInfoByHandle");
+        LoadVersionFunction(oGetFileVersionInfoExW, "GetFileVersionInfoExW");
+        LoadVersionFunction(oGetFileVersionInfoExA, "GetFileVersionInfoExA");
+        LoadVersionFunction(oGetFileVersionInfoSizeA, "GetFileVersionInfoSizeA");
+        LoadVersionFunction(oGetFileVersionInfoSizeExW, "GetFileVersionInfoSizeExW");
+        LoadVersionFunction(oGetFileVersionInfoSizeExA, "GetFileVersionInfoSizeExA");
+        LoadVersionFunction(oGetFileVersionInfoSizeW, "GetFileVersionInfoSizeW");
+        LoadVersionFunction(oGetFileVersionInfoW, "GetFileVersionInfoW");
+        LoadVersionFunction(oVerFindFileA, "VerFindFileA");
+        LoadVersionFunction(oVerFindFileW, "VerFindFileW");
+        LoadVersionFunction(oVerInstallFileA, "VerInstallFileA");
+        LoadVersionFunction(oVerInstallFileW, "VerInstallFileW");
+        LoadVersionFunction(oVerLanguageNameA, "VerLanguageNameA");
+        LoadVersionFunction(oVerLanguageNameW, "VerLanguageNameW");
+        LoadVersionFunction(oVerQueryValueA, "VerQueryValueA");
+        LoadVersionFunction(oVerQueryValueW, "VerQueryValueW");
 }
 
 std::filesystem::path getApplicationPath() {
