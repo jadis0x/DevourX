@@ -50,12 +50,6 @@ namespace
         return 0;
     }
 
-    bool NotifyUser(const std::string& message)
-    {
-        il2cppi_log_write(message);
-        MessageBoxA(nullptr, message.c_str(), "DevourX", MB_OK | MB_ICONWARNING | MB_SYSTEMMODAL);
-    }
-
     bool NotifyUser(const std::string& message, NotifyType type = NotifyType::Info)
     {
         UINT flags = MB_SYSTEMMODAL;
@@ -80,6 +74,11 @@ namespace
 
         int result = MessageBoxA(nullptr, message.c_str(), "DevourX", flags);
         return (result == IDOK);
+    }
+
+    bool NotifyUser(const std::string& message)
+    {
+        return NotifyUser(message, NotifyType::Warning);
     }
 }
 
