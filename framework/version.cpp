@@ -10,6 +10,8 @@
 #include <thread>
 #include <cctype>
 #include <type_traits>
+#include <sstream>
+#include <vector>
 
 #include "build_info.h"
 #include "winhttp_client.h"
@@ -265,43 +267,82 @@ namespace
         }
 }
 
-#define DEFINE_VERSION_WRAPPER(name, ret, ...)                                                \
-        using name##_t = ret(WINAPI*)(__VA_ARGS__);                                           \
-        static name##_t o##name = nullptr;                                                    \
-        extern "C" ret WINAPI _##name(__VA_ARGS__)                                           \
-        {                                                                                     \
-                if (!o##name)                                                                 \
-                {                                                                             \
-                        SetLastError(ERROR_PROC_NOT_FOUND);                                   \
-                        if constexpr (std::is_void_v<ret>)                                   \
-                        {                                                                     \
-                                return;                                                       \
-                        }                                                                     \
-                        else                                                                  \
-                        {                                                                     \
-                                return {};                                                    \
-                        }                                                                     \
-                }                                                                             \
-                return o##name(__VA_ARGS__);                                                  \
+#define DEFINE_VERSION_WRAPPER(name, ret, params, args)                                       \
+        using name##_t = ret(WINAPI*) params;                                                \
+        static name##_t o##name = nullptr;                                                   \
+        extern "C" ret WINAPI _##name params                                                \
+        {                                                                                    \
+                if (!o##name)                                                                \
+                {                                                                            \
+                        SetLastError(ERROR_PROC_NOT_FOUND);                                  \
+                        if constexpr (std::is_void_v<ret>)                                  \
+                        {                                                                    \
+                                return;                                                      \
+                        }                                                                    \
+                        else                                                                 \
+                        {                                                                    \
+                                return {};                                                   \
+                        }                                                                    \
+                }                                                                            \
+                return o##name args;                                                         \
         }
 
-DEFINE_VERSION_WRAPPER(GetFileVersionInfoA, BOOL, LPCSTR, DWORD, DWORD, LPVOID);
-DEFINE_VERSION_WRAPPER(GetFileVersionInfoByHandle, BOOL, HANDLE, DWORD, DWORD, LPVOID);
-DEFINE_VERSION_WRAPPER(GetFileVersionInfoExW, BOOL, DWORD, LPCWSTR, DWORD, DWORD, LPVOID);
-DEFINE_VERSION_WRAPPER(GetFileVersionInfoExA, BOOL, DWORD, LPCSTR, DWORD, DWORD, LPVOID);
-DEFINE_VERSION_WRAPPER(GetFileVersionInfoSizeA, DWORD, LPCSTR, LPDWORD);
-DEFINE_VERSION_WRAPPER(GetFileVersionInfoSizeExA, DWORD, DWORD, LPCSTR, LPDWORD);
-DEFINE_VERSION_WRAPPER(GetFileVersionInfoSizeExW, DWORD, DWORD, LPCWSTR, LPDWORD);
-DEFINE_VERSION_WRAPPER(GetFileVersionInfoSizeW, DWORD, LPCWSTR, LPDWORD);
-DEFINE_VERSION_WRAPPER(GetFileVersionInfoW, BOOL, LPCWSTR, DWORD, DWORD, LPVOID);
-DEFINE_VERSION_WRAPPER(VerFindFileA, DWORD, DWORD, LPCSTR, LPCSTR, LPCSTR, LPSTR, PUINT, LPSTR, PUINT);
-DEFINE_VERSION_WRAPPER(VerFindFileW, DWORD, DWORD, LPCWSTR, LPCWSTR, LPCWSTR, LPWSTR, PUINT, LPWSTR, PUINT);
-DEFINE_VERSION_WRAPPER(VerInstallFileA, DWORD, DWORD, LPCSTR, LPCSTR, LPCSTR, LPCSTR, LPCSTR, LPSTR, PUINT);
-DEFINE_VERSION_WRAPPER(VerInstallFileW, DWORD, DWORD, LPCWSTR, LPCWSTR, LPCWSTR, LPCWSTR, LPCWSTR, LPWSTR, PUINT);
-DEFINE_VERSION_WRAPPER(VerLanguageNameA, DWORD, DWORD, LPSTR, DWORD);
-DEFINE_VERSION_WRAPPER(VerLanguageNameW, DWORD, DWORD, LPWSTR, DWORD);
-DEFINE_VERSION_WRAPPER(VerQueryValueA, BOOL, LPCVOID, LPCSTR, LPVOID*, PUINT);
-DEFINE_VERSION_WRAPPER(VerQueryValueW, BOOL, LPCVOID, LPCWSTR, LPVOID*, PUINT);
+DEFINE_VERSION_WRAPPER(GetFileVersionInfoA, BOOL,
+        (LPCSTR lptstrFilename, DWORD dwHandle, DWORD dwLen, LPVOID lpData),
+        (lptstrFilename, dwHandle, dwLen, lpData));
+DEFINE_VERSION_WRAPPER(GetFileVersionInfoByHandle, BOOL,
+        (HANDLE hFile, DWORD dwReserved, DWORD dwLen, LPVOID lpData),
+        (hFile, dwReserved, dwLen, lpData));
+DEFINE_VERSION_WRAPPER(GetFileVersionInfoExW, BOOL,
+        (DWORD dwFlags, LPCWSTR lpwstrFilename, DWORD dwHandle, DWORD dwLen, LPVOID lpData),
+        (dwFlags, lpwstrFilename, dwHandle, dwLen, lpData));
+DEFINE_VERSION_WRAPPER(GetFileVersionInfoExA, BOOL,
+        (DWORD dwFlags, LPCSTR lptstrFilename, DWORD dwHandle, DWORD dwLen, LPVOID lpData),
+        (dwFlags, lptstrFilename, dwHandle, dwLen, lpData));
+DEFINE_VERSION_WRAPPER(GetFileVersionInfoSizeA, DWORD,
+        (LPCSTR lptstrFilename, LPDWORD lpdwHandle),
+        (lptstrFilename, lpdwHandle));
+DEFINE_VERSION_WRAPPER(GetFileVersionInfoSizeExA, DWORD,
+        (DWORD dwFlags, LPCSTR lptstrFilename, LPDWORD lpdwHandle),
+        (dwFlags, lptstrFilename, lpdwHandle));
+DEFINE_VERSION_WRAPPER(GetFileVersionInfoSizeExW, DWORD,
+        (DWORD dwFlags, LPCWSTR lpwstrFilename, LPDWORD lpdwHandle),
+        (dwFlags, lpwstrFilename, lpdwHandle));
+DEFINE_VERSION_WRAPPER(GetFileVersionInfoSizeW, DWORD,
+        (LPCWSTR lpwstrFilename, LPDWORD lpdwHandle),
+        (lpwstrFilename, lpdwHandle));
+DEFINE_VERSION_WRAPPER(GetFileVersionInfoW, BOOL,
+        (LPCWSTR lpwstrFilename, DWORD dwHandle, DWORD dwLen, LPVOID lpData),
+        (lpwstrFilename, dwHandle, dwLen, lpData));
+DEFINE_VERSION_WRAPPER(VerFindFileA, DWORD,
+        (DWORD dwFlags, LPCSTR lpszFileName, LPCSTR lpszWinDir, LPCSTR lpszAppDir, LPSTR lpszCurDir, PUINT lpuCurDirLen,
+                LPSTR lpszDestDir, PUINT lpuDestDirLen),
+        (dwFlags, lpszFileName, lpszWinDir, lpszAppDir, lpszCurDir, lpuCurDirLen, lpszDestDir, lpuDestDirLen));
+DEFINE_VERSION_WRAPPER(VerFindFileW, DWORD,
+        (DWORD dwFlags, LPCWSTR lpwstrFileName, LPCWSTR lpwstrWinDir, LPCWSTR lpwstrAppDir, LPWSTR lpwstrCurDir,
+                PUINT lpuCurDirLen, LPWSTR lpwstrDestDir, PUINT lpuDestDirLen),
+        (dwFlags, lpwstrFileName, lpwstrWinDir, lpwstrAppDir, lpwstrCurDir, lpuCurDirLen, lpwstrDestDir, lpuDestDirLen));
+DEFINE_VERSION_WRAPPER(VerInstallFileA, DWORD,
+        (DWORD dwFlags, LPCSTR lpszSrcFileName, LPCSTR lpszDestFileName, LPCSTR lpszSrcDir, LPCSTR lpszDestDir,
+                LPCSTR lpszCurDir, LPSTR lpszTmpFile, PUINT lpuTmpFileLen),
+        (dwFlags, lpszSrcFileName, lpszDestFileName, lpszSrcDir, lpszDestDir, lpszCurDir, lpszTmpFile, lpuTmpFileLen));
+DEFINE_VERSION_WRAPPER(VerInstallFileW, DWORD,
+        (DWORD dwFlags, LPCWSTR lpwstrSrcFileName, LPCWSTR lpwstrDestFileName, LPCWSTR lpwstrSrcDir, LPCWSTR lpwstrDestDir,
+                LPCWSTR lpwstrCurDir, LPWSTR lpwstrTmpFile, PUINT lpuTmpFileLen),
+        (dwFlags, lpwstrSrcFileName, lpwstrDestFileName, lpwstrSrcDir, lpwstrDestDir, lpwstrCurDir, lpwstrTmpFile,
+                lpuTmpFileLen));
+DEFINE_VERSION_WRAPPER(VerLanguageNameA, DWORD,
+        (DWORD wLang, LPSTR szLang, DWORD cchLang),
+        (wLang, szLang, cchLang));
+DEFINE_VERSION_WRAPPER(VerLanguageNameW, DWORD,
+        (DWORD wLang, LPWSTR szLang, DWORD cchLang),
+        (wLang, szLang, cchLang));
+DEFINE_VERSION_WRAPPER(VerQueryValueA, BOOL,
+        (LPCVOID pBlock, LPCSTR lpSubBlock, LPVOID* lplpBuffer, PUINT puLen),
+        (pBlock, lpSubBlock, lplpBuffer, puLen));
+DEFINE_VERSION_WRAPPER(VerQueryValueW, BOOL,
+        (LPCVOID pBlock, LPCWSTR lpSubBlock, LPVOID* lplpBuffer, PUINT puLen),
+        (pBlock, lpSubBlock, lplpBuffer, puLen));
 
 #undef DEFINE_VERSION_WRAPPER
 
