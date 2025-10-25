@@ -5,6 +5,7 @@
 #include <chrono>
 #include <filesystem>
 #include <thread>
+#include "update_checker.h"
 
 HMODULE version_dll;
 
@@ -76,33 +77,35 @@ std::filesystem::path getApplicationPath() {
 
 DWORD WINAPI Load(LPVOID lpParam) {
 
-    auto checkDependency = [](const char* dll, const char* runtime) -> bool {
-        HMODULE mod = LoadLibraryA(dll);
-        if (mod) {
-            FreeLibrary(mod);
-            return true;
-        }
-        std::string msg = std::string("Missing dependency: ") + dll +
-            "\nPlease install " + runtime + ".";
-        MessageBoxA(NULL, msg.c_str(), "Devourx", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
-        OutputDebugStringA(msg.c_str());
-        return false;
-        };
+	auto checkDependency = [](const char* dll, const char* runtime) -> bool {
+		HMODULE mod = LoadLibraryA(dll);
+		if (mod) {
+			FreeLibrary(mod);
+			return true;
+		}
+		std::string msg = std::string("Missing dependency: ") + dll +
+			"\nPlease install " + runtime + ".";
+		MessageBoxA(NULL, msg.c_str(), "Devourx", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
+		OutputDebugStringA(msg.c_str());
+		return false;
+		};
 
-    if (!checkDependency("d3d11.dll", "the DirectX 11 runtime") ||
-        !checkDependency("dxgi.dll", "the DirectX 11 runtime") ||
-        !checkDependency("vcruntime140.dll", "the Microsoft Visual C++ Redistributable") ||
+	if (!checkDependency("d3d11.dll", "the DirectX 11 runtime") ||
+		!checkDependency("dxgi.dll", "the DirectX 11 runtime") ||
+		!checkDependency("vcruntime140.dll", "the Microsoft Visual C++ Redistributable") ||
 		!checkDependency("vcruntime140_1.dll", "the Microsoft Visual C++ Redistributable") ||
 		!checkDependency("msvcp140.dll", "the Microsoft Visual C++ Redistributable")) {
-        return 0;
-    }
+		return 0;
+	}
 
-    load_version();
-    if (!version_dll)
-        return 0;
+	load_version();
+	if (!version_dll)
+		return 0;
+	
+	UpdateChecker::CheckAndNotify();
 
-    std::this_thread::sleep_for(std::chrono::seconds(7));
-    Run(lpParam);
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+	Run(lpParam);
 
-    return 0;
+	return 0;
 }

@@ -34,9 +34,6 @@
     <ClCompile Include="libraries\pipeline\keybinds.cpp">
       <Filter>libraries\pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="libraries\pipeline\scene_explorer.cpp">
-      <Filter>libraries\pipeline</Filter>
-    </ClCompile>
     <ClCompile Include="libraries\pipeline\settings.cpp">
       <Filter>libraries\pipeline</Filter>
     </ClCompile>
@@ -106,6 +103,9 @@
     <ClCompile Include="libraries\pipeline\localization\LocalizationManager.cpp">
       <Filter>libraries\pipeline\localization</Filter>
     </ClCompile>
+    <ClCompile Include="framework\update_checker.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="user\main.h">
@@ -133,9 +133,6 @@
       <Filter>libraries\pipeline</Filter>
     </ClInclude>
     <ClInclude Include="libraries\pipeline\keybinds.h">
-      <Filter>libraries\pipeline</Filter>
-    </ClInclude>
-    <ClInclude Include="libraries\pipeline\scene_explorer.h">
       <Filter>libraries\pipeline</Filter>
     </ClInclude>
     <ClInclude Include="libraries\pipeline\settings.h">
@@ -216,6 +213,9 @@
     <ClInclude Include="libraries\imgui\imstb_truetype.h">
       <Filter>libraries\imgui</Filter>
     </ClInclude>
+    <ClInclude Include="libraries\pipeline\localization\LocalizationManager.h">
+      <Filter>libraries\pipeline\localization</Filter>
+    </ClInclude>
     <ClInclude Include="appdata\il2cpp-api-functions.h">
       <Filter>appdata</Filter>
     </ClInclude>
@@ -234,8 +234,14 @@
     <ClInclude Include="appdata\il2cpp-types-ptr.h">
       <Filter>appdata</Filter>
     </ClInclude>
-    <ClInclude Include="libraries\pipeline\localization\LocalizationManager.h">
-      <Filter>libraries\pipeline\localization</Filter>
+    <ClInclude Include="framework\build_info.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\winhttp_client.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\update_checker.h">
+      <Filter>framework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

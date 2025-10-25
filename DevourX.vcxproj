@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="framework\update_checker.cpp" />
     <ClCompile Include="libraries\detours\detours.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -159,6 +160,7 @@
     <ClInclude Include="framework\il2cpp-appdata.h" />
     <ClInclude Include="framework\il2cpp-init.h" />
     <ClInclude Include="framework\pch-il2cpp.h" />
+    <ClInclude Include="framework\update_checker.h" />
     <ClInclude Include="framework\version.h" />
     <ClInclude Include="framework\winhttp_client.h" />
     <ClInclude Include="libraries\imgui\imconfig.h" />
