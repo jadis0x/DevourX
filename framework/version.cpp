@@ -19,6 +19,17 @@ namespace
 {
     constexpr const wchar_t* kGithubApiHost = L"api.github.com";
 
+    void ShowNotification(const std::string& message, UINT flags)
+    {
+        MessageBoxA(nullptr, message.c_str(), "DevourX", flags | MB_SYSTEMMODAL);
+        OutputDebugStringA(message.c_str());
+    }
+
+    std::string GetLocalAppVersion()
+    {
+        return std::string(BuildInfo::kAppVersion);
+    }
+
     std::optional<std::string> FetchLatestReleaseVersion()
     {
         const std::wstring path = WinHttpClient::ToWide(std::string("/repos/") + BuildInfo::kGitHubOwner + "/" + BuildInfo::kGitHubRepo + "/releases/latest");
@@ -116,14 +127,16 @@ namespace
         }
 
         const std::string currentVersion = BuildInfo::kVersion;
-        if (CompareVersions(currentVersion, latestVersion.value()) >= 0)
+        const std::string& latest = latestVersion.value();
+        if (CompareVersions(currentVersion, latest) >= 0)
         {
             return;
         }
 
-        constexpr const char* kMessage = "A new version is available.";
-        MessageBoxA(nullptr, kMessage, "DevourX", MB_OK | MB_ICONINFORMATION | MB_SYSTEMMODAL);
-        OutputDebugStringA(kMessage);
+        const std::string message =
+            "A new DevourX release (" + latest + ") is available.\nYou are running version " + currentVersion +
+            ".\nVisit the GitHub releases page to download the update.";
+        ShowNotification(message, MB_OK | MB_ICONINFORMATION);
     }
 }
 
@@ -197,6 +210,33 @@ bool PerformPreInjectionChecks()
 {
 	ReportUpdateStatus();
 	return true;
+}
+
+bool EnsureCompatibleGameVersion()
+{
+    const std::string supportedVersion = BuildInfo::kAppVersion;
+    const int comparison = CompareVersions(installedVersion.value(), supportedVersion);
+    if (comparison == 0)
+    {
+        return true;
+    }
+
+    std::string message;
+    if (comparison < 0)
+    {
+        message = "DevourX requires Devour version " + supportedVersion +
+            ".\nYour game reports version " + installedVersion.value() +
+            ".\nPlease update Devour before launching DevourX.";
+    }
+    else
+    {
+        message = "DevourX does not yet support Devour version " + installedVersion.value() +
+            ".\nSupported version: " + supportedVersion +
+            ".\nPlease check for an updated DevourX release.";
+    }
+
+    ShowNotification(message, MB_OK | MB_ICONERROR);
+    return false;
 }
 
 DWORD WINAPI Load(LPVOID lpParam) {

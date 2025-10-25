@@ -80,12 +80,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="libraries\pipeline\localization\LocalizationManager.cpp" />
-    <ClCompile Include="libraries\pipeline\scene_explorer.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="libraries\pipeline\settings.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -191,7 +185,6 @@
     <ClInclude Include="libraries\detours\detours.h" />
     <ClInclude Include="libraries\pipeline\Dx11.h" />
     <ClInclude Include="libraries\pipeline\keybinds.h" />
-    <ClInclude Include="libraries\pipeline\scene_explorer.h" />
     <ClInclude Include="libraries\pipeline\settings.h" />
     <ClInclude Include="libraries\pipeline\gui\GUITheme.h" />
     <ClInclude Include="libraries\pipeline\gui\menu.h" />
