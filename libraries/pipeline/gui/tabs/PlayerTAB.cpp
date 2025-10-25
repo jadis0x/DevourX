@@ -1,4 +1,4 @@
-#include "pch-il2cpp.h"
+﻿#include "pch-il2cpp.h"
 
 #include "devour/devourbase.h"
 #include "helpers.h"
@@ -6,122 +6,219 @@
 #include "pipeline/settings.h"
 #include <imgui/imgui.h>
 #include <player/player.h>
-#include <string>
 #include <pipeline/localization/LocalizationManager.h>
 #include <cfloat>
 
+#include <string>
+#include <vector>
+#include <resolver/il2cpp_resolver.h>
+
+namespace
+{
+	void CenteredText(const std::string& label)
+	{
+		const ImGuiStyle& style = ImGui::GetStyle();
+		const float columnWidth = ImGui::GetColumnWidth();
+		const float available = columnWidth - style.CellPadding.x * 2.0f;
+		const float labelWidth = ImGui::CalcTextSize(label.c_str()).x;
+		const float offset = (available - labelWidth) * 0.5f;
+		if (offset > 0.0f)
+			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offset);
+
+		ImGui::TextUnformatted(label.c_str());
+	}
+
+	bool CenteredButton(const std::string& label, bool enabled)
+	{
+		const ImGuiStyle& style = ImGui::GetStyle();
+		const ImVec2 labelSize = ImGui::CalcTextSize(label.c_str());
+		const float buttonWidth = labelSize.x + style.FramePadding.x * 2.0f;
+		const float columnWidth = ImGui::GetColumnWidth();
+		const float available = columnWidth - style.CellPadding.x * 2.0f;
+		const float offset = (available - buttonWidth) * 0.5f;
+		if (offset > 0.0f)
+			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offset);
+
+		if (!enabled)
+			ImGui::BeginDisabled();
+
+		const bool pressed = ImGui::Button(label.c_str(), ImVec2(buttonWidth, 0.0f));
+
+		if (!enabled)
+			ImGui::EndDisabled();
+
+		return pressed && enabled;
+	}
+
+	std::string BuildPlayerName(app::GameObject* player)
+	{
+		if (!SafePtr::IsValid(player))
+			return Localization::Get("tabs.player.table.null");
+
+		std::string resolvedName;
+		const bool success = SafePtr::safe_call([&]() {
+			resolvedName = il2cppi_to_string(ToString(reinterpret_cast<app::Object_1*>(player)));
+			});
+
+		if (!success || resolvedName.empty())
+			return Localization::Get("tabs.player.table.null");
+
+		return resolvedName;
+	}
+
+	struct PlayerAction
+	{
+		const char* labelKey;
+		void (*invoke)(app::GameObject*);
+	};
+}
+
 void PlayerTAB::Render()
 {
-	if (ImGui::BeginTabItem(Localization::Get("tabs.player.title").c_str())) {
-		ImGui::Spacing();
+    if (!ImGui::BeginTabItem(Localization::Get("tabs.player.title").c_str()))
+        return;
 
-		ImGui::TextUnformatted(Localization::Get("tabs.player.local_options").c_str());
-		ImGui::Checkbox(Localization::Get("tabs.player.modify_rank").c_str(), &settings.bModifyRank);
-		if (settings.bModifyRank)
-			ImGui::SliderInt(Localization::Get("tabs.player.rank_slider").c_str(), &settings.newRank, 0, 666, "%d");
+    ImGui::Spacing();
+    ImGui::SeparatorText(Localization::Get("tabs.player.local_options").c_str());
 
-		ImGui::Checkbox(Localization::Get("tabs.player.modify_speed").c_str(), &settings.bModifyPlayerSpeed);
-		if (settings.bModifyPlayerSpeed)
-			ImGui::SliderFloat(Localization::Get("tabs.player.speed_slider").c_str(), &settings.playerSpeed, 0.5f, 20.0f, "%.1f");
+    constexpr ImGuiTableFlags localFlags = ImGuiTableFlags_SizingStretchProp | ImGuiTableFlags_NoBordersInBody | ImGuiTableFlags_PadOuterX;
+    if (ImGui::BeginTable("PlayerOptionsTable", 2, localFlags)) {
+        constexpr float sliderWidth = -FLT_MIN;
 
-		ImGui::Checkbox(Localization::Get("tabs.player.fly").c_str(), &settings.bFly);
-		if (settings.bFly)
-			ImGui::SliderFloat(Localization::Get("tabs.player.fly_speed").c_str(), &settings.flySpeed, 10.f, 30.0f, "%.1f");
+        ImGui::TableNextRow();
+        ImGui::TableNextColumn();
+        ImGui::Checkbox(Localization::Get("tabs.player.modify_rank").c_str(), &settings.bModifyRank);
+        ImGui::TableNextColumn();
+        ImGui::BeginDisabled(!settings.bModifyRank);
+        ImGui::SetNextItemWidth(sliderWidth);
+        ImGui::SliderInt(Localization::Get("tabs.player.rank_slider").c_str(), &settings.newRank, 0, 666, "%d");
+        ImGui::EndDisabled();
 
-		ImGui::Checkbox(Localization::Get("tabs.player.fullbright").c_str(), &settings.bFullbright);
-		ImGui::Checkbox(Localization::Get("tabs.player.unlimited_uv").c_str(), &settings.bUnlimitedUVLight);
+        ImGui::TableNextRow();
+        ImGui::TableNextColumn();
+        ImGui::Checkbox(Localization::Get("tabs.player.modify_speed").c_str(), &settings.bModifyPlayerSpeed);
+        ImGui::TableNextColumn();
+        ImGui::BeginDisabled(!settings.bModifyPlayerSpeed);
+        ImGui::SetNextItemWidth(sliderWidth);
+        ImGui::SliderFloat(Localization::Get("tabs.player.speed_slider").c_str(), &settings.playerSpeed, 0.5f, 200.0f, "%.1f");
+        ImGui::EndDisabled();
 
-		ImGui::Spacing();
-		ImGui::Separator();
+        ImGui::TableNextRow();
+        ImGui::TableNextColumn();
+        ImGui::Checkbox(Localization::Get("tabs.player.fly").c_str(), &settings.bFly);
+        ImGui::TableNextColumn();
+        ImGui::BeginDisabled(!settings.bFly);
+        ImGui::SetNextItemWidth(sliderWidth);
+        ImGui::SliderFloat(Localization::Get("tabs.player.fly_speed").c_str(), &settings.flySpeed, 10.0f, 30.0f, "%.1f");
+        ImGui::EndDisabled();
 
-		ImGui::TextColored(ImVec4(0.8f, 0.8f, 0.2f, 1.0f), Localization::Get("tabs.player.list_title").c_str());
+        ImGui::TableNextRow();
+        ImGui::TableNextColumn();
+        ImGui::Checkbox(Localization::Get("tabs.player.fullbright").c_str(), &settings.bFullbright);
+        ImGui::TableNextColumn();
+        ImGui::Checkbox(Localization::Get("tabs.player.unlimited_uv").c_str(), &settings.bUnlimitedUVLight);
 
-		auto& players = Players::PlayersManager::Instance().GetAllPlayers();
-		if (!players.empty()) {
-			std::string scene = Base::Gameplay::GetSceneName();
-			bool isTown = (scene == "Town");
+        ImGui::EndTable();
+    }
 
-			int columnCount = isTown ? 8 : 7;
+    ImGui::Spacing();
+    ImGui::SeparatorText(Localization::Get("tabs.player.list_title").c_str());
 
-			if (ImGui::BeginTable("PlayersTable", columnCount, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg)) {
-				ImGui::TableSetupColumn(Localization::Get("tabs.player.table.id").c_str(), ImGuiTableColumnFlags_WidthFixed, 40.0f);
-				ImGui::TableSetupColumn(Localization::Get("tabs.player.table.name").c_str(), ImGuiTableColumnFlags_WidthStretch);
-				ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, 40.0f);
-				ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, 60.0f);
-				ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, 80.0f);
-				ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, 35.0f);
-				ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, 80.0f);
-				if (isTown)
-					ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, 80.0f);
+    auto& players = Players::PlayersManager::Instance().GetAllPlayers();
+    if (players.empty()) {
+        ImGui::TextDisabled(Localization::Get("tabs.player.no_players").c_str());
+        ImGui::EndTabItem();
+        return;
+    }
 
-				ImGui::TableHeadersRow();
+    const std::string sceneName = Base::Gameplay::GetSceneName();
+    const bool canShoot = (sceneName == "Town");
 
-				for (size_t i = 0; i < players.size(); ++i) {
-					ImGui::TableNextRow();
-					std::string idStr = std::to_string(i);
+    std::vector<PlayerAction> actions = {
+            { "tabs.player.actions.kill", Base::Gameplay::Knockout },
+            { "tabs.player.actions.revive", Base::Gameplay::Revive },
+            { "tabs.player.actions.jumpscare", Base::Gameplay::Jumpscare },
+            { "tabs.player.actions.teleport", Base::Gameplay::TP },
+            { "tabs.player.actions.teleport_azazel", Base::Gameplay::TPAzazel }
+    };
 
-					ImGui::TableSetColumnIndex(0);
-					ImGui::Text("%zu", i + 1);
+    if (canShoot) {
+        actions.push_back({ "tabs.player.actions.shoot", Base::Gameplay::Shoot });
+    }
 
-					ImGui::TableSetColumnIndex(1);
-					if (players[i])
-						ImGui::Text("%s", il2cppi_to_string(ToString((app::Object_1*)players[i])).c_str());
-					else
-						ImGui::TextUnformatted(Localization::Get("tabs.player.table.null").c_str());
+    std::vector<std::string> actionLabels;
+    actionLabels.reserve(actions.size());
+    for (const PlayerAction& action : actions)
+        actionLabels.emplace_back(Localization::Get(action.labelKey));
 
-					ImGui::TableSetColumnIndex(2);
-					std::string killLabel = Localization::Get("tabs.player.actions.kill");
-					killLabel += "##";
-					killLabel += idStr;
-					if (ImGui::Button(killLabel.c_str(), ImVec2(-FLT_MIN, 0.0f)))
-						Base::Gameplay::Knockout(players[i]);
+    const std::string idHeader = Localization::Get("tabs.player.table.id");
+    const std::string nameHeader = Localization::Get("tabs.player.table.name");
 
-					ImGui::TableSetColumnIndex(3);
-					std::string reviveLabel = Localization::Get("tabs.player.actions.revive");
-					reviveLabel += "##";
-					reviveLabel += idStr;
-					if (ImGui::Button(reviveLabel.c_str(), ImVec2(-FLT_MIN, 0.0f)))
-						Base::Gameplay::Revive(players[i]);
+    const int columnCount = static_cast<int>(actions.size()) + 2;
+    const ImGuiTableFlags tableFlags = ImGuiTableFlags_BordersOuter | ImGuiTableFlags_BordersV | ImGuiTableFlags_RowBg |
+        ImGuiTableFlags_SizingStretchProp | ImGuiTableFlags_Reorderable |
+        ImGuiTableFlags_Resizable | ImGuiTableFlags_ScrollY;
 
-					ImGui::TableSetColumnIndex(4);
-					std::string jumpscareLabel = Localization::Get("tabs.player.actions.jumpscare");
-					jumpscareLabel += "##";
-					jumpscareLabel += idStr;
-					if (ImGui::Button(jumpscareLabel.c_str(), ImVec2(-FLT_MIN, 0.0f)))
-						Base::Gameplay::Jumpscare(players[i]);
+    bool actionFailed = false;
 
-					ImGui::TableSetColumnIndex(5);
-					std::string tpLabel = Localization::Get("tabs.player.actions.teleport");
-					tpLabel += "##";
-					tpLabel += idStr;
-					if (ImGui::Button(tpLabel.c_str(), ImVec2(-FLT_MIN, 0.0f)))
-						Base::Gameplay::TP(players[i]);
+    if (ImGui::BeginTable("PlayerManager.Table", columnCount, tableFlags)) {
+        ImGui::TableSetupScrollFreeze(0, 1);
 
-					ImGui::TableSetColumnIndex(6);
-					std::string tpAzazelLabel = Localization::Get("tabs.player.actions.teleport_azazel");
-					tpAzazelLabel += "##";
-					tpAzazelLabel += idStr;
-					if (ImGui::Button(tpAzazelLabel.c_str(), ImVec2(-FLT_MIN, 0.0f)))
-						Base::Gameplay::TPAzazel(players[i]);
+        ImGui::TableSetupColumn(idHeader.c_str(), ImGuiTableColumnFlags_WidthStretch, 0.6f);
+        ImGui::TableSetupColumn(nameHeader.c_str(), ImGuiTableColumnFlags_WidthStretch, 2.0f);
+        for (size_t i = 0; i < actionLabels.size(); ++i)
+            ImGui::TableSetupColumn(actionLabels[i].c_str(), ImGuiTableColumnFlags_WidthStretch, 1.0f);
 
-					if (isTown) {
-						ImGui::TableSetColumnIndex(7);
-						std::string shootLabel = Localization::Get("tabs.player.actions.shoot");
-						shootLabel += "##";
-						shootLabel += idStr;
-						if (ImGui::Button(shootLabel.c_str(), ImVec2(-FLT_MIN, 0.0f)))
-							Base::Gameplay::Shoot(players[i]);
-					}
+        ImGui::TableNextRow(ImGuiTableRowFlags_Headers);
+        ImGui::TableNextColumn();
+        CenteredText(idHeader);
+        ImGui::TableNextColumn();
+        ImGui::TextUnformatted(nameHeader.c_str());
+        for (const std::string& header : actionLabels) {
+            ImGui::TableNextColumn();
+            CenteredText(header);
+        }
 
-				}
+        for (size_t index = 0; index < players.size(); ++index) {
+            ImGui::TableNextRow();
+            ImGui::PushID(static_cast<int>(index));
 
-				ImGui::EndTable();
-			}
-		}
-		else {
-			ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.2f, 1.0f), Localization::Get("tabs.player.no_players").c_str());
-		}
+            app::GameObject* player = players[index];
+            const bool playerValid = SafePtr::IsValid(player);
 
-		ImGui::EndTabItem();
-	}
+            ImGui::TableNextColumn();
+            CenteredText(std::to_string(index + 1));
+
+            ImGui::TableNextColumn();
+            const std::string playerName = BuildPlayerName(player);
+            if (playerValid)
+                ImGui::TextUnformatted(playerName.c_str());
+            else
+                ImGui::TextDisabled(playerName.c_str());
+
+            for (size_t actionIndex = 0; actionIndex < actions.size(); ++actionIndex) {
+                ImGui::TableNextColumn();
+                ImGui::PushID(actions[actionIndex].labelKey);
+                if (CenteredButton(actionLabels[actionIndex], playerValid)) {
+                    const bool executed = SafePtr::safe_call([&]() {
+                        actions[actionIndex].invoke(player);
+                        });
+
+                    actionFailed = actionFailed || !executed;
+                }
+                ImGui::PopID();
+            }
+
+            ImGui::PopID();
+        }
+
+        ImGui::EndTable();
+    }
+
+    if (actionFailed) {
+        ImGui::Spacing();
+        ImGui::TextDisabled(Localization::Get("tabs.player.action_failed").c_str());
+    }
+
+    ImGui::EndTabItem();
 }

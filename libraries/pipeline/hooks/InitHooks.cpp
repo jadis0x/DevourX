@@ -883,6 +883,18 @@ void dGameStatsPlayerToken_Read(app::GameStatsPlayerToken* __this, app::UdpPacke
 	app::GameStatsPlayerToken_Read(__this, packet, method);
 }
 
+void dBoltNetwork_LoadScene_1(app::String* scene, app::IProtocolToken* token, MethodInfo* method)
+{
+	if (token) {
+		const char* className = il2cpp_class_get_name((Il2CppClass*)token->klass);
+		const char* classNamespace = il2cpp_class_get_namespace((Il2CppClass*)token->klass);
+
+		printf("Token type: %s.%s\n", classNamespace, className);
+	}
+
+	app::BoltNetwork_LoadScene_1(scene, token, method);
+}
+
 bool HookFunction(PVOID* ppPointer, PVOID pDetour, const char* functionName) {
 	if (const auto error = DetourAttach(ppPointer, pDetour); error != NO_ERROR)
 	{
@@ -1279,6 +1291,12 @@ void DetourInitilization() {
 		return;
 	}
 
+	if (!HookFunction(&(PVOID&)app::BoltNetwork_LoadScene_1, dBoltNetwork_LoadScene_1, "dBoltNetwork_LoadScene_1"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
 	DetourTransactionCommit();
 }
 
@@ -1367,4 +1385,5 @@ void DetourUninitialization() {
 	if (DetourDetach(&(PVOID&)app::SurvivalLobbyController_PlayerPrefabsAttached, dSurvivalLobbyController_PlayerPrefabsAttached) != 0) return;
 	if (DetourDetach(&(PVOID&)app::Menu_CanPlayMode, dMenu_CanPlayMode) != 0) return;
 	if (DetourDetach(&(PVOID&)app::GameStatsPlayerToken_Read, dGameStatsPlayerToken_Read) != 0) return;
+	if (DetourDetach(&(PVOID&)app::BoltNetwork_LoadScene_1, dBoltNetwork_LoadScene_1) != 0) return;
 }

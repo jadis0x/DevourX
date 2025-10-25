@@ -32,7 +32,7 @@ void MapTAB::Render()
 		ImGui::Spacing();
 
 		static const char* maps[] = {
-			"Menu"
+			"Menu",
 			"Farmhouse",
 			"Asylum",
 			"Inn",
