@@ -6,7 +6,9 @@
 #include "version.h"
 #include <chrono>
 #include <filesystem>
+#include <optional>
 #include <thread>
+#include <cctype>
 
 #include "build_info.h"
 #include "winhttp_client.h"
@@ -155,10 +157,10 @@ namespace
 		return components;
 	}
 
-	int CompareVersions(const std::string& lhs, const std::string& rhs)
-	{
-		const auto lhsComponents = ParseVersionComponents(lhs);
-		const auto rhsComponents = ParseVersionComponents(rhs);
+        int CompareVersions(const std::string& lhs, const std::string& rhs)
+        {
+                const auto lhsComponents = ParseVersionComponents(lhs);
+                const auto rhsComponents = ParseVersionComponents(rhs);
 
 		const size_t maxSize = std::max(lhsComponents.size(), rhsComponents.size());
 		for (size_t i = 0; i < maxSize; ++i)
@@ -176,55 +178,90 @@ namespace
 			}
 		}
 
-		return 0;
-	}
+                return 0;
+        }
+
+        const std::optional<ReleaseVersionInfo>& GetLatestReleaseInfo()
+        {
+                static bool fetched = false;
+                static std::optional<ReleaseVersionInfo> cachedRelease;
+
+                if (!fetched)
+                {
+                        cachedRelease = FetchLatestReleaseVersion();
+                        fetched = true;
+                }
+
+                return cachedRelease;
+        }
+
+        std::string NormalizeVersionString(const std::string& version)
+        {
+                std::string normalized = version;
+                while (!normalized.empty() && !std::isdigit(static_cast<unsigned char>(normalized.front())))
+                {
+                        normalized.erase(normalized.begin());
+                }
+
+                return normalized;
+        }
+
+        std::string GetLocalModVersion()
+        {
+                return NormalizeVersionString(BuildInfo::kVersion);
+        }
+
+        std::string GetLocalAppVersion()
+        {
+                return NormalizeVersionString(BuildInfo::kAppVersion);
+        }
 
 
 
-	void ReportUpdateStatus()
-	{
-		auto latestVersion = FetchLatestReleaseVersion();
-		if (!latestVersion.has_value())
-		{
+        void ReportUpdateStatus()
+        {
+                const auto& latestVersion = GetLatestReleaseInfo();
+                if (!latestVersion.has_value())
+                {
+                        return;
+                }
+
+                const ReleaseVersionInfo& releaseInfo = latestVersion.value();
+
+                const std::string currentModVersion = GetLocalModVersion();
+                const std::string installedGameVersion = GetLocalAppVersion();
+
+                if (CompareVersions(currentModVersion, releaseInfo.modVersion) < 0)
+                {
+                        const std::string message =
+                                "A new DevourX release (" + releaseInfo.tag + ") is available.\nYou are running version " +
+                                FormatReleaseTag(currentModVersion, installedGameVersion) +
+                                ").\nPlease update DevourX before launching.";
+                        ShowNotification(message, MB_OK | MB_ICONERROR);
+                }
+
+                const int compatibility = CompareVersions(installedGameVersion, releaseInfo.appVersion);
+                if (compatibility == 0)
+                {
 			return;
 		}
 
-		const ReleaseVersionInfo& releaseInfo = latestVersion.value();
+                std::string message;
+                if (compatibility < 0)
+                {
+                        message = "DevourX " + releaseInfo.tag + " requires Devour version " + releaseInfo.appVersion +
+                                ").\nYour game reports version " + installedGameVersion +
+                                ").\nPlease update Devour before launching DevourX. DevourX will not load until the game is updated.";
+                }
+                else
+                {
+                        message = "Devour has been updated to version " + installedGameVersion +
+                                ", but the latest DevourX release (" + releaseInfo.tag + ") only supports Devour " + releaseInfo.appVersion +
+                                ").\nDevourX will not load until it is updated.";
+                }
 
-		const std::string currentModVersion = BuildInfo::kVersion;
-		const std::string installedGameVersion = BuildInfo::kAppVersion;
-
-		if (CompareVersions(currentModVersion, releaseInfo.modVersion) < 0)
-		{
-			const std::string message =
-				"A new DevourX release (" + releaseInfo.tag + ") is available.\nYou are running version " +
-				FormatReleaseTag(currentModVersion, BuildInfo::kAppVersion) +
-				").\nVisit the GitHub releases page to download the update.";
-			ShowNotification(message, MB_OK | MB_ICONINFORMATION);
-		}
-
-		const int compatibility = CompareVersions(installedGameVersion, releaseInfo.appVersion);
-		if (compatibility == 0)
-		{
-			return;
-		}
-
-		std::string message;
-		if (compatibility < 0)
-		{
-			message = "DevourX " + releaseInfo.tag + " requires Devour version " + releaseInfo.appVersion +
-				").\nYour game reports version " + installedGameVersion +
-				").\nPlease update Devour before launching DevourX.";
-		}
-		else
-		{
-			message = "Devour has been updated to version " + installedGameVersion +
-				", but the latest DevourX release (" + releaseInfo.tag + ") only supports Devour " + releaseInfo.appVersion +
-				").\nRunning DevourX may cause crashes until it is updated.";
-		}
-
-		ShowNotification(message, MB_OK | MB_ICONERROR);
-	}
+                ShowNotification(message, MB_OK | MB_ICONERROR);
+        }
 }
 
 #define WRAPPER_GENFUNC(name) \
@@ -295,13 +332,37 @@ std::filesystem::path getApplicationPath() {
 
 bool PerformPreInjectionChecks()
 {
-	ReportUpdateStatus();
-	return true;
+        ReportUpdateStatus();
+
+        const auto& latestVersion = GetLatestReleaseInfo();
+        if (!latestVersion.has_value())
+        {
+                return true;
+        }
+
+        const std::string currentModVersion = GetLocalModVersion();
+        const ReleaseVersionInfo& releaseInfo = latestVersion.value();
+
+        if (CompareVersions(currentModVersion, releaseInfo.modVersion) < 0)
+        {
+                return false;
+        }
+
+        return EnsureCompatibleGameVersion();
 }
 
 bool EnsureCompatibleGameVersion()
 {
-	return false;
+        const auto& latestVersion = GetLatestReleaseInfo();
+        if (!latestVersion.has_value())
+        {
+                return true;
+        }
+
+        const std::string installedGameVersion = GetLocalAppVersion();
+        const ReleaseVersionInfo& releaseInfo = latestVersion.value();
+
+        return CompareVersions(installedGameVersion, releaseInfo.appVersion) == 0;
 }
 
 DWORD WINAPI Load(LPVOID lpParam) {
