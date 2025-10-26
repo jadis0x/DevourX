@@ -62,6 +62,22 @@ bool LoadSettingsFromConfig()
         {
             settings.showLanguagePromptOnStart = it->get<bool>();
         }
+
+        if (const auto it = document.find("enable_RenderHook"); it != document.end() && it->is_boolean())
+        {
+            settings.bEnableRenderHook = it->get<bool>();
+        }
+
+        if (const auto it = document.find("render_QualityMode"); it != document.end() && it->is_number_integer())
+        {
+            settings.renderQualityMode = std::clamp(it->get<int>(), 0, 3);
+        }
+
+        if (const auto it = document.find("render_Sharpness"); it != document.end() && it->is_number())
+        {
+            settings.dSharpness = std::clamp(it->get<float>(), 0.0f, 1.0f);
+        }
+
     }
     catch (const std::exception&)
     {
@@ -99,7 +115,11 @@ bool SaveSettingsToConfig()
 
     json document = {
             { "localizationCulture", settings.localizationCulture },
-            { "showLanguagePromptOnStart", settings.showLanguagePromptOnStart }
+            { "showLanguagePromptOnStart", settings.showLanguagePromptOnStart },
+            { "showLanguagePromptOnStart", settings.showLanguagePromptOnStart },
+            { "enable_RenderHook", settings.bEnableRenderHook },
+            { "render_QualityMode", settings.renderQualityMode },
+            { "render_Sharpness", settings.dSharpness }
     };
 
     stream << document.dump(4);

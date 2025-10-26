@@ -66,6 +66,10 @@ public:
 	char customRoomName[64] = "-";
 	char customSteamname[64] = "hotdogcat";
 	char customSteamIdStr[32] = "";
+
+	bool bEnableRenderHook = false;
+	int renderQualityMode = 1;
+	float dSharpness = 0.2f;
 };
 
 extern Settings settings;

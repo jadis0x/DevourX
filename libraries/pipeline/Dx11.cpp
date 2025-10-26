@@ -1,6 +1,7 @@
 #include "Dx11.h"
 
 D3D_PRESENT_FUNCTION dx11api::presentFunction = nullptr;
+DXGI_RESIZEBUFFERS_FUNCTION dx11api::resizeBuffersFunction = nullptr;
 bool dx11api::initialized = false;
 
 D3D_PRESENT_FUNCTION dx11api::GetPresentFunction()
@@ -63,6 +64,7 @@ D3D_PRESENT_FUNCTION dx11api::GetPresentFunction()
 
     void** pVMT = *(void***)pSwapChain;
     presentFunction = (D3D_PRESENT_FUNCTION)pVMT[8];
+    resizeBuffersFunction = (DXGI_RESIZEBUFFERS_FUNCTION)pVMT[13];
 
     if (pSwapChain) {
         pSwapChain->Release();
@@ -84,6 +86,16 @@ D3D_PRESENT_FUNCTION dx11api::GetPresentFunction()
 
     initialized = true;
     return presentFunction;
+}
+
+DXGI_RESIZEBUFFERS_FUNCTION dx11api::GetResizeBuffersFunction()
+{
+    if (!initialized)
+    {
+        GetPresentFunction();
+    }
+
+    return resizeBuffersFunction;
 }
 
 void dx11api::Shutdown()

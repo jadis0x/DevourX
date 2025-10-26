@@ -163,3 +163,6 @@ bool dMenu_CanPlayMode(app::Menu* __this, app::DevourGameMode__Enum gameMode, ap
 
 // DO_APP_FUNC(0x00BBC870, void, BoltNetwork_LoadScene_1, (String * scene, IProtocolToken * token, MethodInfo * method));
 void dBoltNetwork_LoadScene_1(app::String* scene, app::IProtocolToken* token, MethodInfo* method);
+
+// DO_APP_FUNC(0x007DBF90, String *, Menu_GetPlayerId, (Menu * __this, MethodInfo * method));
+app::String* dMenu_GetPlayerId(app::Menu* __this, MethodInfo* method);

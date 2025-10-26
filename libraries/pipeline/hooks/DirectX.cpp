@@ -8,6 +8,7 @@
 #include "pipeline/gui/Menu.h"
 #include <mutex>
 #include "pipeline/Settings.h"
+#include "RenderHook.h"
 
 #include "pipeline/keybinds.h"
 #include <iostream>
@@ -30,6 +31,7 @@ ID3D11Device* pDevice = NULL;
 ID3D11DeviceContext* pContext = NULL;
 ID3D11RenderTargetView* pRenderTargetView = NULL;
 D3D_PRESENT_FUNCTION oPresent = nullptr;
+DXGI_RESIZEBUFFERS_FUNCTION oResizeBuffers = nullptr;
 WNDPROC oWndProc;
 
 HANDLE DirectX::hRenderSemaphore;
@@ -327,6 +329,7 @@ LRESULT __stdcall dWndProc(const HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 			WaitForSingleObject(DirectX::hRenderSemaphore, INFINITE);
 			pRenderTargetView->Release();
 			pRenderTargetView = nullptr;
+			renderPipeline::OnBeforeResize();
 			ReleaseSemaphore(DirectX::hRenderSemaphore, 1, NULL);
 		}
 	}
@@ -393,6 +396,19 @@ bool ImGuiInitialization(IDXGISwapChain* pSwapChain) {
 }
 
 std::once_flag init_d3d;
+HRESULT __stdcall dResizeBuffers(IDXGISwapChain* __this, UINT BufferCount, UINT Width, UINT Height, DXGI_FORMAT NewFormat, UINT SwapChainFlags)
+{
+	renderPipeline::OnBeforeResize();
+
+	if (pRenderTargetView)
+	{
+		pRenderTargetView->Release();
+		pRenderTargetView = nullptr;
+	}
+
+	return oResizeBuffers(__this, BufferCount, Width, Height, NewFormat, SwapChainFlags);
+}
+
 HRESULT __stdcall dPresent(IDXGISwapChain* __this, UINT SyncInterval, UINT Flags) {
 	std::call_once(init_d3d, [&] {
 		if (SUCCEEDED(__this->GetDevice(__uuidof(ID3D11Device), (void**)&pDevice)))
@@ -450,6 +466,13 @@ HRESULT __stdcall dPresent(IDXGISwapChain* __this, UINT SyncInterval, UINT Flags
 		}
 	}
 
+
+	renderPipeline::SetEnabled(settings.bEnableRenderHook);
+	if (settings.bEnableRenderHook)
+	{
+		renderPipeline::Process(__this, pDevice, pContext, pRenderTargetView);
+	}
+
 	il2cpp_gc_disable();
 
 	ApplyTheme();
@@ -502,5 +525,11 @@ void DirectX::Shutdown() {
 
 	if (ImGui::GetCurrentContext())
 		ImGui::DestroyContext();
+	if (pRenderTargetView)
+	{
+		pRenderTargetView->Release();
+		pRenderTargetView = nullptr;
+	}
+	renderPipeline::Shutdown();
 	CloseHandle(hRenderSemaphore);
 }

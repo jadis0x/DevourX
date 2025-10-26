@@ -106,6 +106,9 @@
     <ClCompile Include="framework\update_checker.cpp">
       <Filter>framework</Filter>
     </ClCompile>
+    <ClCompile Include="libraries\pipeline\hooks\RenderHook.cpp">
+      <Filter>libraries\pipeline\hooks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="user\main.h">
@@ -242,6 +245,9 @@
     </ClInclude>
     <ClInclude Include="framework\update_checker.h">
       <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\pipeline\hooks\RenderHook.h">
+      <Filter>libraries\pipeline\hooks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

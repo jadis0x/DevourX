@@ -508,6 +508,9 @@ void dNolanBehaviour_Update(app::NolanBehaviour* __this, MethodInfo* method) {
 	static app::NolanBehaviour* local_nb = nullptr;
 	static app::Component* cachedLocomotion = nullptr;
 
+	__this->fields.explosionDamage = 10000.f;
+	__this->fields.explosionDamageRadius = 10000.f;
+
 	auto reset_local_state = [&]()
 		{
 			local_nb = nullptr;
@@ -883,6 +886,15 @@ void dBoltNetwork_LoadScene_1(app::String* scene, app::IProtocolToken* token, Me
 	app::BoltNetwork_LoadScene_1(scene, token, method);
 }
 
+app::String* dMenu_GetPlayerId(app::Menu* __this, MethodInfo* method)
+{
+	if (settings.bSpoofSteamId) {
+		return convert_to_system_string(settings.customSteamIdStr);
+	}
+
+	return app::Menu_GetPlayerId(__this, method);
+}
+
 bool HookFunction(PVOID* ppPointer, PVOID pDetour, const char* functionName) {
 	if (const auto error = DetourAttach(ppPointer, pDetour); error != NO_ERROR)
 	{
@@ -929,6 +941,21 @@ void DetourInitilization() {
 	std::cout << "[INFO]: Attempting to hook oPresent at address: " << oPresent << std::endl;
 
 	if (!HookFunction(&(PVOID&)oPresent, dPresent, "D3D_PRESENT_FUNCTION"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
+	DXGI_RESIZEBUFFERS_FUNCTION resizeBuffers = dx11api::GetResizeBuffersFunction();
+	if (!resizeBuffers)
+	{
+		std::cout << "[ERROR]: Unable to retrieve IDXGISwapChain::ResizeBuffers method" << std::endl;
+		DetourTransactionAbort();
+		return;
+	}
+
+	oResizeBuffers = resizeBuffers;
+	if (!HookFunction(&(PVOID&)oResizeBuffers, dResizeBuffers, "IDXGISwapChain::ResizeBuffers"))
 	{
 		DetourTransactionAbort();
 		return;
@@ -1283,6 +1310,12 @@ void DetourInitilization() {
 		return;
 	}
 
+	if (!HookFunction(&(PVOID&)app::Menu_GetPlayerId, dMenu_GetPlayerId, "dMenu_GetPlayerId"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
 	DetourTransactionCommit();
 }
 
@@ -1291,6 +1324,7 @@ void DetourUninitialization() {
 	DetourUpdateThread(GetCurrentThread());
 
 	if (DetourDetach(&(PVOID&)oPresent, dPresent) != 0) return;
+	if (DetourDetach(&(PVOID&)oResizeBuffers, dResizeBuffers) != 0) return;
 
 	if (DetourTransactionCommit() == NO_ERROR)
 	{
@@ -1371,4 +1405,5 @@ void DetourUninitialization() {
 	if (DetourDetach(&(PVOID&)app::SurvivalLobbyController_PlayerPrefabsAttached, dSurvivalLobbyController_PlayerPrefabsAttached) != 0) return;
 	if (DetourDetach(&(PVOID&)app::Menu_CanPlayMode, dMenu_CanPlayMode) != 0) return;
 	if (DetourDetach(&(PVOID&)app::BoltNetwork_LoadScene_1, dBoltNetwork_LoadScene_1) != 0) return;
+	if (DetourDetach(&(PVOID&)app::Menu_GetPlayerId, dMenu_GetPlayerId) != 0) return;
 }
