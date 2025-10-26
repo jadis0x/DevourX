@@ -161,8 +161,5 @@ bool dDoorBehaviour_IsLocked(app::DoorBehaviour* __this, MethodInfo* method);
 // DO_APP_FUNC(0x007D48D0, bool, Menu_CanPlayMode, (Menu * __this, DevourGameMode__Enum gameMode, DevourMap__Enum map, MethodInfo * method));
 bool dMenu_CanPlayMode(app::Menu* __this, app::DevourGameMode__Enum gameMode, app::DevourMap__Enum map, MethodInfo* method);
 
-// DO_APP_FUNC(0x0080F550, void, GameStatsPlayerToken_Read, (GameStatsPlayerToken * __this, UdpPacket * packet, MethodInfo * method));
-void dGameStatsPlayerToken_Read(app::GameStatsPlayerToken* __this, app::UdpPacket* packet, MethodInfo* method);
-
 // DO_APP_FUNC(0x00BBC870, void, BoltNetwork_LoadScene_1, (String * scene, IProtocolToken * token, MethodInfo * method));
 void dBoltNetwork_LoadScene_1(app::String* scene, app::IProtocolToken* token, MethodInfo* method);

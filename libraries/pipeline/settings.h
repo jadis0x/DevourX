@@ -53,7 +53,7 @@ public:
 	bool bChangeRoomName = false;
 	bool bForcePublic = false;
 	bool bFakeGameInProgress = false;
-	bool bSpoofSteamName = true;
+	bool bSpoofSteamName = false;
 	bool bSpoofSteamId = false;
 	bool bAzazelEsp = false;
 	bool bAzazelLine = false;

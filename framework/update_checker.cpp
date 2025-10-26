@@ -52,7 +52,29 @@ namespace
 
     bool NotifyUser(const std::string& message, NotifyType type = NotifyType::Info)
     {
-        UINT flags = MB_SYSTEMMODAL;
+        UINT flags = MB_SYSTEMMODAL | MB_SETFOREGROUND | MB_TOPMOST;
+
+        AllowSetForegroundWindow(ASFW_ANY);
+
+        HWND owner = GetForegroundWindow();
+        const DWORD currentThread = GetCurrentThreadId();
+        DWORD ownerThread = 0;
+        if (owner)
+        {
+            ownerThread = GetWindowThreadProcessId(owner, nullptr);
+        }
+
+        bool attachedToOwner = false;
+        if (owner && ownerThread != 0 && ownerThread != currentThread)
+        {
+            attachedToOwner = AttachThreadInput(ownerThread, currentThread, TRUE);
+        }
+
+        if (owner)
+        {
+            SetForegroundWindow(owner);
+            BringWindowToTop(owner);
+        }
 
         switch (type)
         {
@@ -72,7 +94,13 @@ namespace
 
         il2cppi_log_write(message);
 
-        int result = MessageBoxA(nullptr, message.c_str(), "DevourX", flags);
+        int result = MessageBoxA(owner ? owner : nullptr, message.c_str(), "DevourX", flags);
+
+        if (attachedToOwner)
+        {
+            AttachThreadInput(ownerThread, currentThread, FALSE);
+        }
+
         return (result == IDOK);
     }
 

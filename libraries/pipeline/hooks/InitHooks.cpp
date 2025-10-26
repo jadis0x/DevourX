@@ -575,7 +575,7 @@ void dNolanBehaviour_Update(app::NolanBehaviour* __this, MethodInfo* method) {
 
 		if (SafePtr::IsValid((app::Object_1*)cachedLocomotion) && app::UltimateCharacterLocomotion_SetPosition_1)
 		{
-			app::UltimateCharacterLocomotion_SetPosition_1((app::UltimateCharacterLocomotion*)cachedLocomotion, pos, true, nullptr);
+			app::UltimateCharacterLocomotion_SetPosition_1((app::UltimateCharacterLocomotion*)cachedLocomotion, pos, false, nullptr);
 		}
 	}
 
@@ -871,18 +871,6 @@ bool dMenu_CanPlayMode(app::Menu* __this, app::DevourGameMode__Enum gameMode, ap
 	return true;
 }
 
-void dGameStatsPlayerToken_Read(app::GameStatsPlayerToken* __this, app::UdpPacket* packet, MethodInfo* method)
-{
-	__this->fields.numDeaths = 9999;
-	__this->fields.numBanishes = 9999;
-	__this->fields.numRevives = 9999;
-	__this->fields.numStaggers = 9999;
-
-	std::cout << il2cppi_to_string(__this->fields.playerSteamName) << "\n";
-
-	app::GameStatsPlayerToken_Read(__this, packet, method);
-}
-
 void dBoltNetwork_LoadScene_1(app::String* scene, app::IProtocolToken* token, MethodInfo* method)
 {
 	if (token) {
@@ -1055,8 +1043,6 @@ void DetourInitilization() {
 		DetourTransactionAbort();
 		return;
 	}
-
-
 
 	if (!HookFunction(&(PVOID&)app::SurvivalLobbyController_CanReady, dSurvivalLobbyController_CanReady, "SurvivalLobbyController_CanReady"))
 	{
@@ -1285,7 +1271,7 @@ void DetourInitilization() {
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::GameStatsPlayerToken_Read, dGameStatsPlayerToken_Read, "dGameStatsPlayerToken_Read"))
+	if (!HookFunction(&(PVOID&)app::BoltNetwork_LoadScene_1, dBoltNetwork_LoadScene_1, "dBoltNetwork_LoadScene_1"))
 	{
 		DetourTransactionAbort();
 		return;
@@ -1384,6 +1370,5 @@ void DetourUninitialization() {
 	if (DetourDetach(&(PVOID&)app::DoorBehaviour_IsLocked, dDoorBehaviour_IsLocked) != 0) return;
 	if (DetourDetach(&(PVOID&)app::SurvivalLobbyController_PlayerPrefabsAttached, dSurvivalLobbyController_PlayerPrefabsAttached) != 0) return;
 	if (DetourDetach(&(PVOID&)app::Menu_CanPlayMode, dMenu_CanPlayMode) != 0) return;
-	if (DetourDetach(&(PVOID&)app::GameStatsPlayerToken_Read, dGameStatsPlayerToken_Read) != 0) return;
 	if (DetourDetach(&(PVOID&)app::BoltNetwork_LoadScene_1, dBoltNetwork_LoadScene_1) != 0) return;
 }

@@ -91,7 +91,7 @@ void PlayerTAB::Render()
         ImGui::TableNextColumn();
         ImGui::BeginDisabled(!settings.bModifyRank);
         ImGui::SetNextItemWidth(sliderWidth);
-        ImGui::SliderInt(Localization::Get("tabs.player.rank_slider").c_str(), &settings.newRank, 0, 666, "%d");
+        ImGui::SliderInt("##PlayerRank", &settings.newRank, 0, 666, "%d");
         ImGui::EndDisabled();
 
         ImGui::TableNextRow();
@@ -100,7 +100,7 @@ void PlayerTAB::Render()
         ImGui::TableNextColumn();
         ImGui::BeginDisabled(!settings.bModifyPlayerSpeed);
         ImGui::SetNextItemWidth(sliderWidth);
-        ImGui::SliderFloat(Localization::Get("tabs.player.speed_slider").c_str(), &settings.playerSpeed, 0.5f, 200.0f, "%.1f");
+        ImGui::SliderFloat("##PlayerSpeed", &settings.playerSpeed, 0.1f, 15.0f, "%.1f");
         ImGui::EndDisabled();
 
         ImGui::TableNextRow();
@@ -109,7 +109,7 @@ void PlayerTAB::Render()
         ImGui::TableNextColumn();
         ImGui::BeginDisabled(!settings.bFly);
         ImGui::SetNextItemWidth(sliderWidth);
-        ImGui::SliderFloat(Localization::Get("tabs.player.fly_speed").c_str(), &settings.flySpeed, 10.0f, 30.0f, "%.1f");
+        ImGui::SliderFloat("##FlySpeed", &settings.flySpeed, 10.0f, 30.0f, "%.1f");
         ImGui::EndDisabled();
 
         ImGui::TableNextRow();

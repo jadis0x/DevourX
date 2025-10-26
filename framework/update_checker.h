@@ -8,7 +8,6 @@ enum class NotifyType
     Confirm
 };
 
-
 namespace UpdateChecker
 {
     void CheckAndNotify();
