@@ -6,6 +6,8 @@
 #include <fstream>
 #include "nlohmann/json.hpp"
 #include "main.h"
+#include <algorithm>
+#include <pipeline/localization/LocalizationManager.h>
 
 Settings settings;
 
@@ -48,6 +50,7 @@ bool LoadSettingsFromConfig()
 		return false;
 	}
 
+	bool configUpdated = false;
 	try
 	{
 		json document;
@@ -68,9 +71,27 @@ bool LoadSettingsFromConfig()
 		return false;
 	}
 
+	stream.close();
+
 	if (settings.localizationCulture.empty())
 	{
-		settings.localizationCulture = "en-US";
+		settings.localizationCulture = Localization::GetFallbackCulture();
+		configUpdated = true;
+	}
+	else
+	{
+		const auto availableCultures = Localization::GetAvailableCultures();
+		const bool cultureKnown = std::find(availableCultures.begin(), availableCultures.end(), settings.localizationCulture) != availableCultures.end();
+		if (!cultureKnown)
+		{
+			settings.localizationCulture = Localization::GetFallbackCulture();
+			configUpdated = true;
+		}
+	}
+
+	if (configUpdated)
+	{
+		SaveSettingsToConfig();
 	}
 
 	return true;
