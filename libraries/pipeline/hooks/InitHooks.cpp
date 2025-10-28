@@ -946,21 +946,6 @@ void DetourInitilization() {
 		return;
 	}
 
-	DXGI_RESIZEBUFFERS_FUNCTION resizeBuffers = dx11api::GetResizeBuffersFunction();
-	if (!resizeBuffers)
-	{
-		std::cout << "[ERROR]: Unable to retrieve IDXGISwapChain::ResizeBuffers method" << std::endl;
-		DetourTransactionAbort();
-		return;
-	}
-
-	oResizeBuffers = resizeBuffers;
-	if (!HookFunction(&(PVOID&)oResizeBuffers, dResizeBuffers, "IDXGISwapChain::ResizeBuffers"))
-	{
-		DetourTransactionAbort();
-		return;
-	}
-
 	if (!HookFunction(&(PVOID&)Debug_2_Log, dDebug_Log, "Debug_2_Log"))
 	{
 		DetourTransactionAbort();
@@ -1324,7 +1309,6 @@ void DetourUninitialization() {
 	DetourUpdateThread(GetCurrentThread());
 
 	if (DetourDetach(&(PVOID&)oPresent, dPresent) != 0) return;
-	if (DetourDetach(&(PVOID&)oResizeBuffers, dResizeBuffers) != 0) return;
 
 	if (DetourTransactionCommit() == NO_ERROR)
 	{

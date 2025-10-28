@@ -5,19 +5,14 @@
 typedef HRESULT(__stdcall* D3D_PRESENT_FUNCTION)(IDXGISwapChain* __this, UINT SyncInterval, UINT Flags);
 typedef HRESULT(__stdcall* DXGI_RESIZEBUFFERS_FUNCTION)(IDXGISwapChain* __this, UINT BufferCount, UINT Width, UINT Height, DXGI_FORMAT NewFormat, UINT SwapChainFlags);
 
-
 class dx11api {
 public:
     // Retrieve IDXGISwapChain::Present and cache the result.
     static D3D_PRESENT_FUNCTION GetPresentFunction();
 
-    // Retrieve IDXGISwapChain::ResizeBuffers and cache the result.
-    static DXGI_RESIZEBUFFERS_FUNCTION GetResizeBuffersFunction();
-
     // Release cached resources.
     static void Shutdown();
 private:
     static D3D_PRESENT_FUNCTION presentFunction;
-    static DXGI_RESIZEBUFFERS_FUNCTION resizeBuffersFunction;
     static bool initialized;
 };
