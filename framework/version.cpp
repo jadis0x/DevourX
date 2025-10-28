@@ -104,7 +104,7 @@ DWORD WINAPI Load(LPVOID lpParam) {
 	
 	UpdateChecker::CheckAndNotify();
 
-	std::this_thread::sleep_for(std::chrono::seconds(4));
+	std::this_thread::sleep_for(std::chrono::seconds(6));
 	Run(lpParam);
 
 	return 0;

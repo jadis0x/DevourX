@@ -505,11 +505,12 @@ void dNolanBehaviour_FixedUpdate(app::NolanBehaviour* __this, MethodInfo* method
 }
 
 void dNolanBehaviour_Update(app::NolanBehaviour* __this, MethodInfo* method) {
+
+	constexpr int key_mask = 0x8000;
+
 	static app::NolanBehaviour* local_nb = nullptr;
 	static app::Component* cachedLocomotion = nullptr;
 
-	__this->fields.explosionDamage = 10000.f;
-	__this->fields.explosionDamageRadius = 10000.f;
 
 	auto reset_local_state = [&]()
 		{
@@ -557,12 +558,12 @@ void dNolanBehaviour_Update(app::NolanBehaviour* __this, MethodInfo* method) {
 		const app::Vector3 up = app::Transform_get_up(transform, nullptr);
 		app::Vector3 pos = app::Transform_get_position(transform, nullptr);
 
-		if (GetAsyncKeyState('W') & 0x8000) pos = pos + (forward * speed * deltaTime);
-		if (GetAsyncKeyState('S') & 0x8000) pos = pos - (forward * speed * deltaTime);
-		if (GetAsyncKeyState('D') & 0x8000) pos = pos + (right * speed * deltaTime);
-		if (GetAsyncKeyState('A') & 0x8000) pos = pos - (right * speed * deltaTime);
-		if (GetAsyncKeyState(VK_SPACE) & 0x8000) pos = pos + (up * speed * deltaTime);
-		if (GetAsyncKeyState(VK_LCONTROL) & 0x8000) pos = pos - (up * speed * deltaTime);
+		if (GetAsyncKeyState('W') & key_mask) pos = pos + (forward * speed * deltaTime);
+		if (GetAsyncKeyState('S') & key_mask) pos = pos - (forward * speed * deltaTime);
+		if (GetAsyncKeyState('D') & key_mask) pos = pos + (right * speed * deltaTime);
+		if (GetAsyncKeyState('A') & key_mask) pos = pos - (right * speed * deltaTime);
+		if (GetAsyncKeyState(VK_SPACE) & key_mask) pos = pos + (up * speed * deltaTime);
+		if (GetAsyncKeyState(VK_LCONTROL) & key_mask) pos = pos - (up * speed * deltaTime);
 
 		app::GameObject* thisGO = app::Component_get_gameObject((app::Component*)__this, nullptr);
 		if (!SafePtr::IsValid(thisGO))
