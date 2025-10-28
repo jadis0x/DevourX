@@ -216,6 +216,15 @@
     <ClInclude Include="libraries\pipeline\localization\LocalizationManager.h">
       <Filter>libraries\pipeline\localization</Filter>
     </ClInclude>
+    <ClInclude Include="framework\build_info.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\winhttp_client.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\update_checker.h">
+      <Filter>framework</Filter>
+    </ClInclude>
     <ClInclude Include="appdata\il2cpp-api-functions.h">
       <Filter>appdata</Filter>
     </ClInclude>
@@ -233,15 +242,6 @@
     </ClInclude>
     <ClInclude Include="appdata\il2cpp-types-ptr.h">
       <Filter>appdata</Filter>
-    </ClInclude>
-    <ClInclude Include="framework\build_info.h">
-      <Filter>framework</Filter>
-    </ClInclude>
-    <ClInclude Include="framework\winhttp_client.h">
-      <Filter>framework</Filter>
-    </ClInclude>
-    <ClInclude Include="framework\update_checker.h">
-      <Filter>framework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
