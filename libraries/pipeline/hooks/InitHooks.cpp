@@ -1290,12 +1290,6 @@ void DetourInitilization() {
 		return;
 	}
 
-	if (!HookFunction(&(PVOID&)app::BoltNetwork_LoadScene_1, dBoltNetwork_LoadScene_1, "dBoltNetwork_LoadScene_1"))
-	{
-		DetourTransactionAbort();
-		return;
-	}
-
 	if (!HookFunction(&(PVOID&)app::Menu_GetPlayerId, dMenu_GetPlayerId, "dMenu_GetPlayerId"))
 	{
 		DetourTransactionAbort();

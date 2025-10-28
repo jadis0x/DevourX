@@ -226,7 +226,18 @@ namespace Localization
                 continue;
             }
 
-            cultures.emplace_back(entry.path().stem().string());
+            const std::string stem = entry.path().stem().string();
+            if (stem.empty())
+            {
+                continue;
+            }
+
+            if (stem == "config" || stem.find('.') != std::string::npos)
+            {
+                continue;
+            }
+
+            cultures.emplace_back(stem);
         }
 
         if (iteratorError)
