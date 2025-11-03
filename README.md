@@ -63,7 +63,10 @@ DevourX includes menu text in several languages:
 - 🇺🇸 English (`en-US`)
 - 🇹🇷 Turkish (`tr-TR`)
 - 🇨🇳 Simplified Chinese (`zh-CN`)
-- 🇰🇷 Korean (`ko-KR`)
+- 🇺🇦 Ukrainian (`uk-UA`)
+- 🇪🇸 Spanish (`es-ES`)
+- 🇷🇺 Russian (`ru-RU`)
+- 🇩🇪 German (`de-DE`)
 
 The game asks for your preferred language the first time it runs. You can change it later from **Settings → Language** in the menu or by editing `localization/config.json` and updating `localizationCulture`.
 
@@ -74,6 +77,11 @@ The game asks for your preferred language the first time it runs. You can change
 4. (Optional) Set it as default in `localization/config.json` while testing.
 
 When you are done, send the new JSON file in a pull request.
+
+## Troubleshooting
+- **Menu does not appear:** Make sure that `version.dll` is located in the same folder as `Devour.exe`.
+Sometimes, Windows Defender or other antivirus programs may automatically quarantine or block `version.dll`, marking it as a potential threat.
+If this happens, restore the file from quarantine and add it to your antivirus exception list before launching the game.
 
 ## Uninstalling
 1. Close Devour.
