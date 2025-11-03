@@ -106,6 +106,12 @@
     <ClCompile Include="user\settings.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="appdata\il2cpp-api-functions-ptr.h" />
+    <ClInclude Include="appdata\il2cpp-api-functions.h" />
+    <ClInclude Include="appdata\il2cpp-functions.h" />
+    <ClInclude Include="appdata\il2cpp-metadata-version.h" />
+    <ClInclude Include="appdata\il2cpp-types-ptr.h" />
+    <ClInclude Include="appdata\il2cpp-types.h" />
     <ClInclude Include="framework\build_info.h" />
     <ClInclude Include="framework\helpers.h" />
     <ClInclude Include="framework\il2cpp-appdata.h" />
