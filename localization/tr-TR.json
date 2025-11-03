@@ -116,6 +116,7 @@
       "world": {
         "title": "Dünya Yaşam Kolaylığı",
         "unlock_doors": "Kapıları Kilitsiz Yap",
+		"unlock_all": "Her Şeyin Kilidini Aç",
         "disable_long_interact": "Uzun Etkileşimi Devre Dışı Bırak",
         "auto_calm": "Yakındayken Otomatik Sakinleştir",
         "never_calm": "Asla Sakinleşmesin"

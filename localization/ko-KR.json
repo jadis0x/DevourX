@@ -116,6 +116,7 @@
       "world": {
         "title": "월드 편의 기능",
         "unlock_doors": "문 잠금 해제",
+		"unlock_all": "모든 항목 잠금 해제",
         "disable_long_interact": "긴 상호작용 비활성화",
         "auto_calm": "근처에서 자동 진정",
         "never_calm": "절대 진정 안 함"

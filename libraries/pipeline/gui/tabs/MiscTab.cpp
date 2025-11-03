@@ -35,6 +35,7 @@ void MiscTAB::Render()
 		ImGui::TableNextColumn();
 		GuiWidgets::SectionTitle("tabs.misc.world.title", ImVec4(0.95f, 0.76f, 0.45f, 1.0f));
 		ImGui::Checkbox(Localization::Get("tabs.misc.world.unlock_doors").c_str(), &settings.bUnlockDoors);
+		ImGui::Checkbox(Localization::Get("tabs.misc.world.unlock_all").c_str(), &settings.bUnlockAll);
 		ImGui::Checkbox(Localization::Get("tabs.misc.world.disable_long_interact").c_str(), &settings.bDisableLongInteract);
 		ImGui::Spacing();
 		ImGui::Checkbox(Localization::Get("tabs.misc.world.auto_calm").c_str(), &settings.bAutoCalmWhenNearby);

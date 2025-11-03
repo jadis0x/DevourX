@@ -116,6 +116,7 @@
       "world": {
         "title": "世界便利功能",
         "unlock_doors": "解锁门",
+		"unlock_all": "解锁全部内容",
         "disable_long_interact": "禁用长时间互动",
         "auto_calm": "靠近时自动安抚",
         "never_calm": "永不安抚"

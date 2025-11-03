@@ -116,6 +116,7 @@
       "world": {
         "title": "World Quality of Life",
         "unlock_doors": "Unlock Doors",
+		"unlock_all": "Unlock Everything",
         "disable_long_interact": "Disable Long Interact",
         "auto_calm": "Auto-Calm When Nearby",
         "never_calm": "Never Calm"
