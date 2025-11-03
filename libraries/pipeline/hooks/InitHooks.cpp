@@ -501,32 +501,39 @@ void dEnemyState_set_MultipleFocus(app::EnemyState* __this, bool value, MethodIn
 // Outfit etc..
 
 bool dOptionsHelpers_IsCharacterUnlocked(app::OptionsHelpers* __this, app::String* prefab, MethodInfo* method) {
-	if (settings.bUnlockAll)
+
+	bool orgCharUnlocked = app::OptionsHelpers_IsCharacterUnlocked(__this, prefab, method);
+
+	if (orgCharUnlocked != true && settings.bUnlockAll)
 	{
 		return true;
 	}
 
-	return app::OptionsHelpers_IsCharacterUnlocked(__this, prefab, method);
+	return orgCharUnlocked;
 }
 
 bool dOptionsHelpers_IsRobeUnlocked(app::OptionsHelpers* __this, app::String* robe, app::String* character, MethodInfo* method) {
+	
+	bool orgRobeUnlocked = app::OptionsHelpers_IsRobeUnlocked(__this, robe, character, method);
 
-	if (settings.bUnlockAll)
+	if (orgRobeUnlocked != true && settings.bUnlockAll)
 	{
 		return true;
 	}
 
-	return app::OptionsHelpers_IsRobeUnlocked(__this, robe, character, method);
+	return orgRobeUnlocked;
 }
 
 bool dOptionsHelpers_HasOutfit(app::OptionsHelpers* __this, app::String* outfitName, app::String* characterName, MethodInfo* method)
 {
-	if (settings.bUnlockAll)
+	bool OrgHasOutfit = app::OptionsHelpers_HasOutfit(__this, outfitName, characterName, method);
+
+	if (OrgHasOutfit != true && settings.bUnlockAll)
 	{
 		return true;
 	}
 
-	return app::OptionsHelpers_HasOutfit(__this, outfitName, characterName, method);
+	return OrgHasOutfit;
 }
 
 app::UIPerkSelectionType* dMenu_SetupPerk(app::Menu* __this, app::CharacterPerk* perk, MethodInfo* method) {
@@ -547,12 +554,14 @@ app::UIPerkSelectionType* dMenu_SetupPerk(app::Menu* __this, app::CharacterPerk*
 
 bool dSurvivalLobbyController_PlayableCharacterSelected(app::SurvivalLobbyController* __this, MethodInfo* method) {
 
-	if (settings.bUnlockAll)
+	bool orgPlayableSelected = app::SurvivalLobbyController_PlayableCharacterSelected(__this, method);
+
+	if (orgPlayableSelected != true && settings.bUnlockAll)
 	{
 		return true;
 	}
 
-	return app::SurvivalLobbyController_PlayableCharacterSelected(__this, method);
+	return orgPlayableSelected;
 }
 
 bool dSurvivalLobbyController_UnlockedCharacterSelected(app::SurvivalLobbyController* __this, MethodInfo* method) {
@@ -608,12 +617,14 @@ void dUIPerkSelectionType_SetLocked(app::UIPerkSelectionType* __this, bool locke
 
 bool dSteamInventoryManager_UserHasItem(app::SteamInventoryManager* __this, int32_t steamItemDefID, MethodInfo* method) {
 
-	if (settings.bUnlockAll)
+	bool orgHasItem = app::SteamInventoryManager_UserHasItem(__this, steamItemDefID, method);
+
+	if (orgHasItem != true && settings.bUnlockAll)
 	{
 		return true;
 	}
 
-	return app::SteamInventoryManager_UserHasItem(__this, steamItemDefID, method);
+	return orgHasItem;
 }
 
 void dCharacterOutfit__ctor(app::CharacterOutfit* __this, MethodInfo* method) {
