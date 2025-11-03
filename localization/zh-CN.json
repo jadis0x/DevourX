@@ -2,8 +2,12 @@
   "languages": {
     "en-US": "英语",
     "tr-TR": "土耳其语",
-    "zh-CN": "简体中文",
-    "ko-KR": "韩语"
+    "zh-CN": "中文",
+    "ko-KR": "韩语",
+    "es-ES": "西班牙语",
+    "de-DE": "德语",
+    "ru-RU": "俄语",
+    "uk-UA": "乌克兰语"
   },
   "common": {
     "help_icon": "(?)",

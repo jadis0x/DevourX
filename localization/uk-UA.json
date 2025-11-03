@@ -1,0 +1,276 @@
+{
+  "languages": {
+    "en-US": "Англійська",
+    "tr-TR": "Турецька",
+    "zh-CN": "Китайська",
+    "ko-KR": "Корейська",
+    "es-ES": "Іспанська",
+    "de-DE": "Німецька",
+    "ru-RU": "Російська",
+    "uk-UA": "Українська"
+  },
+  "common": {
+    "help_icon": "(?)",
+    "placeholder_dash": "-",
+    "language_unavailable": "Файлів локалізації не знайдено.",
+    "ok": "Гаразд",
+    "cancel": "Скасувати",
+    "save": "Зберегти"
+  },
+  "menu": {
+    "window": {
+      "title": "DevourX від Jadis0x"
+    },
+    "header": {
+      "title": "DevourX",
+      "build": "Збірка %s",
+      "toggle": "Переключити меню: %s",
+      "steam_account": "Акаунт Steam",
+      "steam_id": "ID: %llu",
+      "host": "Лобі хостингу",
+      "client": "Клієнт",
+      "game_state": "Стан гри",
+      "scene": "Сцена: %s",
+      "ping": "Пінг: %d мс",
+      "ping_host": "Пінг: 0 мс"
+    },
+    "quick_actions": {
+      "title": "Швидкі дії",
+      "azazel_esp": "Азазель ESP",
+      "azazel_esp_help": "Підкреслює основну позицію азазелі, навіть крізь стіни.",
+      "player_esp": "Гравець ESP",
+      "player_esp_help": "Показує контури та відстань кожного гравця для швидкої координації.",
+      "interactable_esp": "Взаємодіючий ESP",
+      "interactable_esp_help": "Малює маркери для ключів, запобіжників та інших важливих підбирачів."
+    },
+    "environment": {
+      "title": "Навколишнє середовище",
+      "fullbright": "Фуллбрайт",
+      "fullbright_help": "Усуває майже всю темряву.",
+      "unlimited_uv": "Необмежене ультрафіолетове світло"
+    },
+    "status": {
+      "title": "Статус",
+      "auth": "Авторизація: %s",
+      "ok": "Гаразд",
+      "waiting": "Чекаю Steam"
+    }
+  },
+  "popups": {
+    "language": {
+      "change_prompt_title": "Змінити мову?",
+      "change_prompt_message": "Чи бажаєте ви змінити мову, яку використовує DevourX?",
+      "dont_show_again": "Більше не показувати",
+      "restart_title": "Потрібен перезапуск",
+      "restart_required": "Перезапустіть гру, щоб зміна мови вступила в силу."
+    }
+  },
+  "tabs": {
+    "settings": {
+      "title": "Налаштування",
+      "session": {
+        "title": "Сесія",
+        "framerate": "Частота кадрів: %.1f",
+        "version": "Версія: %s",
+        "menu_toggle": "Перемикач меню: %s",
+        "discord": "Дискорд: Jadis0x"
+      },
+      "language": {
+        "title": "Мова",
+        "dropdown": "Мова",
+        "missing": "Немає доступних мов"
+      },
+      "visual": {
+        "title": "Візуальні перевизначення",
+        "post_fx": "Post FX Override (експериментальний)",
+        "post_fx_help": "Примусово встановлює спеціальні параметри постобробки під час завантаження наступного рівня.\nЧудово підходить для яскравості карт жахів, але не можна вимкнути під час матчу.",
+        "unity_logs": "Показати журнали Unity"
+      },
+      "hint": "Потрібно швидко сховати DevourX? Натисніть %s у будь-який момент, щоб перемкнути меню.",
+      "unhook_button": "Безпечно від’єднайте та закрийте"
+    },
+    "esp": {
+      "title": "ESP",
+      "visual_tracking": "Візуальне відстеження",
+      "azazel": {
+        "title": "Азазель",
+        "enable": "Увімкніть ESP",
+        "offscreen": "Індикатор поза екраном"
+      },
+      "players": {
+        "title": "Гравці",
+        "enable": "Гравець ESP",
+        "help": "Показує гравцям крізь стіни вздовж їх відстані.",
+        "offscreen": "Закадрова лінія гравця"
+      },
+      "items": {
+        "title": "Предмети світу",
+        "enable": "Інтерактивний предмет ESP",
+        "help": "Підсвічує ключі, ритуальні предмети та інші цілі для швидкого пересування."
+      }
+    },
+    "misc": {
+      "title": "Різне",
+      "progression": {
+        "title": "Прогресія",
+        "modify_exp": "Змінити отримання досвіду",
+        "xp_slider": "XP",
+        "modify_uv": "Змінити колір УФ"
+      },
+      "world": {
+        "title": "Світова якість життя",
+        "unlock_doors": "Розблокувати двері",
+        "unlock_all": "Розблокувати все",
+        "disable_long_interact": "Вимкнути тривалу взаємодію",
+        "auto_calm": "Автоматичне заспокоєння, коли поруч",
+        "never_calm": "Ніколи спокійно"
+      },
+      "azazel": {
+        "title": "Поведінка Азазель",
+        "modify_speed": "Змінити швидкість Azazel",
+        "help": "Змініть швидкість переміщення Азазель по карті.",
+        "speed_slider": "Нова швидкість"
+      }
+    },
+    "network": {
+      "title": "Мережа",
+      "ping": "Пінг: %dms",
+      "manager": {
+        "title": "Менеджер лобі",
+        "region": "Регіон",
+        "lobby_size": "Розмір лобі",
+        "private_lobby": "Приватне лобі",
+        "create": "Створити лобі"
+      },
+      "control": {
+        "title": "Контроль лобі",
+        "change_room": "Змінити назву кімнати",
+        "new_room": "Нова назва кімнати",
+        "ghost": "Режим Ghost (Stealth Join)",
+        "ghost_help": "Приєднайтеся як невидимий. Тебе ніхто не бачить, а ти їх бачиш і чуєш!",
+        "force_public": "Зробити лобі публічним",
+        "force_public_help": "Якщо ввімкнено, поточне приватне лобі буде примусово оприлюднено та видиме для всіх.",
+        "fake_state": "Фальшивий ігровий стан",
+        "fake_state_help": "Якщо ввімкнено, поточне лобі відображатиметься так, ніби гра все ще триває чи ні."
+      },
+      "spoof": {
+        "name": "Підробка назви Steam",
+        "custom_name": "Спеціальна назва Steam",
+        "id": "Підробка ідентифікатора Steam",
+        "custom_id": "Спеціальний ідентифікатор Steam",
+        "generate": "Згенерувати випадковий SteamID"
+      }
+    },
+    "items": {
+      "title": "Предмети",
+      "spawn": "Спаун",
+      "items_section": {
+        "title": "Предмети",
+        "hay": "сіно",
+        "first_aid": "Перша допомога",
+        "spade": "Лопата",
+        "cake": "Торт",
+        "battery": "Акумулятор",
+        "gasoline": "Бензин",
+        "fuse": "Запобіжник",
+        "food": "харчування",
+        "bleach": "Відбілювач",
+        "bone": "кістка",
+        "salt": "сіль",
+        "ritual_book_inactive": "Ритуальна книга (неактивна)",
+        "ritual_book_active": "Ритуальна книга (активна)",
+        "matchbox": "Сірникова коробка",
+        "egg_1": "Яйце-1",
+        "egg_2": "Яйце-2",
+        "egg_3": "Яйце-3",
+        "egg_4": "Яйце-4",
+        "egg_5": "Яйце-5",
+        "egg_6": "Яйце-6",
+        "egg_7": "Яйце-7",
+        "egg_8": "Яйце-8",
+        "egg_9": "Яйце-9",
+        "egg_10": "Яйце-10",
+        "head_dirty_gardener": "Голова (брудний/садівник)",
+        "head_clean_gardener": "Керівник (прибиральник/садівник)",
+        "head_dirty_butler": "Голова (Брудний/Дворецький)",
+        "head_clean_butler": "Голова (прибиральник/дворецький)",
+        "head_dirty_bridesmaid_01": "Голова (Dirty/Bridesmaid_01)",
+        "head_clean_bridesmaid_01": "Голова (Clean/Bridesmaid_01)",
+        "head_dirty_bridesmaid_02": "Голова (Dirty/Bridesmaid_02)",
+        "head_clean_bridesmaid_02": "Голова (Clean/Bridesmaid_02)",
+        "head_dirty_cook": "Голова (брудний/кухар)",
+        "head_clean_cook": "Голова (Очищення/Приготування)",
+        "head_dirty_groomsman_01": "Голова (Dirty/Groomsman_01)",
+        "head_clean_groomsman_01": "Голова (Clean/Groomsman_01)",
+        "head_dirty_groomsman_02": "Голова (Dirty/Groomsman_02)",
+        "head_clean_groomsman_02": "Голова (Clean/Groomsman_02)",
+        "head_dirty_maid": "Голова (Брудна/Покоївка)",
+        "head_clean_maid": "Керівник (прибиральниця/покоївка)",
+        "head_dirty_photographer": "Голова (Брудний/Фотограф)",
+        "head_clean_photographer": "Голова (прибиральник/фотограф)",
+        "head_dirty_priest": "Голова (Брудний/Священик)",
+        "head_clean_priest": "Голова (чистий/священик)",
+        "coin": "Монета",
+        "music_box_idle": "Музична скринька (неактивний)",
+        "music_box_armed": "Музична скринька (з озброєнням)",
+        "survival_doll_head": "Голова ляльки"
+      },
+      "animals_section": {
+        "title": "Тварини",
+        "rat": "Щур",
+        "goat": "Коза",
+        "pig": "свиня"
+      },
+      "prefabs_section": {
+        "title": "Збірні конструкції"
+      }
+    },
+    "player": {
+      "title": "Менеджер гравців",
+      "local_options": "Параметри локального гравця:",
+      "modify_rank": "Змінити рейтинг гравця",
+      "rank_slider": "Новий ранг",
+      "modify_speed": "Змінити швидкість гравця",
+      "speed_slider": "Нова швидкість",
+      "fly": "Літати",
+      "fly_speed": "Швидкість польоту",
+      "fullbright": "Фуллбрайт",
+      "unlimited_uv": "Необмежене ультрафіолетове світло",
+      "list_title": "Список гравців:",
+      "table": {
+        "id": "ID",
+        "name": "Ім'я",
+        "null": "нульовий"
+      },
+      "actions": {
+        "kill": "вбити",
+        "revive": "Оживити",
+        "jumpscare": "Jumpscare",
+        "teleport": "TP",
+        "teleport_azazel": "Т. П. Азазель",
+        "shoot": "Стріляти"
+      },
+      "no_players": "Гравців не знайдено."
+    },
+    "map": {
+      "title": "Менеджер карт",
+      "mouse_follower": "[Лобі] Dynamic Mouse Follower",
+      "offset_x": "Зсув X",
+      "offset_y": "Зсув Y",
+      "lerp_speed": "Лерп Швидкість",
+      "force_start": "[СИЛА] Початок лобі",
+      "force_progress": "[FORCE] Установити прогрес на:",
+      "map_name": "Назва карти",
+      "load_map": "[FORCE] Завантажити карту",
+      "progress_slider": "Прогрес карти"
+    },
+    "server_browser": {
+      "title": "Браузер сервера",
+      "fix_button": "Застрягли на завантаженні? Виправте це",
+      "search_placeholder": "Пошук серверів...",
+      "unknown_name": "*<невідомо>",
+      "session_id": "ID сеансу:",
+      "join_button": "Приєднуйтесь"
+    }
+  }
+}

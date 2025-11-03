@@ -6,17 +6,20 @@
 #include "InitHooks.h"
 #include <iostream>
 #include "DirectX.h"
-#include "pipeline/settings.h"
+#include "settings.h"
 #include <helpers.h>
 #include "resolver/il2cpp_resolver.h"
 #include "player/player.h"
-#include <devour/devourbase.h>
+#include "pipeline/devour_helper.h"
 #include <esp/esp.h>
 
 using app::Debug_2_Log;
+using app::Debug_2_Log_1;
 using app::Debug_2_LogError;
+using app::Debug_2_LogError_1;
 using app::Debug_2_LogException;
 using app::Debug_2_LogWarning;
+using app::Debug_2_LogWarning_1;
 
 using app::Object;
 using app::Exception;
@@ -51,6 +54,26 @@ namespace UnityLogger
 		il2cppi_log_write(formattedMessage);
 		std::cout << formattedMessage << std::endl;
 	}
+
+	static std::string BuildUnityLogMessage(Object* message, app::Object_1* context = nullptr)
+	{
+		std::string formattedMessage = ToString(message);
+
+		if (context != nullptr)
+		{
+			if (app::String* contextName = ToString(context); contextName != nullptr)
+			{
+				const std::string contextString = il2cppi_to_string(contextName);
+				if (!contextString.empty())
+				{
+					formattedMessage.append(" [Context: ").append(contextString).append("]");
+				}
+			}
+		}
+
+		return formattedMessage;
+	}
+
 }
 
 static bool fxApplied = false; // post process
@@ -60,9 +83,19 @@ void dDebug_Log(Object* message, MethodInfo* method) {
 	app::Debug_2_Log(message, method);
 }
 
+void dDebug_Log_1(Object* message, app::Object_1* context, MethodInfo* method) {
+	UnityLogger::HandleUnityLog("Log", UnityLogger::BuildUnityLogMessage(message, context));
+	app::Debug_2_Log_1(message, context, method);
+}
+
 void dDebug_LogError(Object* message, MethodInfo* method) {
 	UnityLogger::HandleUnityLog("Error", ToString(message));
 	app::Debug_2_LogError(message, method);
+}
+
+void dDebug_LogError_1(Object* message, app::Object_1* context, MethodInfo* method) {
+	UnityLogger::HandleUnityLog("Error", UnityLogger::BuildUnityLogMessage(message, context));
+	app::Debug_2_LogError_1(message, context, method);
 }
 
 void dDebug_LogException(Exception* exception, MethodInfo* method) {
@@ -93,6 +126,11 @@ void dDebug_LogException(Exception* exception, MethodInfo* method) {
 void dDebug_LogWarning(app::Object* message, MethodInfo* method) {
 	UnityLogger::HandleUnityLog("Warning", ToString(message));
 	app::Debug_2_LogWarning(message, method);
+}
+
+void dDebug_LogWarning_1(Object* message, app::Object_1* context, MethodInfo* method) {
+	UnityLogger::HandleUnityLog("Warning", UnityLogger::BuildUnityLogMessage(message, context));
+	app::Debug_2_LogWarning_1(message, context, method);
 }
 
 bool dCursor_get_visible(MethodInfo* method) {
@@ -191,6 +229,7 @@ void dServerConnectToken_Write(app::ServerConnectToken* __this, app::UdpPacket* 
 		__this->fields.playerId = convert_to_system_string(settings.customSteamIdStr);
 		__this->fields.survivalPrefabIdPreference = nullptr;
 		__this->fields.uniqueId = nullptr;
+		__this->fields.dissonanceId = nullptr;
 	}
 
 	if (settings.bSpoofSteamName)
@@ -198,6 +237,7 @@ void dServerConnectToken_Write(app::ServerConnectToken* __this, app::UdpPacket* 
 		__this->fields.username = convert_to_system_string(settings.customSteamname);
 		__this->fields.survivalPrefabIdPreference = nullptr;
 		__this->fields.uniqueId = nullptr;
+		__this->fields.dissonanceId = nullptr;
 	}
 
 	app::ServerConnectToken_Write(__this, packet, method);
@@ -324,11 +364,13 @@ void dServerBrowser_JoinSession(app::ServerBrowser* __this, app::PhotonSession* 
 
 void dServerDisconnectToken_Read(app::ServerDisconnectToken* __this, app::UdpPacket* packet, MethodInfo* method)
 {
+	std::cout << "disconnected.\n";
 	return;
 }
 
 app::Byte__Array* dProtocolTokenUtils_ToByteArray(app::IProtocolToken* token, MethodInfo* method)
 {
+	/*
 	Il2CppObject* obj = reinterpret_cast<Il2CppObject*>(token);
 
 	Il2CppClass* klass = il2cpp_object_get_class(obj);
@@ -356,6 +398,7 @@ app::Byte__Array* dProtocolTokenUtils_ToByteArray(app::IProtocolToken* token, Me
 				<< "\n";
 		}
 	}
+	*/
 
 	return app::ProtocolTokenUtils_ToByteArray(token, method);
 }
@@ -380,6 +423,12 @@ void dBoltNetwork_LoadScene_1(app::String* scene, app::IProtocolToken* token, Me
 	app::BoltNetwork_LoadScene_1(scene, token, method);
 }
 
+void dMenu_BoltStartDone(app::Menu* __this, MethodInfo* method)
+{
+	std::cout << "done.\n";
+
+	app::Menu_BoltStartDone(__this, method);
+}
 
 // Steam
 app::CSteamID dSteamUser_GetSteamID(MethodInfo* method) {
@@ -605,8 +654,8 @@ void dUIPerkSelectionType_SetLocked(app::UIPerkSelectionType* __this, bool locke
 	if (settings.bUnlockAll)
 	{
 		locked = false;
-
 		cost = 0;
+
 		__this->fields.perkType->fields.isHidden = false;
 		__this->fields.perkType->fields.isOwned = true;
 		__this->fields.perkType->fields.cost = 0;
@@ -1123,7 +1172,18 @@ void DetourInitilization() {
 		DetourTransactionAbort();
 		return;
 	}
+	if (!HookFunction(&(PVOID&)Debug_2_Log_1, dDebug_Log_1, "Debug_2_Log_1"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+
 	if (!HookFunction(&(PVOID&)Debug_2_LogError, dDebug_LogError, "Debug_2_LogError"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+	if (!HookFunction(&(PVOID&)Debug_2_LogError_1, dDebug_LogError_1, "Debug_2_LogError_1"))
 	{
 		DetourTransactionAbort();
 		return;
@@ -1134,6 +1194,11 @@ void DetourInitilization() {
 		return;
 	}
 	if (!HookFunction(&(PVOID&)Debug_2_LogWarning, dDebug_LogWarning, "Debug_2_LogWarning"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+	if (!HookFunction(&(PVOID&)Debug_2_LogWarning_1, dDebug_LogWarning_1, "Debug_2_LogWarning_1"))
 	{
 		DetourTransactionAbort();
 		return;
@@ -1228,6 +1293,11 @@ void DetourInitilization() {
 		return;
 	}
 	if (!HookFunction(&(PVOID&)app::BoltNetwork_LoadScene_1, dBoltNetwork_LoadScene_1, "dBoltNetwork_LoadScene_1"))
+	{
+		DetourTransactionAbort();
+		return;
+	}
+	if (!HookFunction(&(PVOID&)app::Menu_BoltStartDone, dMenu_BoltStartDone, "dMenu_BoltStartDone"))
 	{
 		DetourTransactionAbort();
 		return;
@@ -1476,9 +1546,12 @@ void DetourUninitialization() {
 
 	// Unity.DebugLog
 	if (DetourDetach(&(PVOID&)Debug_2_Log, dDebug_Log) != 0) return;
+	if (DetourDetach(&(PVOID&)Debug_2_Log_1, dDebug_Log_1) != 0) return;
 	if (DetourDetach(&(PVOID&)Debug_2_LogError, dDebug_LogError) != 0) return;
+	if (DetourDetach(&(PVOID&)Debug_2_LogError_1, dDebug_LogError_1) != 0) return;
 	if (DetourDetach(&(PVOID&)Debug_2_LogException, dDebug_LogException) != 0) return;
 	if (DetourDetach(&(PVOID&)Debug_2_LogWarning, dDebug_LogWarning) != 0) return;
+	if (DetourDetach(&(PVOID&)Debug_2_LogWarning_1, dDebug_LogWarning_1) != 0) return;
 
 	// Input
 	if (DetourDetach(&(PVOID&)app::Cursor_1_get_visible, dCursor_get_visible) != 0) return;
@@ -1501,6 +1574,7 @@ void DetourUninitialization() {
 	if (DetourDetach(&(PVOID&)app::ProtocolTokenUtils_ToByteArray, dProtocolTokenUtils_ToByteArray) != 0) return;
 	if (DetourDetach(&(PVOID&)app::Menu_get_boltConfig, dMenu_get_boltConfig) != 0) return;
 	if (DetourDetach(&(PVOID&)app::BoltNetwork_LoadScene_1, dBoltNetwork_LoadScene_1) != 0) return;
+	if (DetourDetach(&(PVOID&)app::Menu_BoltStartDone, dMenu_BoltStartDone) != 0) return;
 
 	// Steam
 	if (DetourDetach(&(PVOID&)app::SteamUser_GetSteamID, dSteamUser_GetSteamID) != 0) return;

@@ -1,7 +1,7 @@
 ﻿#include "pch-il2cpp.h"
 #include "pipeline/gui/tabs/MapTab.h"
-#include "pipeline/settings.h"
-#include <devour/devourbase.h>
+#include "settings.h"
+#include "pipeline/devour_helper.h"
 #include <imgui/imgui.h>
 #include <pipeline/localization/LocalizationManager.h>
 

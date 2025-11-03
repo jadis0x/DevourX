@@ -1,9 +1,9 @@
 ﻿#include "pch-il2cpp.h"
 
-#include "devour/devourbase.h"
+#include "pipeline/devour_helper.h"
 #include "helpers.h"
 #include "pipeline/gui/tabs/PlayerTAB.h"
-#include "pipeline/settings.h"
+#include "settings.h"
 #include <imgui/imgui.h>
 #include <player/player.h>
 #include <pipeline/localization/LocalizationManager.h>

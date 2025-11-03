@@ -2,7 +2,7 @@
 
 #include "pipeline/gui/tabs/MiscTab.h"
 #include "pipeline/gui/widgets.h"
-#include "pipeline/settings.h"
+#include "settings.h"
 #include <imgui/imgui.h>
 #include <pipeline/localization/LocalizationManager.h>
 

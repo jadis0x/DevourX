@@ -1,7 +1,7 @@
 #include "pch-il2cpp.h"
 
 #include "pipeline/gui/tabs/ItemTab.h"
-#include <devour/devourbase.h>
+#include "pipeline/devour_helper.h"
 #include <imgui/imgui.h>
 #include <iostream>
 #include <array>

@@ -23,9 +23,12 @@ void DetourUninitialization();
 
 // Unity.Debug
 void dDebug_Log(app::Object* message, MethodInfo* method);
+void dDebug_Log_1(app::Object* message, app::Object_1* context, MethodInfo* method);
 void dDebug_LogError(app::Object* message, MethodInfo* method);
+void dDebug_LogError_1(app::Object* message, app::Object_1* context, MethodInfo* method);
 void dDebug_LogException(app::Exception* exception, MethodInfo* method);
 void dDebug_LogWarning(app::Object* message, MethodInfo* method);
+void dDebug_LogWarning_1(app::Object* message, app::Object_1* context, MethodInfo* method);
 
 // Input
 bool dCursor_get_visible(MethodInfo* method);
@@ -48,6 +51,7 @@ void dServerBrowser_JoinSession(app::ServerBrowser* __this, app::PhotonSession* 
 app::Byte__Array* dProtocolTokenUtils_ToByteArray(app::IProtocolToken* token, MethodInfo* method);
 app::BoltConfig* dMenu_get_boltConfig(app::Menu* __this, MethodInfo* method);
 void dBoltNetwork_LoadScene_1(app::String* scene, app::IProtocolToken* token, MethodInfo* method);
+void dMenu_BoltStartDone(app::Menu* __this, MethodInfo* method);
 
 // StunManager__ctor
 

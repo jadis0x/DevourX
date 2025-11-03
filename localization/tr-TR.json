@@ -3,7 +3,11 @@
     "en-US": "İngilizce",
     "tr-TR": "Türkçe",
     "zh-CN": "Çince",
-    "ko-KR": "Korece"
+	"ko-KR": "Korece",
+    "es-ES": "İspanyolca",
+    "de-DE": "Almanca",
+    "ru-RU": "Rusça",
+    "uk-UA": "Ukraynaca"
   },
   "common": {
     "help_icon": "(?)",

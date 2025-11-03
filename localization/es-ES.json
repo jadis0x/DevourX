@@ -1,0 +1,276 @@
+{
+  "languages": {
+    "en-US": "Inglés",
+    "tr-TR": "Turco",
+    "zh-CN": "Chino",
+    "ko-KR": "Coreano",
+    "es-ES": "Español",
+    "de-DE": "Alemán",
+    "ru-RU": "Ruso",
+    "uk-UA": "Ucraniano"
+  },
+  "common": {
+    "help_icon": "(?)",
+    "placeholder_dash": "-",
+    "language_unavailable": "No se encontraron archivos de localización.",
+    "ok": "Aceptar",
+    "cancel": "Cancelar",
+    "save": "Guardar"
+  },
+  "menu": {
+    "window": {
+      "title": "DevourX por Jadis0x"
+    },
+    "header": {
+      "title": "DevourX",
+      "build": "Compilación %s",
+      "toggle": "Alternar menú: %s",
+      "steam_account": "Cuenta de Steam",
+      "steam_id": "ID: %llu",
+      "host": "Vestíbulo de alojamiento",
+      "client": "Cliente",
+      "game_state": "Estado del juego",
+      "scene": "Escena: %s",
+      "ping": "Ping: %d ms",
+      "ping_host": "Ping: 0 ms"
+    },
+    "quick_actions": {
+      "title": "Acciones Rápidas",
+      "azazel_esp": "Azazel ESP",
+      "azazel_esp_help": "Destaca la posición del azazel principal, incluso a través de las paredes.",
+      "player_esp": "ESP de jugador",
+      "player_esp_help": "Muestra el contorno y la distancia de cada jugador para una rápida coordinación.",
+      "interactable_esp": "ESP de objetos interactuables",
+      "interactable_esp_help": "Dibuja marcadores para llaves, fusibles y otros elementos importantes."
+    },
+    "environment": {
+      "title": "Ambiente",
+      "fullbright": "Fullbright",
+      "fullbright_help": "Elimina casi toda la oscuridad.",
+      "unlimited_uv": "Luz UV ilimitada"
+    },
+    "status": {
+      "title": "Estado",
+      "auth": "Autenticación: %s",
+      "ok": "OK",
+      "waiting": "Esperando Steam"
+    }
+  },
+  "popups": {
+    "language": {
+      "change_prompt_title": "¿Cambiar idioma?",
+      "change_prompt_message": "¿Te gustaría cambiar el idioma utilizado por DevourX?",
+      "dont_show_again": "No volver a mostrar",
+      "restart_title": "Se requiere reinicio",
+      "restart_required": "Reinicia el juego para que el cambio de idioma surta efecto."
+    }
+  },
+  "tabs": {
+    "settings": {
+      "title": "Ajustes",
+      "session": {
+        "title": "Sesión",
+        "framerate": "Velocidad de fotogramas: %.1f",
+        "version": "Versión: %s",
+        "menu_toggle": "Alternar menú: %s",
+        "discord": "Discord: Jadis0x"
+      },
+      "language": {
+        "title": "Idioma",
+        "dropdown": "Idioma",
+        "missing": "No hay idiomas disponibles"
+      },
+      "visual": {
+        "title": "Anulaciones visuales",
+        "post_fx": "Anulación posterior a FX (experimental)",
+        "post_fx_help": "Fuerza configuraciones de posprocesamiento personalizadas en la carga del siguiente nivel.\nExcelente para iluminar mapas de terror, pero no se puede desactivar a mitad de la partida.",
+        "unity_logs": "Mostrar registros de Unity"
+      },
+      "hint": "¿Necesitas ocultar DevourX rápidamente? Presiona %s en cualquier momento para alternar el menú.",
+      "unhook_button": "Desenganche y cierre de forma segura"
+    },
+    "esp": {
+      "title": "ESP",
+      "visual_tracking": "Seguimiento visual",
+      "azazel": {
+        "title": "Azazel",
+        "enable": "Habilitar ESP",
+        "offscreen": "Indicador fuera de pantalla"
+      },
+      "players": {
+        "title": "Jugadores",
+        "enable": "ESP de jugadores",
+        "help": "Muestra a los jugadores a través de las paredes a lo largo de su distancia.",
+        "offscreen": "Línea fuera de la pantalla del jugador"
+      },
+      "items": {
+        "title": "Artículos del mundo",
+        "enable": "Elemento interactuable ESP",
+        "help": "Destaca claves, piezas rituales y otros objetivos para un enrutamiento rápido."
+      }
+    },
+    "misc": {
+      "title": "Varios",
+      "progression": {
+        "title": "Progresión",
+        "modify_exp": "Modificar ganancia de EXP",
+        "xp_slider": "EXP",
+        "modify_uv": "Modificar color UV"
+      },
+      "world": {
+        "title": "Calidad de vida mundial",
+        "unlock_doors": "desbloquear puertas",
+        "unlock_all": "Desbloquear todo",
+        "disable_long_interact": "Deshabilitar la interacción prolongada",
+        "auto_calm": "Calmar automáticamente cuando esté cerca",
+        "never_calm": "Nunca te calmes"
+      },
+      "azazel": {
+        "title": "Comportamiento de Azazel",
+        "modify_speed": "Modificar la velocidad de Azazel",
+        "help": "Cambia la rapidez con la que Azazel se mueve por el mapa.",
+        "speed_slider": "Nueva velocidad"
+      }
+    },
+    "network": {
+      "title": "Red",
+      "ping": "Hacer silbido: %dms",
+      "manager": {
+        "title": "Gerente de lobby",
+        "region": "Región",
+        "lobby_size": "Tamaño del vestíbulo",
+        "private_lobby": "Vestíbulo privado",
+        "create": "Crear lobby"
+      },
+      "control": {
+        "title": "Control del vestíbulo",
+        "change_room": "Cambiar nombre de habitación",
+        "new_room": "Nuevo nombre de habitación",
+        "ghost": "Modo fantasma (unión sigilosa)",
+        "ghost_help": "Únete como invisible. ¡Nadie te ve, pero tú los ves y los escuchas!",
+        "force_public": "Hacer público el lobby",
+        "force_public_help": "Si está habilitado, el lobby privado actual se hará público y visible para todos.",
+        "fake_state": "Estado del juego falso",
+        "fake_state_help": "Si está habilitado, el lobby actual aparecerá como si el juego todavía estuviera en progreso o no."
+      },
+      "spoof": {
+        "name": "Nombre falso de Steam",
+        "custom_name": "Nombre de Steam personalizado",
+        "id": "Identificación falsa de Steam",
+        "custom_id": "ID de Steam personalizado",
+        "generate": "Generar SteamID aleatorio"
+      }
+    },
+    "items": {
+      "title": "Elementos",
+      "spawn": "Desovar",
+      "items_section": {
+        "title": "Elementos",
+        "hay": "Heno",
+        "first_aid": "Primeros auxilios",
+        "spade": "Pala",
+        "cake": "Pastel",
+        "battery": "Batería",
+        "gasoline": "Gasolina",
+        "fuse": "Fusible",
+        "food": "Alimento",
+        "bleach": "Lejía",
+        "bone": "Hueso",
+        "salt": "Sal",
+        "ritual_book_inactive": "Libro ritual (inactivo)",
+        "ritual_book_active": "Libro ritual (activo)",
+        "matchbox": "Cajita de cerillas",
+        "egg_1": "huevo-1",
+        "egg_2": "huevo-2",
+        "egg_3": "huevo-3",
+        "egg_4": "huevo-4",
+        "egg_5": "huevo-5",
+        "egg_6": "huevo-6",
+        "egg_7": "huevo-7",
+        "egg_8": "huevo-8",
+        "egg_9": "huevo-9",
+        "egg_10": "huevo-10",
+        "head_dirty_gardener": "Cabeza (Sucia/Jardinero)",
+        "head_clean_gardener": "Jefe (limpio/jardinero)",
+        "head_dirty_butler": "Cabeza (sucio/mayordomo)",
+        "head_clean_butler": "Jefe (limpio/mayordomo)",
+        "head_dirty_bridesmaid_01": "Cabeza (Sucio/Dama de honor_01)",
+        "head_clean_bridesmaid_01": "Cabeza (Limpia/Dama de honor_01)",
+        "head_dirty_bridesmaid_02": "Cabeza (Sucio/Dama de honor_02)",
+        "head_clean_bridesmaid_02": "Cabeza (Limpia/Dama de honor_02)",
+        "head_dirty_cook": "Cabeza (Sucia/Cocinera)",
+        "head_clean_cook": "Cabezal (limpiar/cocinar)",
+        "head_dirty_groomsman_01": "Cabeza (Sucio/Padrino de boda_01)",
+        "head_clean_groomsman_01": "Jefe (limpio/padrino de boda_01)",
+        "head_dirty_groomsman_02": "Cabeza (Sucio/Padrino de boda_02)",
+        "head_clean_groomsman_02": "Jefe (limpio/padrino de boda_02)",
+        "head_dirty_maid": "Cabeza (Sucia/Sirvienta)",
+        "head_clean_maid": "Jefe (limpio/mucama)",
+        "head_dirty_photographer": "Cabeza (Sucia/Fotógrafo)",
+        "head_clean_photographer": "Jefe (limpio/fotógrafo)",
+        "head_dirty_priest": "Jefe (Sucio/Sacerdote)",
+        "head_clean_priest": "Jefe (limpio/sacerdote)",
+        "coin": "Acuñar",
+        "music_box_idle": "Caja de música (inactiva)",
+        "music_box_armed": "Caja de música (armada)",
+        "survival_doll_head": "cabeza de muñeca"
+      },
+      "animals_section": {
+        "title": "animales",
+        "rat": "Rata",
+        "goat": "Cabra",
+        "pig": "Cerdo"
+      },
+      "prefabs_section": {
+        "title": "Prefabricados"
+      }
+    },
+    "player": {
+      "title": "Gerente de jugadores",
+      "local_options": "Opciones de jugador local:",
+      "modify_rank": "Modificar rango de jugador",
+      "rank_slider": "Nuevo rango",
+      "modify_speed": "Modificar la velocidad del jugador",
+      "speed_slider": "Nueva velocidad",
+      "fly": "Volar",
+      "fly_speed": "Velocidad de vuelo",
+      "fullbright": "Fullbrillante",
+      "unlimited_uv": "Luz UV ilimitada",
+      "list_title": "Lista de jugadores:",
+      "table": {
+        "id": "IDENTIFICACIÓN",
+        "name": "Nombre",
+        "null": "nulo"
+      },
+      "actions": {
+        "kill": "Matar",
+        "revive": "Reanimar",
+        "jumpscare": "Saltar susto",
+        "teleport": "TP",
+        "teleport_azazel": "TP Azazel",
+        "shoot": "Disparar"
+      },
+      "no_players": "No se encontraron jugadores."
+    },
+    "map": {
+      "title": "Administrador de mapas",
+      "mouse_follower": "[Lobby] Seguidor dinámico del mouse",
+      "offset_x": "Desplazamiento X",
+      "offset_y": "Compensación Y",
+      "lerp_speed": "velocidad lerp",
+      "force_start": "[FUERZA] Inicio del lobby",
+      "force_progress": "[FUERZA] Establecer progreso en:",
+      "map_name": "Nombre del mapa",
+      "load_map": "[FUERZA] Cargar mapa",
+      "progress_slider": "Progreso del mapa"
+    },
+    "server_browser": {
+      "title": "Navegador de servidor",
+      "fix_button": "¿Atascado en la carga? arreglarlo",
+      "search_placeholder": "Buscar servidores...",
+      "unknown_name": "*<desconocido>",
+      "session_id": "ID de sesión:",
+      "join_button": "Unirse"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 ﻿
 #include "pch-il2cpp.h"
 
-#include "devourbase.h"
+#include "pipeline/devour_helper.h"
 #include <map>
 #include <player/player.h>
 #include <resolver/il2cpp_resolver.h>

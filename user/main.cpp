@@ -13,10 +13,10 @@
 #include <cstdio>
 #include "helpers.h"
 
-#include <devour/devourbase.h>
+#include "pipeline/devour_helper.h"
 #include <pipeline/hooks/InitHooks.h>
 #include <pipeline/localization/LocalizationManager.h>
-#include <pipeline/settings.h>
+#include <settings.h>
 
 // Set the name of your log file here
 extern const LPCWSTR LOG_FILE = L"Logs.txt";

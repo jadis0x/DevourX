@@ -1,7 +1,7 @@
 #include "pch-il2cpp.h"
 #include "pipeline/gui/tabs/EspTAB.h"
 #include "pipeline/gui/widgets.h"
-#include "pipeline/settings.h"
+#include "settings.h"
 #include <imgui/imgui.h>
 #include <pipeline/localization/LocalizationManager.h>
 

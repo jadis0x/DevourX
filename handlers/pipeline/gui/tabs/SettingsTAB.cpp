@@ -5,7 +5,7 @@
 #include "pipeline/gui/widgets.h"
 #include <imgui/imgui.h>
 #include <pipeline/keybinds.h>
-#include <pipeline/settings.h>
+#include <settings.h>
 #include <string>
 #include <pipeline/localization/LocalizationManager.h>
 #include "build_info.h"

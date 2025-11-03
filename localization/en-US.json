@@ -3,7 +3,11 @@
     "en-US": "English",
     "tr-TR": "Turkish",
     "zh-CN": "Chinese",
-    "ko-KR": "Korean"
+    "ko-KR": "Korean",
+    "es-ES": "Spanish",
+    "de-DE": "German",
+    "ru-RU": "Russian",
+    "uk-UA": "Ukrainian"
   },
   "common": {
     "help_icon": "(?)",

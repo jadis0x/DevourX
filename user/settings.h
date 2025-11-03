@@ -1,6 +1,6 @@
 #pragma once
 
-#include "keybinds.h"
+#include "pipeline/keybinds.h"
 #include <string>
 
 class Settings {

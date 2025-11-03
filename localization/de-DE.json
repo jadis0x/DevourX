@@ -1,0 +1,276 @@
+{
+  "languages": {
+    "en-US": "Englisch",
+    "tr-TR": "Türkisch",
+    "zh-CN": "Chinesisch",
+    "ko-KR": "Koreanisch",
+    "es-ES": "Spanisch",
+    "de-DE": "Deutsch",
+    "ru-RU": "Russisch",
+    "uk-UA": "Ukrainisch"
+  },
+  "common": {
+    "help_icon": "(?)",
+    "placeholder_dash": "-",
+    "language_unavailable": "Keine Lokalisierungsdateien gefunden.",
+    "ok": "OK",
+    "cancel": "Abbrechen",
+    "save": "Speichern"
+  },
+  "menu": {
+    "window": {
+      "title": "DevourX von Jadis0x"
+    },
+    "header": {
+      "title": "DevourX",
+      "build": "Build %s",
+      "toggle": "Menü umschalten: %s",
+      "steam_account": "Steam-Konto",
+      "steam_id": "ID: %llu",
+      "host": "Lobby hosten",
+      "client": "Client",
+      "game_state": "Spielstatus",
+      "scene": "Szene: %s",
+      "ping": "Ping: %d ms",
+      "ping_host": "Ping: 0 ms"
+    },
+    "quick_actions": {
+      "title": "Schnelle Aktionen",
+      "azazel_esp": "Azazel ESP",
+      "azazel_esp_help": "Hebt die Position des Haupt-Azazels hervor, auch durch Wände hindurch.",
+      "player_esp": "Spieler ESP",
+      "player_esp_help": "Zeigt die Umrisse und Entfernungen jedes Spielers für eine schnelle Koordination an.",
+      "interactable_esp": "Interaktives ESP",
+      "interactable_esp_help": "Zeichnet Markierungen für Schlüssel, Sicherungen und andere wichtige Gegenstände."
+    },
+    "environment": {
+      "title": "Umfeld",
+      "fullbright": "Vollhell",
+      "fullbright_help": "Entfernt fast alle Dunkelheit.",
+      "unlimited_uv": "Unbegrenztes UV-Licht"
+    },
+    "status": {
+      "title": "Status",
+      "auth": "Authentifizierung: %s",
+      "ok": "OK",
+      "waiting": "Warten auf Steam"
+    }
+  },
+  "popups": {
+    "language": {
+      "change_prompt_title": "Sprache ändern?",
+      "change_prompt_message": "Möchten Sie die von DevourX verwendete Sprache ändern?",
+      "dont_show_again": "Nicht mehr anzeigen",
+      "restart_title": "Neustart erforderlich",
+      "restart_required": "Starten Sie das Spiel neu, damit die Sprachänderung wirksam wird."
+    }
+  },
+  "tabs": {
+    "settings": {
+      "title": "Einstellungen",
+      "session": {
+        "title": "Sitzung",
+        "framerate": "Bildrate: %.1f",
+        "version": "Version: %s",
+        "menu_toggle": "Menü umschalten: %s",
+        "discord": "Discord: Jadis0x"
+      },
+      "language": {
+        "title": "Sprache",
+        "dropdown": "Sprache",
+        "missing": "Keine Sprachen verfügbar"
+      },
+      "visual": {
+        "title": "Visuelle Überschreibungen",
+        "post_fx": "Post-FX-Override (experimentell)",
+        "post_fx_help": "Erzwingt benutzerdefinierte Nachbearbeitungseinstellungen beim Laden des nächsten Levels.\nIdeal zum Aufhellen von Horrorkarten, kann aber nicht mitten im Spiel deaktiviert werden.",
+        "unity_logs": "Unity-Protokolle anzeigen"
+      },
+      "hint": "Müssen Sie DevourX schnell verstecken? Drücken Sie jederzeit %s, um das Menü umzuschalten.",
+      "unhook_button": "Sicher aushängen und schließen"
+    },
+    "esp": {
+      "title": "ESP",
+      "visual_tracking": "Visuelles Tracking",
+      "azazel": {
+        "title": "Azazel",
+        "enable": "ESP aktivieren",
+        "offscreen": "Off-Screen-Anzeige"
+      },
+      "players": {
+        "title": "Spieler",
+        "enable": "Spieler ESP",
+        "help": "Zeigt Spieler durch Wände entlang ihrer Distanz.",
+        "offscreen": "Off-Screen-Zeile des Spielers"
+      },
+      "items": {
+        "title": "Weltgegenstände",
+        "enable": "Interagierbares Element ESP",
+        "help": "Hebt Schlüssel, Ritualstücke und andere Ziele für eine schnelle Orientierung hervor."
+      }
+    },
+    "misc": {
+      "title": "Sonstiges",
+      "progression": {
+        "title": "Progression",
+        "modify_exp": "Ändere den EXP-Gewinn",
+        "xp_slider": "XP",
+        "modify_uv": "UV-Farbe ändern"
+      },
+      "world": {
+        "title": "Weltweite Lebensqualität",
+        "unlock_doors": "Türen entriegeln",
+        "unlock_all": "Schalte alles frei",
+        "disable_long_interact": "Deaktivieren Sie die lange Interaktion",
+        "auto_calm": "Automatische Beruhigung in der Nähe",
+        "never_calm": "Niemals beruhigen"
+      },
+      "azazel": {
+        "title": "Azazel-Verhalten",
+        "modify_speed": "Azazel-Geschwindigkeit ändern",
+        "help": "Ändere, wie schnell sich Azazel über die Karte bewegt.",
+        "speed_slider": "Neue Geschwindigkeit"
+      }
+    },
+    "network": {
+      "title": "Netzwerk",
+      "ping": "Ping: %dms",
+      "manager": {
+        "title": "Lobbymanager",
+        "region": "Region",
+        "lobby_size": "Lobbygröße",
+        "private_lobby": "Private Lobby",
+        "create": "Lobby erstellen"
+      },
+      "control": {
+        "title": "Lobby-Kontrolle",
+        "change_room": "Raumnamen ändern",
+        "new_room": "Neuer Raumname",
+        "ghost": "Geistermodus (Stealth Join)",
+        "ghost_help": "Treten Sie als unsichtbar bei. Niemand sieht dich, aber du siehst und hörst sie!",
+        "force_public": "Lobby öffentlich machen",
+        "force_public_help": "Wenn diese Option aktiviert ist, wird die aktuelle private Lobby zwangsweise öffentlich und für alle sichtbar gemacht.",
+        "fake_state": "Gefälschter Spielstatus",
+        "fake_state_help": "Wenn diese Option aktiviert ist, wird die aktuelle Lobby so angezeigt, als ob das Spiel noch läuft oder nicht."
+      },
+      "spoof": {
+        "name": "Steam-Namen fälschen",
+        "custom_name": "Benutzerdefinierter Steam-Name",
+        "id": "Steam-ID fälschen",
+        "custom_id": "Benutzerdefinierte Steam-ID",
+        "generate": "Generieren Sie eine zufällige SteamID"
+      }
+    },
+    "items": {
+      "title": "Artikel",
+      "spawn": "Laichen",
+      "items_section": {
+        "title": "Artikel",
+        "hay": "Heu",
+        "first_aid": "Erste Hilfe",
+        "spade": "Spaten",
+        "cake": "Kuchen",
+        "battery": "Batterie",
+        "gasoline": "Benzin",
+        "fuse": "Sicherung",
+        "food": "Essen",
+        "bleach": "Bleichen",
+        "bone": "Knochen",
+        "salt": "Salz",
+        "ritual_book_inactive": "Ritualbuch (inaktiv)",
+        "ritual_book_active": "Ritualbuch (aktiv)",
+        "matchbox": "Streichholzschachtel",
+        "egg_1": "Ei-1",
+        "egg_2": "Ei-2",
+        "egg_3": "Ei-3",
+        "egg_4": "Ei-4",
+        "egg_5": "Ei-5",
+        "egg_6": "Ei-6",
+        "egg_7": "Ei-7",
+        "egg_8": "Ei-8",
+        "egg_9": "Ei-9",
+        "egg_10": "Ei-10",
+        "head_dirty_gardener": "Kopf (Schmutzig/Gärtner)",
+        "head_clean_gardener": "Leiter (Reiniger/Gärtner)",
+        "head_dirty_butler": "Kopf (Dirty/Butler)",
+        "head_clean_butler": "Kopf (Clean/Butler)",
+        "head_dirty_bridesmaid_01": "Kopf (Dirty/Bridesmaid_01)",
+        "head_clean_bridesmaid_01": "Kopf (Clean/Bridesmaid_01)",
+        "head_dirty_bridesmaid_02": "Kopf (Dirty/Bridesmaid_02)",
+        "head_clean_bridesmaid_02": "Kopf (Clean/Bridesmaid_02)",
+        "head_dirty_cook": "Kopf (Dirty/Cook)",
+        "head_clean_cook": "Kopf (Reinigen/Kochen)",
+        "head_dirty_groomsman_01": "Kopf (Dirty/Groomsman_01)",
+        "head_clean_groomsman_01": "Kopf (Clean/Groomsman_01)",
+        "head_dirty_groomsman_02": "Kopf (Dirty/Groomsman_02)",
+        "head_clean_groomsman_02": "Kopf (Clean/Groomsman_02)",
+        "head_dirty_maid": "Kopf (Dreckig/Dienstmädchen)",
+        "head_clean_maid": "Leiter (Reinigung/Dienstmädchen)",
+        "head_dirty_photographer": "Kopf (Dirty/Fotograf)",
+        "head_clean_photographer": "Leiter (Reinigung/Fotograf)",
+        "head_dirty_priest": "Kopf (Dreckig/Priester)",
+        "head_clean_priest": "Oberhaupt (Reiner/Priester)",
+        "coin": "Münze",
+        "music_box_idle": "Spieluhr (Leerlauf)",
+        "music_box_armed": "Spieluhr (bewaffnet)",
+        "survival_doll_head": "Puppenkopf"
+      },
+      "animals_section": {
+        "title": "Tiere",
+        "rat": "Ratte",
+        "goat": "Ziege",
+        "pig": "Schwein"
+      },
+      "prefabs_section": {
+        "title": "Fertighäuser"
+      }
+    },
+    "player": {
+      "title": "Spielermanager",
+      "local_options": "Optionen für lokale Spieler:",
+      "modify_rank": "Ändern Sie den Spielerrang",
+      "rank_slider": "Neuer Rang",
+      "modify_speed": "Spielergeschwindigkeit ändern",
+      "speed_slider": "Neue Geschwindigkeit",
+      "fly": "Fliegen",
+      "fly_speed": "Fluggeschwindigkeit",
+      "fullbright": "Vollhell",
+      "unlimited_uv": "Unbegrenztes UV-Licht",
+      "list_title": "Spielerliste:",
+      "table": {
+        "id": "AUSWEIS",
+        "name": "Name",
+        "null": "null"
+      },
+      "actions": {
+        "kill": "Töten",
+        "revive": "Beleben",
+        "jumpscare": "Jumpscare",
+        "teleport": "TP",
+        "teleport_azazel": "TP Azazel",
+        "shoot": "Schießen"
+      },
+      "no_players": "Keine Spieler gefunden."
+    },
+    "map": {
+      "title": "Kartenmanager",
+      "mouse_follower": "[Lobby] Dynamischer Maus-Follower",
+      "offset_x": "Versatz X",
+      "offset_y": "Y-Versatz",
+      "lerp_speed": "Lerp-Geschwindigkeit",
+      "force_start": "[FORCE] Lobby-Start",
+      "force_progress": "[FORCE] Stellen Sie den Fortschritt ein auf:",
+      "map_name": "Kartenname",
+      "load_map": "[FORCE] Karte laden",
+      "progress_slider": "Kartenfortschritt"
+    },
+    "server_browser": {
+      "title": "Serverbrowser",
+      "fix_button": "Beim Laden hängen geblieben? Repariere es",
+      "search_placeholder": "Suchserver...",
+      "unknown_name": "*<unbekannt>",
+      "session_id": "Sitzungs-ID:",
+      "join_button": "Verbinden"
+    }
+  }
+}

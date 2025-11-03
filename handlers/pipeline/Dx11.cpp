@@ -1,3 +1,5 @@
+#include "pch-il2cpp.h"
+
 #include "Dx11.h"
 
 D3D_PRESENT_FUNCTION dx11api::presentFunction = nullptr;

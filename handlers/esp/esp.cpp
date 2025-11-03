@@ -4,7 +4,7 @@
 
 #include "helpers.h"
 #include <algorithm>
-#include <pipeline/settings.h>
+#include <settings.h>
 #include <vector>
 #include <player/player.h>
 #include <unordered_map>

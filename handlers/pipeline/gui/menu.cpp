@@ -3,7 +3,7 @@
 #include "imgui/imgui.h"
 #include "menu.h"
 
-#include "devour/devourbase.h"
+#include "pipeline/devour_helper.h"
 #include "pipeline/gui/tabs/EspTAB.h"
 #include "pipeline/gui/tabs/ItemTab.h"
 #include "pipeline/gui/tabs/MapTab.h"
@@ -13,7 +13,7 @@
 #include "pipeline/gui/tabs/SettingsTAB.h"
 #include "pipeline/gui/widgets.h"
 #include "pipeline/keybinds.h"
-#include "pipeline/settings.h"
+#include "settings.h"
 #include "pipeline/localization/LocalizationManager.h"
 #include "build_info.h"
 

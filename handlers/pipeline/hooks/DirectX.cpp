@@ -7,13 +7,13 @@
 #include "imgui/imgui_impl_win32.h"
 #include "pipeline/gui/Menu.h"
 #include <mutex>
-#include "pipeline/Settings.h"
+#include "Settings.h"
 
 #include "pipeline/keybinds.h"
 #include <iostream>
 #include <pipeline/gui/GUITheme.h>
 #include <esp/esp.h>
-#include "devour/devourbase.h"
+#include "pipeline/devour_helper.h"
 
 #include "pipeline/localization/LocalizationManager.h"
 #include <algorithm>
