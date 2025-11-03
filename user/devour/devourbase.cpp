@@ -29,6 +29,45 @@ bool Base::Game::IsInGame() {
 	return app::OptionsHelpers_get_inGame(helper, nullptr);
 }
 
+void Base::Game::ShowMessageBox(const char* msg)
+{
+	static Il2cppData data;
+	data.SetImage(ASSEMBLY_CSHARP);
+	data.FindClass("Horror", "Menu");
+
+	if (!data.Get()) return;
+
+	UObject<app::Menu> finder;
+	finder.FindAllObjects(data, true);
+
+	if (app::Menu* menu = finder.FindByName("MenuController", data))
+	{
+		if (app::Menu_ShowMessageModal != nullptr)
+		{
+			app::Menu_ShowMessageModal(menu, convert_to_system_string(msg), nullptr);
+		}
+	}
+}
+
+int Base::Game::ToDevourMapId(const std::string& mapName)
+{
+	if (mapName == "Farmhouse")      return 0;
+	if (mapName == "Asylum")         return 1;
+	if (mapName == "Inn")            return 2;
+	if (mapName == "Town")           return 3;
+	if (mapName == "Slaughterhouse") return 4;
+	if (mapName == "Manor")          return 5;
+	if (mapName == "Carnival")       return 6;
+
+	// default
+	return 0;
+}
+
+app::String* Base::Game::AppVersion()
+{
+	return app::Application_get_version(nullptr);
+}
+
 void Base::Gameplay::FullBright(app::NolanBehaviour* localPlayer_nolanBehaviour) {
 	if (localPlayer_nolanBehaviour != nullptr)
 	{
@@ -237,6 +276,7 @@ void Base::Gameplay::StartCarryItem(const char* itemName) {
 		{"Coin", "SurvivalCoin"},
 		{"Music Box (Idle)", "MusicBox-Idle"},
 		{"Music Box (Armed)", "MusicBox-Armed"},
+		{ "SurvivalDollHead", "SurvivalDollHead"}
 	};
 
 	const auto it = itemMap.find(itemName);
@@ -342,9 +382,9 @@ void Base::Gameplay::InstantiatePrefab(const char* prefabName, app::PrefabId app
 	app::Vector3 pos = app::Transform_get_position(transform, nullptr);
 	app::Vector3 forward = app::Transform_get_forward(transform, nullptr);
 
-	pos.x += forward.x * 1.5f;
-	pos.y += forward.y * 1.5f;
-	pos.z += forward.z * 1.5f;
+	pos.x += forward.x * 1.1f;
+	pos.y += forward.y * 1.1f;
+	pos.z += forward.z * 1.1f;
 
 	app::Quaternion rot = app::Transform_get_rotation(transform, nullptr);
 
@@ -661,24 +701,39 @@ void Base::Gameplay::setRank(app::GameObject* local_player, int32_t new_rank) {
 
 void Base::Gameplay::LoadMap(const char* mapName)
 {
-	if (!Base::DevourNet::IsHost())
-	{
-		std::cout << "[!] You must be the host to use this command!\n";
-		return;
-	}
-
-	if (app::BoltNetwork_LoadScene == nullptr)
-	{
-		std::cout << "[-] BoltNetwork_LoadScene is unavailable.\n";
-		return;
-	}
+	if (!Base::DevourNet::IsHost()) return;
+	if (!app::BoltNetwork_LoadScene_1) return;
 
 	SafePtr::safe_call([&]() {
-		app::String* sceneName = convert_to_system_string(mapName);
-		app::BoltNetwork_LoadScene(sceneName, nullptr);
-		});
+		auto* sceneName = convert_to_system_string(mapName);
 
-	std::cout << "[!] Please press the button only once, it may take some time for the map to load.\n";
+		if (mapName == "Menu")
+		{
+			app::BoltNetwork_LoadScene(convert_to_system_string(mapName), nullptr); return;
+		}
+
+		auto* token = (app::MainSceneToken*)il2cpp_object_new((Il2CppClass*)app::MainSceneToken__TypeInfo);
+		app::MainSceneToken__ctor(token, NULL);
+
+		auto* cfg = (app::GameConfigToken*)il2cpp_object_new((Il2CppClass*)app::GameConfigToken__TypeInfo);
+		app::GameConfigToken__ctor(cfg, NULL);
+
+		cfg->fields.batteries = true;
+		cfg->fields.devourMap = (int32_t)Base::Game::ToDevourMapId(mapName);
+		cfg->fields.devourGameMode = 1;
+		cfg->fields.medkits = true;
+		cfg->fields.gameVersion = Base::Game::AppVersion();
+
+		if (auto* hostEvent = app::HostStartedGameEvent_Create_5(nullptr))
+		{
+			app::Event_Send(reinterpret_cast<app::Event*>(hostEvent), nullptr);
+		}
+
+		std::cout << "[*] Loading map...\n";
+		app::BoltNetwork_LoadScene_1(sceneName, (app::IProtocolToken*)token, nullptr);
+
+		Base::Game::ShowMessageBox("Warning\njust click once, don't spam the button after this message.");
+		});
 }
 
 

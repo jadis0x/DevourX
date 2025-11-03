@@ -19,6 +19,9 @@ namespace Base {
 
 	namespace Game {
 		bool IsInGame();
+		void ShowMessageBox(const char* msg);
+		int ToDevourMapId(const std::string& mapName);
+		app::String* AppVersion();
 	}
 
 	class DevourNet {
@@ -51,6 +54,8 @@ namespace Base {
 
 		void setRank(app::GameObject* local_player, int32_t new_rank);
 		void LoadMap(const char* mapName);
+
+
 	}
 }
 

@@ -80,7 +80,7 @@ namespace {
 
 	constexpr PrefabDefinition kPrefabs[] = {
 #define PREFAB_ENTRY(label, field) { label, &app::BoltPrefabs__StaticFields::field },
-#include "devour/prefab_list.def"
+#include "prefab_list.def"
 #undef PREFAB_ENTRY
 	};
 }

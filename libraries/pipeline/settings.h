@@ -62,6 +62,7 @@ public:
 	bool bPlayerLine = false;
 	bool bPlayerEsp = false;
 	bool bModifyFlashlightColor = false;
+	bool bUnlockAll = false;
 
 	char customRoomName[64] = "-";
 	char customSteamname[64] = "hotdogcat";

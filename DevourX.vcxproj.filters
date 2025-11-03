@@ -243,6 +243,9 @@
     <ClInclude Include="appdata\il2cpp-types-ptr.h">
       <Filter>appdata</Filter>
     </ClInclude>
+    <ClInclude Include="libraries\resolver\il2cpp_unity_wrapper.h">
+      <Filter>libraries\resolver</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="appdata">
@@ -293,11 +296,16 @@
     <Filter Include="libraries\pipeline\localization">
       <UniqueIdentifier>{9662bc46-9a38-49b9-8c3f-8c6b56fcde19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="definitions">
+      <UniqueIdentifier>{734bc8d1-aec6-4262-b7bf-d31aed6cfd48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="version.def" />
-    <None Include="user\devour\prefab_list.def">
-      <Filter>user\devour</Filter>
+    <None Include="definitions\prefab_list.def">
+      <Filter>definitions</Filter>
+    </None>
+    <None Include="definitions\version.def">
+      <Filter>definitions</Filter>
     </None>
   </ItemGroup>
 </Project>
