@@ -4,7 +4,7 @@
 #include <Windows.h>
 #include <filesystem>
 #include <fstream>
-#include "nlohmann/json.hpp"
+#include "json/json.hpp"
 #include "main.h"
 #include <algorithm>
 #include <pipeline/localization/LocalizationManager.h>
