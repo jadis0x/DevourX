@@ -4,7 +4,6 @@ DevourX is an open-source C++ mod menu developed specifically for the co-op horr
 
 ![MenuShowcase](img/Screenshot.png)
 ![MenuShowcase](img/Screenshot2.jpg)
-![MenuShowcase](img/Screenshot3.jpg)
 
 ## Requirements
 - Windows 10/11 64-bit
@@ -14,12 +13,7 @@ DevourX is an open-source C++ mod menu developed specifically for the co-op horr
 ## Quick Start Installation
 
 #### 1. Download the files
-Get the latest release from this repository's [Releases](https://github.com/jadis0x/DevourX/releases) section.
-
-The package now includes:
-- version.dll
-- localization/ folder
-- localization/config.json
+Download the version.dll file from the [Releases](https://github.com/jadis0x/DevourX/releases) section of this repository.
 
 #### 2. Locate your Devour installation folder
  - Default Steam path (might differ):
@@ -27,8 +21,8 @@ The package now includes:
 C:\Program Files (x86)\Steam\steamapps\common\Devour
 ```
 
-#### 3. Copy all files
- - Extract everything into the main game directory, the same folder as Devour.exe
+#### 3. Copy the mod file
+ - Place version.dll directly into the main game folder (the same directory as Devour.exe).
 
 #### 4. Launch the game
  - Start Devour normally through Steam or a shortcut.
@@ -41,7 +35,6 @@ C:\Program Files (x86)\Steam\steamapps\common\Devour
 - Fullbright
 - Unlimited UV Light
 - UV Light Color Customizer
-- Prefab Spawner
 - Force Lobby Start
 - Unlock Robes
 - Unlock Doors
@@ -56,32 +49,6 @@ C:\Program Files (x86)\Steam\steamapps\common\Devour
 - Create Lobby Without Player Limit
 - SteamID & Name Hook
 - Ghost Join
-
-## Language Support
-DevourX includes menu text in several languages:
-
-- 🇺🇸 English (`en-US`)
-- 🇹🇷 Turkish (`tr-TR`)
-- 🇨🇳 Simplified Chinese (`zh-CN`)
-- 🇺🇦 Ukrainian (`uk-UA`)
-- 🇪🇸 Spanish (`es-ES`)
-- 🇷🇺 Russian (`ru-RU`)
-- 🇩🇪 German (`de-DE`)
-
-The game asks for your preferred language the first time it runs. You can change it later from **Settings → Language** in the menu or by editing `localization/config.json` and updating `localizationCulture`.
-
-### Add another language
-1. Copy `localization/en-US.json` (or the closest file) and rename it with your locale, for example `localization/es-ES.json`.
-2. Translate the values, but leave the JSON keys and any placeholders like `%s` or `%d` unchanged.
-3. Add your language name to the `languages` section at the top of the file so it shows up in the menu.
-4. (Optional) Set it as default in `localization/config.json` while testing.
-
-When you are done, send the new JSON file in a pull request.
-
-## Troubleshooting
-- **Menu does not appear:** Make sure that `version.dll` is located in the same folder as `Devour.exe`.
-Sometimes, Windows Defender or other antivirus programs may automatically quarantine or block `version.dll`, marking it as a potential threat.
-If this happens, restore the file from quarantine and add it to your antivirus exception list before launching the game.
 
 ## Uninstalling
 1. Close Devour.
