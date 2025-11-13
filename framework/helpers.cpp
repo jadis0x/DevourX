@@ -8,7 +8,6 @@
 #include <string>
 #include <codecvt>
 #include "helpers.h"
-#include <cstdio>
 
 // Log file location
 extern const LPCWSTR LOG_FILE;
@@ -20,36 +19,21 @@ uintptr_t il2cppi_get_base_address() {
 
 // Helper function to append text to a file
 void il2cppi_log_write(std::string text) {
-	HANDLE file = CreateFileW(
-		LOG_FILE,
-		FILE_APPEND_DATA,
-		FILE_SHARE_READ,
-		nullptr,
-		OPEN_ALWAYS,
-		FILE_ATTRIBUTE_NORMAL,
-		nullptr);
+	HANDLE hfile = CreateFileW(LOG_FILE, FILE_APPEND_DATA, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
-	if (file == INVALID_HANDLE_VALUE)
-	{
-		MessageBoxW(nullptr, L"Could not open log file", nullptr, 0);
-		return;
-	}
+	if (hfile == INVALID_HANDLE_VALUE)
+		MessageBoxW(0, L"Could not open log file", 0, 0);
 
-	DWORD written = 0;
-	WriteFile(file, text.c_str(), static_cast<DWORD>(text.length()), &written, nullptr);
-
-	static constexpr char kNewLine[] = "\r\n";
-	WriteFile(file, kNewLine, sizeof(kNewLine) - 1, &written, nullptr);
-
-	CloseHandle(file);
+	DWORD written;
+	WriteFile(hfile, text.c_str(), (DWORD)text.length(), &written, NULL);
+	WriteFile(hfile, "\r\n", 2, &written, NULL);
+	CloseHandle(hfile);
 }
 
 // Helper function to open a new console window and redirect stdout there
 void il2cppi_new_console() {
 	AllocConsole();
-
-	FILE* stream = nullptr;
-	freopen_s(&stream, "CONOUT$", "w", stdout);
+	freopen_s((FILE**)stdout, "CONOUT$", "w", stdout);
 }
 
 #if _MSC_VER >= 1920

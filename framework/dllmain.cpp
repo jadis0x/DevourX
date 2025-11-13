@@ -17,13 +17,7 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 		CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)Load, hModule, NULL, NULL);
 		break;
 	case DLL_PROCESS_DETACH:
-		if (version_dll)
-		{
-			FreeLibrary(version_dll);
-			version_dll = nullptr;
-		}
-		break;
-	default:
+		FreeLibrary(version_dll);
 		break;
 	}
 	return TRUE;
