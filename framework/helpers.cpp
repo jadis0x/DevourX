@@ -33,7 +33,7 @@ void il2cppi_log_write(std::string text) {
 	HANDLE file = CreateFileW(
 		path.c_str(),
 		FILE_APPEND_DATA,
-		FILE_SHARE_READ,
+		FILE_SHARE_READ | FILE_SHARE_WRITE,
 		nullptr,
 		OPEN_ALWAYS,
 		FILE_ATTRIBUTE_NORMAL,
