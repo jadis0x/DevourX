@@ -151,7 +151,8 @@
         "force_public": "Lobiyi Herkese Aç",
         "force_public_help": "Etkinleştirilirse mevcut özel lobi zorla herkese açık hale gelir ve herkes tarafından görülebilir.",
         "fake_state": "Sahte Oyun Durumu",
-        "fake_state_help": "Etkinse lobi oyunun devam ettiği ya da etmediği şeklinde görünür."
+        "fake_state_help": "Etkinse lobi oyunun devam ettiği ya da etmediği şeklinde görünür.",
+		"walk_lobby": "Lobide Yürü"
       },
       "spoof": {
         "name": "Steam Adını Sahtele",

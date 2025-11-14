@@ -151,7 +151,8 @@
         "force_public": "Hacer público el lobby",
         "force_public_help": "Si está habilitado, el lobby privado actual se hará público y visible para todos.",
         "fake_state": "Estado del juego falso",
-        "fake_state_help": "Si está habilitado, el lobby actual aparecerá como si el juego todavía estuviera en progreso o no."
+        "fake_state_help": "Si está habilitado, el lobby actual aparecerá como si el juego todavía estuviera en progreso o no.",
+		"walk_lobby": "Caminar en el lobby"
       },
       "spoof": {
         "name": "Nombre falso de Steam",

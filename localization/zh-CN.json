@@ -151,7 +151,8 @@
         "force_public": "强制公开大厅",
         "force_public_help": "启用后，将强制把当前私人大厅设为公开，对所有人可见。",
         "fake_state": "伪装游戏状态",
-        "fake_state_help": "启用后，当前大厅将显示为游戏仍在进行或未开始。"
+        "fake_state_help": "启用后，当前大厅将显示为游戏仍在进行或未开始。",
+		"walk_lobby": "大厅中行走"
       },
       "spoof": {
         "name": "伪装 Steam 名称",

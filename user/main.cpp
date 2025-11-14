@@ -18,9 +18,6 @@
 #include <pipeline/localization/LocalizationManager.h>
 #include <settings.h>
 
-// Set the name of your log file here
-extern const LPCWSTR LOG_FILE = L"Logs.txt";
-
 namespace
 {
 	class ScopedHandle

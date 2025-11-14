@@ -9,6 +9,8 @@ void MapTAB::Render()
 {
 	if (ImGui::BeginTabItem(Localization::Get("tabs.map.title").c_str())) {
 
+		ImGui::Checkbox(Localization::Get("tabs.network.control.walk_lobby").c_str(), &settings.bWalkInLobby);
+
 		ImGui::Checkbox(Localization::Get("tabs.map.mouse_follower").c_str(), &settings.bMouseFollower);
 
 		if (settings.bMouseFollower) {

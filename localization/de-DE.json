@@ -151,7 +151,8 @@
         "force_public": "Lobby öffentlich machen",
         "force_public_help": "Wenn diese Option aktiviert ist, wird die aktuelle private Lobby zwangsweise öffentlich und für alle sichtbar gemacht.",
         "fake_state": "Gefälschter Spielstatus",
-        "fake_state_help": "Wenn diese Option aktiviert ist, wird die aktuelle Lobby so angezeigt, als ob das Spiel noch läuft oder nicht."
+        "fake_state_help": "Wenn diese Option aktiviert ist, wird die aktuelle Lobby so angezeigt, als ob das Spiel noch läuft oder nicht.",
+		"walk_lobby": "Im Lobby laufen"
       },
       "spoof": {
         "name": "Steam-Namen fälschen",

@@ -90,7 +90,7 @@ void ItemTAB::Render()
 	if (ImGui::BeginTabItem(Localization::Get("tabs.items.title").c_str())) {
 		ImGui::Spacing();
 
-		GuiWidgets::SectionTitle("tabs.items.items_section.title", ImVec4(0.7f, 0.6f, 0.95f, 1.0f));
+		GuiWidgets::SectionTitle("tabs.items.items_section.title", ImVec4(1.0f, 1.0f, 1.0f, 0.9f));
 
 		static int item_current = 0;
 		const std::string currentItemLabel = Localization::Get(kItems[item_current].labelKey);
@@ -120,7 +120,7 @@ void ItemTAB::Render()
 		ImGui::Spacing();
 		ImGui::Spacing();
 
-		GuiWidgets::SectionTitle("tabs.items.animals_section.title", ImVec4(0.6f, 0.8f, 0.7f, 1.0f));
+		GuiWidgets::SectionTitle("tabs.items.animals_section.title", ImVec4(1.0f, 1.0f, 1.0f, 0.9f));
 		static int animal_current = 0;
 		const std::string currentAnimalLabel = Localization::Get(kAnimals[animal_current].labelKey);
 		if (ImGui::BeginCombo("##animals_combo", currentAnimalLabel.c_str()))
@@ -149,7 +149,7 @@ void ItemTAB::Render()
 		ImGui::Spacing();
 		ImGui::Spacing();
 
-		GuiWidgets::SectionTitle("tabs.items.prefabs_section.title", ImVec4(0.95f, 0.75f, 0.55f, 1.0f));
+		GuiWidgets::SectionTitle("tabs.items.prefabs_section.title", ImVec4(1.0f, 1.0f, 1.0f, 0.9f));
 		static int prefab_current = 0;
 		if (prefab_current >= static_cast<int>(std::size(kPrefabs)))
 		{

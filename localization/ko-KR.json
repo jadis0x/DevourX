@@ -151,7 +151,8 @@
         "force_public": "로비 공개하기",
         "force_public_help": "활성화하면 현재 비공개 로비를 강제로 모두에게 공개합니다.",
         "fake_state": "가짜 게임 상태",
-        "fake_state_help": "활성화하면 현재 로비가 진행 중인지 아닌지 속일 수 있습니다."
+        "fake_state_help": "활성화하면 현재 로비가 진행 중인지 아닌지 속일 수 있습니다.",
+		"walk_lobby": "로비에서 걷기"
       },
       "spoof": {
         "name": "Steam 이름 위장",

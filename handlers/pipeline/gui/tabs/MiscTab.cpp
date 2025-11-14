@@ -18,7 +18,7 @@ void MiscTAB::Render()
 	if (ImGui::BeginTable("##misc_layout", 2, ImGuiTableFlags_SizingStretchProp | ImGuiTableFlags_NoBordersInBody))
 	{
 		ImGui::TableNextColumn();
-		GuiWidgets::SectionTitle("tabs.misc.progression.title", ImVec4(0.65f, 0.84f, 0.55f, 1.0f));
+		GuiWidgets::SectionTitle("tabs.misc.progression.title", ImVec4(1.0f, 1.0f, 1.0f, 0.9f));
 		ImGui::Checkbox(Localization::Get("tabs.misc.progression.modify_exp").c_str(), &settings.exp_modifier);
 		if (settings.exp_modifier)
 		{
@@ -33,7 +33,7 @@ void MiscTAB::Render()
 		}
 
 		ImGui::TableNextColumn();
-		GuiWidgets::SectionTitle("tabs.misc.world.title", ImVec4(0.95f, 0.76f, 0.45f, 1.0f));
+		GuiWidgets::SectionTitle("tabs.misc.world.title", ImVec4(1.0f, 1.0f, 1.0f, 0.9f));
 		ImGui::Checkbox(Localization::Get("tabs.misc.world.unlock_doors").c_str(), &settings.bUnlockDoors);
 		ImGui::Checkbox(Localization::Get("tabs.misc.world.unlock_all").c_str(), &settings.bUnlockAll);
 		ImGui::Checkbox(Localization::Get("tabs.misc.world.disable_long_interact").c_str(), &settings.bDisableLongInteract);
@@ -42,7 +42,7 @@ void MiscTAB::Render()
 		ImGui::Checkbox(Localization::Get("tabs.misc.world.never_calm").c_str(), &settings.bNeverCalm);
 
 		ImGui::Spacing();
-		GuiWidgets::SectionTitle("tabs.misc.azazel.title", ImVec4(0.86f, 0.56f, 0.9f, 1.0f));
+		GuiWidgets::SectionTitle("tabs.misc.azazel.title", ImVec4(1.0f, 1.0f, 1.0f, 0.9f));
 		ImGui::Checkbox(Localization::Get("tabs.misc.azazel.modify_speed").c_str(), &settings.bFreezeAzazel);
 		GuiWidgets::HelpMarker("tabs.misc.azazel.help");
 		if (settings.bFreezeAzazel)

@@ -12,11 +12,14 @@
 // Helper function to get the module base address
 uintptr_t il2cppi_get_base_address();
 
+static std::wstring GetLogFilePath();
+
 // Helper function to append text to a file
 void il2cppi_log_write(std::string text);
 
 // Helper function to open a new console window and redirect stdout there
 void il2cppi_new_console();
+
 
 
 #if _MSC_VER >= 1920

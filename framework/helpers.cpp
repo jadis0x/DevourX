@@ -9,19 +9,29 @@
 #include <codecvt>
 #include "helpers.h"
 #include <cstdio>
-
-// Log file location
-extern const LPCWSTR LOG_FILE;
+#include <filesystem>
 
 // Helper function to get the module base address
 uintptr_t il2cppi_get_base_address() {
 	return (uintptr_t)GetModuleHandleW(L"GameAssembly.dll");
 }
 
+static std::wstring GetLogFilePath()
+{
+	wchar_t modulePath[MAX_PATH] = { 0 };
+	if (GetModuleFileNameW(nullptr, modulePath, MAX_PATH) == 0)
+		return L"DevourX.log";
+
+	std::filesystem::path path(modulePath);
+	return (path.parent_path() / L"DevourX.log").wstring();
+}
+
 // Helper function to append text to a file
 void il2cppi_log_write(std::string text) {
+	std::wstring path = GetLogFilePath();
+
 	HANDLE file = CreateFileW(
-		LOG_FILE,
+		path.c_str(),
 		FILE_APPEND_DATA,
 		FILE_SHARE_READ,
 		nullptr,
@@ -31,7 +41,10 @@ void il2cppi_log_write(std::string text) {
 
 	if (file == INVALID_HANDLE_VALUE)
 	{
-		MessageBoxW(nullptr, L"Could not open log file", nullptr, 0);
+		DWORD err = GetLastError();
+		wchar_t buf[256];
+		swprintf_s(buf, L"Could not open log file\nError: %lu", err);
+		MessageBoxW(nullptr, buf, L"Error", 0);
 		return;
 	}
 

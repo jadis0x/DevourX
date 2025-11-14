@@ -26,10 +26,10 @@
 
 namespace
 {
-	constexpr ImVec4 kAccentColour{ 0.55f, 0.82f, 1.0f, 1.0f };
-	constexpr ImVec4 kSuccessColour{ 0.32f, 0.85f, 0.55f, 1.0f };
-	constexpr ImVec4 kWarningColour{ 0.95f, 0.78f, 0.28f, 1.0f };
-	constexpr ImVec4 kDangerColour{ 0.95f, 0.39f, 0.39f, 1.0f };
+	constexpr ImVec4 kAccentColour{ 1.0f, 1.0f, 1.0f, 0.95f };
+	constexpr ImVec4 kSuccessColour{ 1.0f, 1.0f, 1.0f, 0.85f };
+	constexpr ImVec4 kWarningColour{ 1.0f, 1.0f, 1.0f, 0.65f };
+	constexpr ImVec4 kDangerColour{ 1.0f, 1.0f, 1.0f, 0.45f };
 
 	bool gOpenLanguagePrompt = false;
 	bool gLanguagePromptDontShowAgain = false;
@@ -180,7 +180,7 @@ namespace
 	void RenderHeader()
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(18.0f, 14.0f));
-		ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.07f, 0.08f, 0.12f, 0.94f));
+		ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.0f, 0.0f, 0.0f, 0.92f));
 		if (ImGui::BeginChild("##menu_header", ImVec2(0.0f, 96.0f), true,
 			ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse))
 		{
@@ -230,7 +230,7 @@ namespace
 
 	void RenderQuickActions()
 	{
-		ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.06f, 0.06f, 0.1f, 0.9f));
+		ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.0f, 0.0f, 0.0f, 0.88f));
 		if (ImGui::BeginChild("##quick_actions", ImVec2(0.0f, 0.0f), true,
 			ImGuiWindowFlags_NoScrollbar))
 		{
@@ -295,7 +295,7 @@ namespace Menu {
 		RenderQuickActions();
 		ImGui::NextColumn();
 
-		ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.04f, 0.04f, 0.06f, 0.95f));
+		ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.0f, 0.0f, 0.0f, 0.9f));
 		if (ImGui::BeginChild("##menu_content", ImVec2(0.0f, 0.0f), true))
 		{
 			if (ImGui::BeginTabBar("LuridLab#TopBar", ImGuiTabBarFlags_NoTabListScrollingButtons))

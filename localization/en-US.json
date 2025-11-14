@@ -151,7 +151,8 @@
         "force_public": "Make Lobby Public",
         "force_public_help": "If enabled, the current private lobby will be forcibly made public and visible to everyone.",
         "fake_state": "Fake Game State",
-        "fake_state_help": "If enabled, the current lobby will appear as if the game is still in progress or not."
+        "fake_state_help": "If enabled, the current lobby will appear as if the game is still in progress or not.",
+		"walk_lobby": "Walk In Lobby"
       },
       "spoof": {
         "name": "Spoof Steam Name",
