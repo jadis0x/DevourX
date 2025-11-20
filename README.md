@@ -1,6 +1,15 @@
 # DevourX
-
 DevourX is an open-source C++ mod menu developed specifically for the co-op horror game Devour.
+
+### Notice
+
+> [!WARNING]  
+> **Development of this mod has been discontinued.**
+- It will no longer receive new features.  
+- Only compatibility fixes will be released when future game updates require it.
+
+Thank you to everyone who used, tested or supported this project.  
+End of the line.
 
 ![MenuShowcase](img/Screenshot.png)
 ![MenuShowcase](img/Screenshot2.jpg)
@@ -55,7 +64,6 @@ C:\Program Files (x86)\Steam\steamapps\common\Devour
 - EXP Modifier
 - Create Lobby Without Player Limit
 - SteamID & Name Hook
-- Ghost Join
 
 ## Language Support
 DevourX includes menu text in several languages:
